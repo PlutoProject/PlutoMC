@@ -25,6 +25,7 @@
 - `resource-world`: 资源世界服务器插件。
 - `event-center`: 活动中心服务器插件。
 - `proxy`: velocity 代理端服务器插件。
+- `common-worldgen`: 通用世界生成器插件。
 - `kook-bot`: KOOK 群机器人。
 - `framework`: 一个辅助我们开发的 Bukkit API & velocity API 扩展框架。
 
