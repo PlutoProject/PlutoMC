@@ -29,7 +29,7 @@ allprojects {
     }
 
     dependencies {
-        implementation('com.google.code.gson:gson:2.10')
+        implementation("com.google.code.gson:gson:2.10")
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")
 
