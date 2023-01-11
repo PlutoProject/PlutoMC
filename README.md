@@ -19,15 +19,18 @@
 - `dev`: 开发分支，包含不稳定的代码。
 - `prod`: 生产分支，所有已经确认稳定并且可在生产环境中使用的内容会被提交到此处。
 
+# 模块说明
+
+- `main-survival`: 生存世界服务器插件。
+- `resource-world`: 资源世界服务器插件。
+- `event-center`: 活动中心服务器插件。
+- `proxy`: velocity 代理端服务器插件。
+- `kook-bot`: KOOK 群机器人。
+- `framework`: 一个辅助我们开发的 Bukkit API & velocity API 扩展框架。
+
 # 开发语言
 
 本项目目前使用 Java 语言进行开发。
-
-在后期我们打算对代码进行大规模重构并完全迁移到 Kotlin 语言进行开发。
-
-# 致谢
-
-本项目大规模使用了 [helper](https://github.com/lucko/helper) 项目。这是一个全能型的 Bukkit 扩展库，它让本项目的开发方便快捷了许多。
 
 # 许可
 
