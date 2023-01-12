@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.framework.player;
 
-import com.velocitypowered.api.proxy.Player;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -10,5 +10,9 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractPlayer {
     public static AbstractPlayer bukkit(@NotNull Player player) {
         return (BukkitPlayer) player;
+    }
+
+    public static AbstractPlayer velocity(@NotNull com.velocitypowered.api.proxy.Player player) {
+        return new ProxyPlayer(player);
     }
 }
