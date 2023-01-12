@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.player.metadata;
+package ltd.kumo.plutomc.framework.metadata;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

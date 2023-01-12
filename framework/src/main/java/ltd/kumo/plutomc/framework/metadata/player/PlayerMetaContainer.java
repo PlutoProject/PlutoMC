@@ -1,6 +1,7 @@
-package ltd.kumo.plutomc.framework.player.metadata;
+package ltd.kumo.plutomc.framework.metadata.player;
 
 import ltd.kumo.plutomc.framework.AbstractPlatform;
+import ltd.kumo.plutomc.framework.metadata.AbstractMetaContainer;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.MetaNode;
@@ -17,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
  * @param <T> 玩家实例类型，根据平台来。
  */
 @SuppressWarnings("all")
-public class PlayerMetaContainer<T> extends AbstractMetaContainer{
+public class PlayerMetaContainer<T> extends AbstractMetaContainer {
     @NotNull
     T player;
 

@@ -1,7 +1,7 @@
 package ltd.kumo.plutomc.framework.player;
 
 import com.velocitypowered.api.proxy.Player;
-import ltd.kumo.plutomc.framework.player.metadata.PlayerMetaContainer;
+import ltd.kumo.plutomc.framework.metadata.player.PlayerMetaContainer;
 import org.jetbrains.annotations.NotNull;
 
 /**
