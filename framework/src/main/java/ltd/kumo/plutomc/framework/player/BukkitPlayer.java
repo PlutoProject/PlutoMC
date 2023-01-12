@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * 代表一个 Bukkit 平台的玩家。
  */
 @SuppressWarnings("unused")
-public abstract class BukkitPlayer extends FrameworkPlayer implements Player {
+public abstract class BukkitPlayer extends AbstractPlayer implements Player {
     @NotNull
     public PlayerMetaContainer<Player> metaContainer() {
         return new PlayerMetaContainer<>(this);

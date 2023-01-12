@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
  * 框架玩家。
  */
 @SuppressWarnings("unused")
-public abstract class FrameworkPlayer {
-    public static FrameworkPlayer bukkit(@NotNull Player player) {
+public abstract class AbstractPlayer {
+    public static AbstractPlayer bukkit(@NotNull Player player) {
         return (BukkitPlayer) player;
     }
 }
