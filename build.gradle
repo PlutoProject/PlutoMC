@@ -34,6 +34,7 @@ allprojects {
         implementation("com.google.code.gson:gson:2.10.1")
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")
+        implementation("org.jetbrains:annotations:23.1.0")
 
         compileOnly("org.projectlombok:lombok:1.18.24")
         compileOnly("org.purpurmc.purpur:purpur-api:1.19.3-R0.1-SNAPSHOT") // Purpur API 用于 Bukkit 平台开发
