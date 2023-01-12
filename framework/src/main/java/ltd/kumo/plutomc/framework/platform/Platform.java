@@ -19,13 +19,13 @@ public abstract class Platform {
         return new BukkitPlatform(server);
     }
 
+    public static LuckPerms getLuckPermsApi() {
+        return LUCKPERMS_API;
+    }
+
     @NotNull
     public abstract String name();
 
     @NotNull
     public abstract String version();
-
-    public static LuckPerms getLuckPermsApi() {
-        return LUCKPERMS_API;
-    }
 }
