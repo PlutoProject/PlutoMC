@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.framework.player.metadata;
 
-import ltd.kumo.plutomc.framework.platform.Platform;
+import ltd.kumo.plutomc.framework.AbstractPlatform;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.MetaNode;
@@ -14,11 +14,10 @@ import java.util.concurrent.CompletableFuture;
 /**
  * 玩家元数据容器。
  * 临时使用，待重构。
- *
  * @param <T> 玩家实例类型，根据平台来。
  */
 @SuppressWarnings("all")
-public class PlayerMetaContainer<T> extends AbstractMetaContainer {
+public class PlayerMetaContainer<T> extends AbstractMetaContainer{
     @NotNull
     T player;
 
@@ -29,11 +28,11 @@ public class PlayerMetaContainer<T> extends AbstractMetaContainer {
     @Nullable
     private static <T> User getUser(@NotNull T player) {
         if (player instanceof Player) {
-            return Platform.getLuckPermsApi().getUserManager().getUser(((Player) player).getUniqueId());
+            return AbstractPlatform.getLuckPermsApi().getUserManager().getUser(((Player) player).getUniqueId());
         }
 
         if (player instanceof com.velocitypowered.api.proxy.Player) {
-            return Platform.getLuckPermsApi().getUserManager().getUser(((com.velocitypowered.api.proxy.Player) player).getUniqueId());
+            return AbstractPlatform.getLuckPermsApi().getUserManager().getUser(((com.velocitypowered.api.proxy.Player) player).getUniqueId());
         }
 
         return null;
@@ -97,6 +96,6 @@ public class PlayerMetaContainer<T> extends AbstractMetaContainer {
 
     @Override
     public void apply() {
-        Platform.getLuckPermsApi().getUserManager().saveUser(getUser(player));
+        AbstractPlatform.getLuckPermsApi().getUserManager().saveUser(getUser(player));
     }
 }

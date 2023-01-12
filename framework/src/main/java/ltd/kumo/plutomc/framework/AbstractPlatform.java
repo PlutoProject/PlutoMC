@@ -1,12 +1,16 @@
-package ltd.kumo.plutomc.framework.platform;
+package ltd.kumo.plutomc.framework;
 
+import ltd.kumo.plutomc.framework.platform.BukkitAbstractPlatform;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * 抽象框架平台。
+ */
 @SuppressWarnings("unused")
-public abstract class Platform {
+public abstract class AbstractPlatform {
     @NotNull
     private static final LuckPerms LUCKPERMS_API;
 
@@ -15,12 +19,8 @@ public abstract class Platform {
     }
 
     @NotNull
-    public static Platform bukkit(@NotNull Server server) {
-        return new BukkitPlatform(server);
-    }
-
-    public static LuckPerms getLuckPermsApi() {
-        return LUCKPERMS_API;
+    public static AbstractPlatform bukkit(@NotNull Server server) {
+        return new BukkitAbstractPlatform(server);
     }
 
     @NotNull
@@ -28,4 +28,8 @@ public abstract class Platform {
 
     @NotNull
     public abstract String version();
+
+    public static LuckPerms getLuckPermsApi() {
+        return LUCKPERMS_API;
+    }
 }
