@@ -2,6 +2,7 @@ package ltd.kumo.plutomc.proxy.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.proxy.server.ServerPing;
 import ltd.kumo.plutomc.framework.utility.colorpattle.Catppuccin;
 import net.kyori.adventure.text.Component;
 
@@ -18,5 +19,7 @@ public class ProtocolListener {
                 .append(Component.text(" 二周目已开放！").color(Catppuccin.MOCHA.GREEN))
                 .appendNewline()
                 .append(Component.text("服务器目前正在不断开发中，敬请期待。").color(Catppuccin.MOCHA.PEACH));
+
+        event.setPing(ServerPing.builder().description(desc).build());
     }
 }
