@@ -38,16 +38,12 @@ allprojects {
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")
         implementation("org.jetbrains:annotations:23.1.0")
-        implementation("org.incendo.interfaces:interfaces-paper:1.0.0-SNAPSHOT")
 
         compileOnly("org.projectlombok:lombok:1.18.24")
-        compileOnly("org.purpurmc.purpur:purpur-api:1.19.3-R0.1-SNAPSHOT") // Purpur API 用于 Bukkit 平台开发
-        compileOnly("com.velocitypowered:velocity-api:3.1.1") // velocity API 用于代理平台开发
         compileOnly("net.luckperms:api:5.4")
         testCompileOnly("org.projectlombok:lombok:1.18.24")
 
         annotationProcessor("org.projectlombok:lombok:1.18.24")
-        annotationProcessor("com.velocitypowered:velocity-api:3.1.1")
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
     }
 

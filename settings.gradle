@@ -11,4 +11,6 @@ rootProject.name = 'PlutoMC'
 include 'framework'
 include 'proxy'
 include 'main-survival'
+include 'framework-shared'
+include 'framework-bukkit'
 

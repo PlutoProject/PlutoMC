@@ -16,11 +16,11 @@ public class TempCommand implements CommandExecutor {
 
             var metaContainer = bukkitPlayer.metaContainer();
 
-            metaContainer.set("main_survival_server.temp_broadcast", true);
+            metaContainer.set("main_survival_server.temp_broadcast", "true");
             metaContainer.apply();
 
             player.closeInventory();
-            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0F, 1F);
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 0F);
         }
 
         return true;
