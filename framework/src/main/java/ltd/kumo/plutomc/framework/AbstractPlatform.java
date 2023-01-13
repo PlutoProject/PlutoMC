@@ -1,6 +1,8 @@
 package ltd.kumo.plutomc.framework;
 
+import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.platform.BukkitPlatform;
+import ltd.kumo.plutomc.framework.platform.ProxyPlatform;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Server;
@@ -25,8 +27,13 @@ public abstract class AbstractPlatform<T> {
     }
 
     @NotNull
-    public static AbstractPlatform bukkit(@NotNull Server server) {
+    public static AbstractPlatform<Server> bukkit(@NotNull Server server) {
         return new BukkitPlatform(server);
+    }
+
+    @NotNull
+    public static AbstractPlatform<ProxyServer> velocity(@NotNull ProxyServer proxyServer) {
+        return new ProxyPlatform(proxyServer);
     }
 
     @NotNull
