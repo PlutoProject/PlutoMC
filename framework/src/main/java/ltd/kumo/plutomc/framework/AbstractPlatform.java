@@ -10,9 +10,15 @@ import org.jetbrains.annotations.NotNull;
  * 抽象框架平台。
  */
 @SuppressWarnings("unused")
-public abstract class AbstractPlatform {
+public abstract class AbstractPlatform<T> {
+    @NotNull
+    T server;
     @NotNull
     private static final LuckPerms LUCKPERMS_API;
+
+    public AbstractPlatform(T server) {
+        this.server = server;
+    }
 
     static {
         LUCKPERMS_API = LuckPermsProvider.get();
@@ -31,5 +37,10 @@ public abstract class AbstractPlatform {
 
     public static LuckPerms getLuckPermsApi() {
         return LUCKPERMS_API;
+    }
+
+    @NotNull
+    public T getServer() {
+        return server;
     }
 }

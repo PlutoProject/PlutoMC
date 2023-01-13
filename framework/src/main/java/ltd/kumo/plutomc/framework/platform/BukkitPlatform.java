@@ -8,11 +8,10 @@ import org.jetbrains.annotations.NotNull;
  * Bukkit 框架平台。
  */
 @SuppressWarnings("unused")
-public final class BukkitPlatform extends AbstractPlatform {
-    private final Server BUKKIT_SERVER;
+public final class BukkitPlatform extends AbstractPlatform<Server> {
 
     public BukkitPlatform(Server server) {
-        this.BUKKIT_SERVER = server;
+        super(server);
     }
 
     @Override
@@ -24,6 +23,6 @@ public final class BukkitPlatform extends AbstractPlatform {
     @Override
     @NotNull
     public String version() {
-        return BUKKIT_SERVER.getBukkitVersion();
+        return getServer().getBukkitVersion();
     }
 }
