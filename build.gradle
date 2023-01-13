@@ -51,4 +51,10 @@ allprojects {
             options.encoding = "UTF-8"
         }
     }
+
+    tasks.withType(org.gradle.jvm.tasks.Jar).tap {
+        configureEach {
+            destinationDirectory = file("$rootDir/products")
+        }
+    }
 }
