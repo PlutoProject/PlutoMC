@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.proxy.listeners;
 
-import com.google.common.eventbus.Subscribe;
+import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import ltd.kumo.plutomc.framework.player.AbstractPlayer;
