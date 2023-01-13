@@ -5,6 +5,10 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import ltd.kumo.plutomc.framework.player.AbstractPlayer;
 
+/**
+ * 玩家监听器。
+ */
+@SuppressWarnings("unused")
 public final class PlayerListener {
     @Subscribe
     public void postLoginEvent(PostLoginEvent event) {

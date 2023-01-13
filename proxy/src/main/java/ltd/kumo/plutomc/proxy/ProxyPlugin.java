@@ -1,7 +1,7 @@
 package ltd.kumo.plutomc.proxy;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.eventbus.Subscribe;
+import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
@@ -9,6 +9,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.AbstractPlatform;
 import ltd.kumo.plutomc.framework.platforms.ProxyPlatform;
 import ltd.kumo.plutomc.proxy.listeners.PlayerListener;
+import ltd.kumo.plutomc.proxy.listeners.ProtocolListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +31,8 @@ import java.util.logging.Logger;
 public final class ProxyPlugin {
     @NotNull
     private static final ImmutableList<?> listeners = ImmutableList.of(
-            new PlayerListener()
+            new PlayerListener(),
+            new ProtocolListener()
     );
     @Nullable
     private static ProxyPlatform platform;
