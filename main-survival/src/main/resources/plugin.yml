@@ -1,0 +1,10 @@
+name: main-survival
+version: 1.0.0
+main: ltd.kumo.plutomc.mainsurvival.MainSurvivalPlugin
+description: A plugin that provides functions in PlutoMC Main Survival Server.
+commands:
+  temp_broadcast_finish:
+    description: Temp command
+authors:
+  - PlutoMC Team
+  - All contributors

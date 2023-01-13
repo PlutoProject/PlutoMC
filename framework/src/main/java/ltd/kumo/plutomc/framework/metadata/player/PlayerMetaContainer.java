@@ -83,7 +83,7 @@ public class PlayerMetaContainer<T> extends AbstractMetaContainer {
             set(key, defaultValue);
         }
 
-        return defaultValue;
+        return get(key);
     }
 
     @Override

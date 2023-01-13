@@ -28,6 +28,9 @@ allprojects {
         maven {
             url = uri("https://repo.papermc.io/repository/maven-public/")
         }
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
     }
 
     dependencies {
@@ -35,6 +38,7 @@ allprojects {
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")
         implementation("org.jetbrains:annotations:23.1.0")
+        implementation("org.incendo.interfaces:interfaces-paper:1.0.0-SNAPSHOT")
 
         compileOnly("org.projectlombok:lombok:1.18.24")
         compileOnly("org.purpurmc.purpur:purpur-api:1.19.3-R0.1-SNAPSHOT") // Purpur API 用于 Bukkit 平台开发

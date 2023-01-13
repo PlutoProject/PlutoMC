@@ -34,8 +34,10 @@ public final class ProxyPlugin {
             new PlayerListener(),
             new ProtocolListener()
     );
+
     @Nullable
     private static ProxyPlatform platform;
+
     @NotNull
     private final ProxyServer server;
 
