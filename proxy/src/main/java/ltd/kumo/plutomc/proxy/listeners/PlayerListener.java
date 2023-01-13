@@ -3,7 +3,8 @@ package ltd.kumo.plutomc.proxy.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
-import ltd.kumo.plutomc.framework.player.AbstractPlayer;
+import com.velocitypowered.api.proxy.Player;
+import ltd.kumo.plutomc.framework.player.ProxyPlayer;
 
 /**
  * 玩家监听器。
@@ -12,8 +13,8 @@ import ltd.kumo.plutomc.framework.player.AbstractPlayer;
 public final class PlayerListener {
     @Subscribe
     public void postLoginEvent(PostLoginEvent event) {
-        var player = event.getPlayer();
-        var proxyPlayer = AbstractPlayer.velocity(player);
+        Player player = event.getPlayer();
+        var proxyPlayer = ProxyPlayer.of(player);
 
         var metaContainer = proxyPlayer.metaContainer();
 
@@ -25,8 +26,8 @@ public final class PlayerListener {
 
     @Subscribe
     public void disconnectEvent(DisconnectEvent event) {
-        var player = event.getPlayer();
-        var proxyPlayer = AbstractPlayer.velocity(player);
+        Player player = event.getPlayer();
+        var proxyPlayer = ProxyPlayer.of(player);
 
         var metaContainer = proxyPlayer.metaContainer();
 

@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
  */
 @SuppressWarnings("unused")
 public abstract class BukkitPlayer extends AbstractPlayer implements Player {
+    public static AbstractPlayer of(@NotNull Player player) {
+        return (BukkitPlayer) player;
+    }
+
     @NotNull
     @Override
     public PlayerMetaContainer<Player> metaContainer() {

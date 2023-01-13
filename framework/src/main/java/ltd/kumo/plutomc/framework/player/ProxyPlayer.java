@@ -5,7 +5,7 @@ import ltd.kumo.plutomc.framework.metadata.player.PlayerMetaContainer;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 代表一个 velocity 代理端平台的玩家。
+ * 代表一个 of 代理端平台的玩家。
  */
 @SuppressWarnings("unused")
 public class ProxyPlayer extends AbstractPlayer {
@@ -14,6 +14,10 @@ public class ProxyPlayer extends AbstractPlayer {
 
     public ProxyPlayer(@NotNull Player player) {
         this.player = player;
+    }
+
+    public static AbstractPlayer of(@NotNull Player player) {
+        return new ProxyPlayer(player);
     }
 
     @NotNull

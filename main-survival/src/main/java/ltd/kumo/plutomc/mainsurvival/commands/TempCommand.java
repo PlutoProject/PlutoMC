@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.mainsurvival.commands;
 
-import ltd.kumo.plutomc.framework.player.AbstractPlayer;
+import ltd.kumo.plutomc.framework.player.BukkitPlayer;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +12,7 @@ public class TempCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            var bukkitPlayer = AbstractPlayer.bukkit(player);
+            var bukkitPlayer = BukkitPlayer.of(player);
 
             var metaContainer = bukkitPlayer.metaContainer();
 

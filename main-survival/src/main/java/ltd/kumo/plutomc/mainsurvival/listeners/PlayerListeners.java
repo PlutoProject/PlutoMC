@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.mainsurvival.listeners;
 
-import ltd.kumo.plutomc.framework.player.AbstractPlayer;
+import ltd.kumo.plutomc.framework.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.utility.colorpattle.Catppuccin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -17,7 +17,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
         var player = event.getPlayer();
-        var bukkitPlayer = AbstractPlayer.bukkit(player);
+        var bukkitPlayer = BukkitPlayer.of(player);
 
         var metaContainer = bukkitPlayer.metaContainer();
 

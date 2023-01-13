@@ -1,6 +1,7 @@
 package ltd.kumo.plutomc.proxy;
 
 import com.google.common.collect.ImmutableList;
+import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Dependency;
@@ -12,9 +13,7 @@ import ltd.kumo.plutomc.proxy.listeners.PlayerListener;
 import ltd.kumo.plutomc.proxy.listeners.ProtocolListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.inject.Inject;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 /**
  * 代理端插件主类。
@@ -24,6 +23,8 @@ import java.util.logging.Logger;
         id = "proxy",
         name = "proxy",
         version = "1.0.0",
+        description = "Proxy plugin",
+        authors = {"PlutoMC Team and all contributors"},
         dependencies = {
                 @Dependency(id = "luckperms")
         }
@@ -38,13 +39,12 @@ public final class ProxyPlugin {
     @Nullable
     private static ProxyPlatform platform;
 
-    @NotNull
-    private final ProxyServer server;
+    @Nullable
+    private static ProxyServer server;
 
     @Inject
     public ProxyPlugin(@NotNull ProxyServer server, @NotNull Logger logger) {
-        platform = (ProxyPlatform) AbstractPlatform.velocity(server);
-        this.server = server;
+        ProxyPlugin.server = server;
     }
 
     @Nullable
@@ -52,8 +52,13 @@ public final class ProxyPlugin {
         return platform;
     }
 
+    public static ProxyServer getServer() {
+        return server;
+    }
+
     @Subscribe
     public void proxyInitializeEvent(ProxyInitializeEvent event) {
+        platform = (ProxyPlatform) AbstractPlatform.velocity(server);
         listeners.forEach(o -> server.getEventManager().register(this, o));
     }
 }
