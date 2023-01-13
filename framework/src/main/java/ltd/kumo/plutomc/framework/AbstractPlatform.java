@@ -1,8 +1,8 @@
 package ltd.kumo.plutomc.framework;
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import ltd.kumo.plutomc.framework.platform.BukkitPlatform;
-import ltd.kumo.plutomc.framework.platform.ProxyPlatform;
+import ltd.kumo.plutomc.framework.platforms.BukkitPlatform;
+import ltd.kumo.plutomc.framework.platforms.ProxyPlatform;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Server;

@@ -9,4 +9,5 @@
 
 rootProject.name = 'PlutoMC'
 include 'framework'
+include 'proxy'
 

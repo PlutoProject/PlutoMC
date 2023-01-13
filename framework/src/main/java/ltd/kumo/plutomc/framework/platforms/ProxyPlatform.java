@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.platform;
+package ltd.kumo.plutomc.framework.platforms;
 
 import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.AbstractPlatform;

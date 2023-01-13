@@ -22,6 +22,7 @@ public class ProxyPlayer extends AbstractPlayer {
     }
 
     @NotNull
+    @Override
     public PlayerMetaContainer<Player> metaContainer() {
         return new PlayerMetaContainer<>(player);
     }
