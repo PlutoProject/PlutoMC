@@ -19,7 +19,8 @@ public final class PlayerListener {
         metaContainer.apply();
     }
 
-    @Subscribe public void disconnectEvent(DisconnectEvent event) {
+    @Subscribe
+    public void disconnectEvent(DisconnectEvent event) {
         var player = event.getPlayer();
         var proxyPlayer = AbstractPlayer.velocity(player);
 

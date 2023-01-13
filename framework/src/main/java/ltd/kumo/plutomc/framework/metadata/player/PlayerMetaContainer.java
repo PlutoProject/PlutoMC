@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * 玩家元数据容器。
  * 临时使用，待重构。
+ *
  * @param <T> 玩家实例类型，根据平台来。
  */
 @SuppressWarnings("all")

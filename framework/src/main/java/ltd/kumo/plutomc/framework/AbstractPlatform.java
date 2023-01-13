@@ -14,16 +14,17 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("unused")
 public abstract class AbstractPlatform<T> {
     @NotNull
-    T server;
-    @NotNull
     private static final LuckPerms LUCKPERMS_API;
-
-    public AbstractPlatform(T server) {
-        this.server = server;
-    }
 
     static {
         LUCKPERMS_API = LuckPermsProvider.get();
+    }
+
+    @NotNull
+    T server;
+
+    public AbstractPlatform(T server) {
+        this.server = server;
     }
 
     @NotNull
@@ -36,15 +37,15 @@ public abstract class AbstractPlatform<T> {
         return new ProxyPlatform(proxyServer);
     }
 
+    public static LuckPerms getLuckPermsApi() {
+        return LUCKPERMS_API;
+    }
+
     @NotNull
     public abstract String name();
 
     @NotNull
     public abstract String version();
-
-    public static LuckPerms getLuckPermsApi() {
-        return LUCKPERMS_API;
-    }
 
     @NotNull
     public T getServer() {
