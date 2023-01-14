@@ -21,13 +21,13 @@
 
 # 模块说明
 
-- `main-survival`: 生存世界服务器插件。
-- `resource-world`: 资源世界服务器插件。
-- `event-center`: 活动中心服务器插件。
-- `proxy`: velocity 代理端服务器插件。
-- `common-worldgen`: 通用世界生成器插件。
-- `kook-bot`: KOOK 群机器人。
-- `framework`: 一个辅助我们开发的 Bukkit API & velocity API 扩展框架。
+- `framework-shared`: 开发框架通用部分，大部分内容为抽象接口类。
+- `framework-bukkit`: 开发框架 Bukkit 专用部分。
+- `framework-velocity`: 开发框架 velocity 专用部分。
+- `survival-bootstrap`: 主生存服务器插件。通过框架中的模块功能将需要的模块打入并加载。
+- `resource-bootstrap`: 资源世界服务器插件。通过框架中的模块功能将需要的模块打入并加载。
+- `event-bootstrap`: 活动中心服务器插件。通过框架中的模块功能将需要的模块打入并加载。
+- `module-*`: 各类插件模块。
 
 # 开发语言
 
