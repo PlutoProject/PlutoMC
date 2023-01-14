@@ -16,7 +16,7 @@ public final class BukkitPlayer extends Player<org.bukkit.entity.Player>{
 
     @Override
     public @Nullable org.bukkit.entity.Player player() {
-        return Bukkit.getPlayer(player);
+        return Bukkit.getPlayer(uuid());
     }
 
     public @NotNull Player<org.bukkit.entity.Player> of(org.bukkit.entity.Player player) {

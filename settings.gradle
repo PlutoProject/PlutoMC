@@ -13,4 +13,5 @@ include 'proxy'
 include 'main-survival'
 include 'framework-shared'
 include 'framework-bukkit'
+include 'framework-velocity'
 

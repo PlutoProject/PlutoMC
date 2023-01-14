@@ -1,32 +1,38 @@
-package ltd.kumo.plutomc.framework.bukkit;
+package ltd.kumo.plutomc.framework.velocity;
 
 import com.google.common.collect.ImmutableList;
+import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.proxy.ProxyServer;
+import lombok.NonNull;
 import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public class BukkitPlatform extends Platform<JavaPlugin> {
-    private BukkitPlatform(@NotNull JavaPlugin plugin) {
+public final class VelocityPlatform extends Platform<Plugin> {
+    @NotNull ProxyServer proxyServer;
+
+    private VelocityPlatform(@NotNull Plugin plugin, @NotNull ProxyServer proxyServer) {
         super(plugin);
+        Objects.requireNonNull(proxyServer);
+        this.proxyServer = proxyServer;
     }
 
     @Override
     public @NotNull ImmutableList<?> onlinePlayers() {
-        return ImmutableList.copyOf(plugin().getServer().getOnlinePlayers());
+        return ImmutableList.copyOf(proxyServer.getAllPlayers());
     }
 
     @Override
     public @NotNull String name() {
-        return "Bukkit";
+        return "Velocity";
     }
 
     @Override
     public @NotNull String version() {
-        return plugin().getServer().getVersion();
+        return plugin().version();
     }
 
     @Override
@@ -44,8 +50,10 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
         modules().forEach(Module::reload);
     }
 
-    public @NotNull static Platform<JavaPlugin> of(@NotNull JavaPlugin plugin) {
+    public static Platform<Plugin> of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
         Objects.requireNonNull(plugin);
-        return new BukkitPlatform(plugin);
+        Objects.requireNonNull(proxyServer);
+
+        return new VelocityPlatform(plugin, proxyServer);
     }
 }
