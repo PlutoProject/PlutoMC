@@ -13,6 +13,7 @@ public abstract class Module {
         Objects.requireNonNull(platform);
         this.platform = platform;
     }
+
     public abstract @NotNull String name();
 
     public abstract boolean shouldBeEnabled();

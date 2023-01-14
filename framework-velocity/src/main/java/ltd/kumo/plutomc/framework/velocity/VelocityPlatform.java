@@ -20,6 +20,13 @@ public final class VelocityPlatform extends Platform<Plugin> {
         this.proxyServer = proxyServer;
     }
 
+    public static Platform<Plugin> of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
+        Objects.requireNonNull(plugin);
+        Objects.requireNonNull(proxyServer);
+
+        return new VelocityPlatform(plugin, proxyServer);
+    }
+
     @Override
     public @NotNull ImmutableList<?> onlinePlayers() {
         return ImmutableList.copyOf(proxyServer.getAllPlayers());
@@ -48,12 +55,5 @@ public final class VelocityPlatform extends Platform<Plugin> {
     @Override
     public void reloadModules() {
         modules().forEach(Module::reload);
-    }
-
-    public static Platform<Plugin> of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
-        Objects.requireNonNull(plugin);
-        Objects.requireNonNull(proxyServer);
-
-        return new VelocityPlatform(plugin, proxyServer);
     }
 }

@@ -5,7 +5,6 @@ import ltd.kumo.plutomc.framework.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.utility.colorpattle.Catppuccin;
 import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

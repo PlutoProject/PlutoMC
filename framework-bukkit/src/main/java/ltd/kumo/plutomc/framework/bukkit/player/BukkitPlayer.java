@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public final class BukkitPlayer extends Player<org.bukkit.entity.Player>{
+public final class BukkitPlayer extends Player<org.bukkit.entity.Player> {
 
     private BukkitPlayer(@NotNull UUID player) {
         super(player);

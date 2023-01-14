@@ -22,15 +22,19 @@ public abstract class Platform<T> {
         return plugin;
     }
 
-    public @NotNull abstract ImmutableList<?> onlinePlayers();
+    public @NotNull
+    abstract ImmutableList<?> onlinePlayers();
 
-    public @NotNull abstract String name();
+    public @NotNull
+    abstract String name();
 
-    public @NotNull abstract String version();
+    public @NotNull
+    abstract String version();
 
     public @NotNull ImmutableList<Module> modules() {
         return modules;
     }
+
     public void modules(ImmutableList<Module> modules) {
         this.modules = Objects.requireNonNull(modules);
     }

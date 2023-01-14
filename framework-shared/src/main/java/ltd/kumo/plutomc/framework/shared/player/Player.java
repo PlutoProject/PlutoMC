@@ -15,7 +15,8 @@ public abstract class Player<T> {
         this.player = player;
     }
 
-    public @Nullable abstract T player();
+    public @Nullable
+    abstract T player();
 
     public @NotNull UUID uuid() {
         return player;

@@ -14,6 +14,12 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
         super(plugin);
     }
 
+    public @NotNull
+    static Platform<JavaPlugin> of(@NotNull JavaPlugin plugin) {
+        Objects.requireNonNull(plugin);
+        return new BukkitPlatform(plugin);
+    }
+
     @Override
     public @NotNull ImmutableList<?> onlinePlayers() {
         return ImmutableList.copyOf(plugin().getServer().getOnlinePlayers());
@@ -42,10 +48,5 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
     @Override
     public void reloadModules() {
         modules().forEach(Module::reload);
-    }
-
-    public @NotNull static Platform<JavaPlugin> of(@NotNull JavaPlugin plugin) {
-        Objects.requireNonNull(plugin);
-        return new BukkitPlatform(plugin);
     }
 }

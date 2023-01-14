@@ -15,14 +15,12 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings("unused")
 public final class MainSurvivalPlugin extends JavaPlugin {
-    @Nullable
-    private static JavaPlugin instance;
-
     @NotNull
     private static final ImmutableList<Listener> listeners = ImmutableList.of(
             new PlayerListeners()
     );
-
+    @Nullable
+    private static JavaPlugin instance;
     @Nullable
     private static BukkitPlatform platform;
 
