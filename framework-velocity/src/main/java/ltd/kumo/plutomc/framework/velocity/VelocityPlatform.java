@@ -5,6 +5,8 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.NonNull;
 import ltd.kumo.plutomc.framework.shared.Platform;
+import ltd.kumo.plutomc.framework.shared.command.Command;
+import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +42,17 @@ public final class VelocityPlatform extends Platform<Plugin> {
     @Override
     public @NotNull String version() {
         return plugin().version();
+    }
+
+    @Override
+    public <E extends CommandSender> Command<E> createCommand(String name) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public <E extends CommandSender> void registerCommand(String prefix, Command<E> command) {
+        // TODO
     }
 
     @Override

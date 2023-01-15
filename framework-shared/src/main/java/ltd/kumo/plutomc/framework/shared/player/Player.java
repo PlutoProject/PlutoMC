@@ -1,24 +1,17 @@
 package ltd.kumo.plutomc.framework.shared.player;
 
+import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public abstract class Player<T> {
-    @NotNull UUID player;
+public interface Player<T> extends CommandSender {
 
-    public Player(@NotNull UUID player) {
-        Objects.requireNonNull(player);
-        this.player = player;
-    }
+    @Nullable
+    T player();
 
-    public @Nullable
-    abstract T player();
+    @NotNull UUID uuid();
 
-    public @NotNull UUID uuid() {
-        return player;
-    }
 }

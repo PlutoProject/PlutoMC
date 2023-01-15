@@ -1,6 +1,8 @@
 package ltd.kumo.plutomc.framework.shared;
 
 import com.google.common.collect.ImmutableList;
+import ltd.kumo.plutomc.framework.shared.command.Command;
+import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +40,10 @@ public abstract class Platform<T> {
     public void modules(ImmutableList<Module> modules) {
         this.modules = Objects.requireNonNull(modules);
     }
+
+    public abstract <E extends CommandSender> Command<E> createCommand(String name);
+
+    public abstract <E extends CommandSender> void registerCommand(String prefix, Command<E> command);
 
     public abstract void enableModules();
 
