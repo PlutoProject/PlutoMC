@@ -19,7 +19,7 @@ public class SurvivalBootstrap extends JavaPlugin {
     private static BukkitPlatform bukkitPlatform;
     @NotNull
     private static final ImmutableList<BukkitModule> MODULES = ImmutableList.of(
-            new IronElevatorModule(bukkitPlatform())
+            new IronElevatorModule(bukkitPlatform)
     );
 
     @Override
@@ -36,7 +36,7 @@ public class SurvivalBootstrap extends JavaPlugin {
     }
 
     public static void reload() {
-        Objects.requireNonNull(bukkitPlatform()).reloadModules();
+        Objects.requireNonNull(bukkitPlatform).reloadModules();
     }
 
     @Nullable
