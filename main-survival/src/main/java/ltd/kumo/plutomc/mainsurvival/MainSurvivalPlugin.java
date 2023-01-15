@@ -20,8 +20,6 @@ public final class MainSurvivalPlugin extends JavaPlugin {
             new PlayerListeners()
     );
     @Nullable
-    private static JavaPlugin instance;
-    @Nullable
     private static BukkitPlatform platform;
 
     @Nullable
@@ -29,14 +27,13 @@ public final class MainSurvivalPlugin extends JavaPlugin {
         return platform;
     }
 
-    @Nullable
-    public static JavaPlugin getInstance() {
-        return instance;
+    @NotNull
+    public static MainSurvivalPlugin getInstance() {
+        return JavaPlugin.getPlugin(MainSurvivalPlugin.class);
     }
 
     @Override
     public void onEnable() {
-        instance = this;
         platform = (BukkitPlatform) AbstractPlatform.bukkit(getServer());
 
         listeners.forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));

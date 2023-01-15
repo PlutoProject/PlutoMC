@@ -15,48 +15,46 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
 public class PlayerListeners implements Listener {
+
     @EventHandler
     public void playerJumpEvent(PlayerJumpEvent event) {
         @NotNull Player player = event.getPlayer();
         @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
 
-        if (IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType())) {
-            CompletableFuture.supplyAsync(() -> {
-                @NotNull IronElevatorChain ironElevatorChain = IronElevatorChain.from(location);
-                return ironElevatorChain;
-            }).thenAccept(ironElevatorChain -> {
-                if (ironElevatorChain.getNextFloorNumber(location) != -1) {
+        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType()))
+            return;
+        CompletableFuture.supplyAsync(() -> IronElevatorChain.from(location))
+                .thenAccept(ironElevatorChain -> {
+                    if (ironElevatorChain.getNextFloorNumber(location) == -1)
+                        return;
                     @NotNull Location target = player.getLocation();
                     target.setY(ironElevatorChain.getNextFloor(location).getBlockY());
 
                     IronElevatorModule.prompt(player, ironElevatorChain.getNextFloorNumber(location), ironElevatorChain.getFloorCount());
                     player.teleportAsync(target);
 
-                }
-            });
-        }
+                });
     }
 
     @EventHandler
     public void playerToggleSneakEvent(PlayerToggleSneakEvent event) {
-        if (event.isSneaking()) {
-            @NotNull Player player = event.getPlayer();
-            @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
+        if (!event.isSneaking())
+            return;
+        @NotNull Player player = event.getPlayer();
+        @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
 
-            if (IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType())) {
-                CompletableFuture.supplyAsync(() -> {
-                    @NotNull IronElevatorChain ironElevatorChain = IronElevatorChain.from(location);
-                    return ironElevatorChain;
-                }).thenAccept(ironElevatorChain -> {
-                    if (ironElevatorChain.getPreviousFloorNumber(location) != -1) {
-                        @NotNull Location target = player.getLocation();
-                        target.setY(ironElevatorChain.getPreviousFloor(location).getBlockY());
+        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType()))
+            return;
+        CompletableFuture.supplyAsync(() -> IronElevatorChain.from(location))
+                .thenAccept(ironElevatorChain -> {
+                    if (ironElevatorChain.getPreviousFloorNumber(location) == -1)
+                        return;
+                    @NotNull Location target = player.getLocation();
+                    target.setY(ironElevatorChain.getPreviousFloor(location).getBlockY());
 
-                        IronElevatorModule.prompt(player, ironElevatorChain.getPreviousFloorNumber(location), ironElevatorChain.getFloorCount());
-                        player.teleportAsync(target);
-                    }
+                    IronElevatorModule.prompt(player, ironElevatorChain.getPreviousFloorNumber(location), ironElevatorChain.getFloorCount());
+                    player.teleportAsync(target);
                 });
-            }
-        }
     }
+
 }

@@ -2,7 +2,6 @@ package ltd.kumo.plutomc.modules.ironelevator;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.modules.ironelevator.utilites.LocationUtility;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
@@ -20,9 +19,8 @@ public final class IronElevatorChain {
     private IronElevatorChain(@NotNull Location location) {
         this.LOCATIONS = searchLocsFrom(location);
 
-        if (!oneOrMore()) {
+        if (!oneOrMore())
             throw new RuntimeException("Less than one legal block!");
-        }
     }
 
     public static IronElevatorChain from(@NotNull Location location) {
@@ -34,10 +32,9 @@ public final class IronElevatorChain {
         Objects.requireNonNull(location);
 
         @NotNull List<Location> result = new ArrayList<>();
-        @NotNull Chunk chunk = location.getChunk();
 
-        int index = location.getWorld().getMinHeight();
-        while (index < location.getWorld().getMaxHeight()) {
+        for (int index = location.getWorld().getMinHeight();
+             index < location.getWorld().getMaxHeight(); index++) {
             @NotNull Location indexLocation = new Location(
                     location.getWorld(),
                     location.getBlockX(),
@@ -45,23 +42,15 @@ public final class IronElevatorChain {
                     location.getBlockZ()
             );
 
-            if (IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType())) {
-                @NotNull Location above1 = new Location(indexLocation.getWorld(),
-                        indexLocation.getBlockX(),
-                        indexLocation.getBlockY() + 1,
-                        indexLocation.getBlockZ());
-                @NotNull Location above2 = new Location(indexLocation.getWorld(),
-                        indexLocation.getBlockX(),
-                        indexLocation.getBlockY() + 2,
-                        indexLocation.getBlockZ());
+            if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType()))
+                continue;
+            @NotNull Location above1 = LocationUtility.getAbove(indexLocation);
+            @NotNull Location above2 = LocationUtility.getAbove(above1);
 
-                if (above1.getBlock().getType().equals(Material.AIR)
-                        && above2.getBlock().getType().equals(Material.AIR)) {
-                    result.add(indexLocation);
-                }
-            }
-
-            index++;
+            if (!above1.getBlock().getType().equals(Material.AIR)
+                    || !above2.getBlock().getType().equals(Material.AIR))
+                continue;
+            result.add(indexLocation);
         }
 
         return ImmutableList.copyOf(result);
@@ -76,33 +65,23 @@ public final class IronElevatorChain {
 
         @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
 
-        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType())) {
+        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
-        }
 
-        @NotNull Location elevatorBlockLocation = new Location(location.getWorld(),
-                location.getBlockX(),
-                location.getBlockY() - 1,
-                location.getBlockZ());
+        @NotNull Location elevatorBlockLocation = LocationUtility.getUnder(cleanedLocation);
 
-        if (LOCATIONS.size() != LOCATIONS.indexOf(elevatorBlockLocation) + 1) {
+        if (LOCATIONS.size() != LOCATIONS.indexOf(elevatorBlockLocation) + 1)
             return LOCATIONS.indexOf(elevatorBlockLocation) + 2;
-        }
 
         return -1;
     }
 
     @NotNull
     public Location getNextFloor(@NotNull Location location) {
-        if (getNextFloorNumber(location) == -1) {
+        if (getNextFloorNumber(location) == -1)
             throw new RuntimeException("No more floors!");
-        }
 
-        @NotNull Location nextFloorBlock = LOCATIONS.get(getNextFloorNumber(location) - 1);
-        return new Location(nextFloorBlock.getWorld(),
-                nextFloorBlock.getBlockX(),
-                nextFloorBlock.getBlockY() + 1,
-                nextFloorBlock.getBlockZ());
+        return LocationUtility.getUnder(LOCATIONS.get(getNextFloorNumber(location) - 1)); // 因为LOCATIONS创建的时候里面就全是BlockX Y Z了所以不需要clean
     }
 
     public int getPreviousFloorNumber(@NotNull Location location) {
@@ -110,33 +89,24 @@ public final class IronElevatorChain {
 
         @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
 
-        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType())) {
+        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
-        }
 
-        @NotNull Location elevatorBlockLocation = new Location(location.getWorld(),
-                location.getBlockX(),
-                location.getBlockY() - 1,
-                location.getBlockZ());
+        @NotNull Location elevatorBlockLocation = LocationUtility.getUnder(cleanedLocation);
 
-        if (LOCATIONS.indexOf(elevatorBlockLocation) != 0) {
+        if (LOCATIONS.indexOf(elevatorBlockLocation) != 0)
             return LOCATIONS.indexOf(elevatorBlockLocation);
-        }
 
         return -1;
     }
 
     @NotNull
     public Location getPreviousFloor(@NotNull Location location) {
-        if (getPreviousFloorNumber(location) == -1) {
+        if (getPreviousFloorNumber(location) == -1)
             throw new RuntimeException("No more floors!");
-        }
 
         @NotNull Location previousFloorBlock = LOCATIONS.get(getPreviousFloorNumber(location) - 1);
-        return new Location(previousFloorBlock.getWorld(),
-                previousFloorBlock.getBlockX(),
-                previousFloorBlock.getBlockY() + 1,
-                previousFloorBlock.getBlockZ());
+        return LocationUtility.getAbove(previousFloorBlock); // 参考getNextFlour的注释
     }
 
     public int getCurrentFloorNumber(@NotNull Location location) {
@@ -144,36 +114,27 @@ public final class IronElevatorChain {
 
         @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
 
-        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType())) {
+        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
-        }
 
-        @NotNull Location elevatorBlockLocation = new Location(location.getWorld(),
-                location.getBlockX(),
-                location.getBlockY() - 1,
-                location.getBlockZ());
+        @NotNull Location elevatorBlockLocation = LocationUtility.getUnder(cleanedLocation);
 
-        if (LOCATIONS.indexOf(elevatorBlockLocation) != 0) {
+        if (LOCATIONS.indexOf(elevatorBlockLocation) != 0)
             return LOCATIONS.indexOf(elevatorBlockLocation) + 1;
-        }
 
         return -1;
     }
 
     @NotNull
     public Location getCurrentFloor(@NotNull Location location) {
-        if (getCurrentFloorNumber(location) == -1) {
+        if (getCurrentFloorNumber(location) == -1)
             throw new RuntimeException("No more floors!");
-        }
 
-        @NotNull Location previousFloorBlock = LOCATIONS.get(getCurrentFloorNumber(location) - 1);
-        return new Location(previousFloorBlock.getWorld(),
-                previousFloorBlock.getBlockX(),
-                previousFloorBlock.getBlockY() + 1,
-                previousFloorBlock.getBlockZ());
+        return LocationUtility.getAbove(LOCATIONS.get(getCurrentFloorNumber(location) - 1)); // 参考getNextFlour的注释
     }
 
     public int getFloorCount() {
         return LOCATIONS.size();
     }
+
 }

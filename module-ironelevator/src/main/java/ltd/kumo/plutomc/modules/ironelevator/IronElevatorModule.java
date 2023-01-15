@@ -19,7 +19,6 @@ public final class IronElevatorModule extends BukkitModule {
     @NotNull
     public final static ImmutableList<Material> ELEVATOR_MATERIALS = ImmutableList.of(
             Material.COPPER_BLOCK,
-            Material.RAW_COPPER_BLOCK,
             Material.WAXED_COPPER_BLOCK
     );
 
@@ -39,7 +38,7 @@ public final class IronElevatorModule extends BukkitModule {
                         Component.text(max + " 层")
                 ).color(Catppuccin.MOCHA.TEAL)
         ));
-        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1F, 1F);
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1F, 1F);
     }
 
     @Override
