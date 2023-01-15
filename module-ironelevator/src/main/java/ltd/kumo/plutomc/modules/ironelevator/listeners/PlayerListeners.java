@@ -17,7 +17,6 @@ import java.util.concurrent.CompletableFuture;
 public class PlayerListeners implements Listener {
     @EventHandler
     public void playerJumpEvent(PlayerJumpEvent event) {
-        System.out.println(1);
         @NotNull Player player = event.getPlayer();
         @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
 
@@ -41,7 +40,6 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void playerToggleSneakEvent(PlayerToggleSneakEvent event) {
         if (event.isSneaking()) {
-            System.out.println(2);
             @NotNull Player player = event.getPlayer();
             @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
 
