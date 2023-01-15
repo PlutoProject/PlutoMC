@@ -2,10 +2,8 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
-import ltd.kumo.plutomc.framework.bukkit.modules.BukkitModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -17,17 +15,15 @@ public class SurvivalBootstrap extends JavaPlugin {
     public static JavaPlugin instance;
     @Nullable
     private static BukkitPlatform bukkitPlatform;
-    @NotNull
-    private static ImmutableList<BukkitModule> modules = ImmutableList.of();
 
     @Override
     public void onEnable() {
         instance = this;
         bukkitPlatform = BukkitPlatform.of(this);
 
-        modules = ImmutableList.of(
+        bukkitPlatform.modules(ImmutableList.of(
                 new IronElevatorModule(bukkitPlatform)
-        );
+        ));
 
         Objects.requireNonNull(bukkitPlatform).enableModules();
     }
@@ -49,9 +45,5 @@ public class SurvivalBootstrap extends JavaPlugin {
     @Nullable
     public static JavaPlugin instance() {
         return instance;
-    }
-
-    public static ImmutableList<BukkitModule> modules() {
-        return modules;
     }
 }

@@ -8,6 +8,7 @@ import ltd.kumo.plutomc.modules.ironelevator.listeners.PlayerListeners;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -35,9 +36,10 @@ public final class IronElevatorModule extends BukkitModule {
         player.showTitle(Title.title(
                 Component.text(" "),
                 Component.text(current + " / ").append(
-                        Component.text(max + "层")
+                        Component.text(max + " 层")
                 ).color(Catppuccin.MOCHA.TEAL)
         ));
+        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1F, 1F);
     }
 
     @Override
