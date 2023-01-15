@@ -1,4 +1,4 @@
-main: ltd.kumo.plutomc.survival.bootstrap
+main: ltd.kumo.plutomc.survival.bootstrap.SurvivalBootstrap
 name: survival-bootstrap
 version: 1.0.0
 authors:
