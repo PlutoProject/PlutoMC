@@ -105,8 +105,7 @@ public final class IronElevatorChain {
         if (getPreviousFloorNumber(location) == -1)
             throw new RuntimeException("No more floors!");
 
-        @NotNull Location previousFloorBlock = LOCATIONS.get(getPreviousFloorNumber(location) - 1);
-        return LocationUtility.getAbove(previousFloorBlock); // 参考getNextFlour的注释
+        return LocationUtility.getAbove(LOCATIONS.get(getPreviousFloorNumber(location) - 1)); // 参考getNextFlour的注释
     }
 
     public int getCurrentFloorNumber(@NotNull Location location) {
