@@ -16,6 +16,20 @@ public class SurvivalBootstrap extends JavaPlugin {
     @Nullable
     private static BukkitPlatform bukkitPlatform;
 
+    public static void reload() {
+        Objects.requireNonNull(bukkitPlatform).reloadModules();
+    }
+
+    @Nullable
+    public static BukkitPlatform bukkitPlatform() {
+        return bukkitPlatform;
+    }
+
+    @Nullable
+    public static JavaPlugin instance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -31,19 +45,5 @@ public class SurvivalBootstrap extends JavaPlugin {
     @Override
     public void onDisable() {
         Objects.requireNonNull(bukkitPlatform).disableModules();
-    }
-
-    public static void reload() {
-        Objects.requireNonNull(bukkitPlatform).reloadModules();
-    }
-
-    @Nullable
-    public static BukkitPlatform bukkitPlatform() {
-        return bukkitPlatform;
-    }
-
-    @Nullable
-    public static JavaPlugin instance() {
-        return instance;
     }
 }

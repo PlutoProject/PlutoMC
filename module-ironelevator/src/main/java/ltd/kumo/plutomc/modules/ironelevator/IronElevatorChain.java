@@ -29,6 +29,44 @@ public final class IronElevatorChain {
         return new IronElevatorChain(location);
     }
 
+    @NotNull
+    private static ImmutableList<Location> searchLocsFrom(@NotNull Location location) {
+        Objects.requireNonNull(location);
+
+        @NotNull List<Location> result = new ArrayList<>();
+        @NotNull Chunk chunk = location.getChunk();
+
+        int index = location.getWorld().getMinHeight();
+        while (index < location.getWorld().getMaxHeight()) {
+            @NotNull Location indexLocation = new Location(
+                    location.getWorld(),
+                    location.getBlockX(),
+                    index,
+                    location.getBlockZ()
+            );
+
+            if (IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType())) {
+                @NotNull Location above1 = new Location(indexLocation.getWorld(),
+                        indexLocation.getBlockX(),
+                        indexLocation.getBlockY() + 1,
+                        indexLocation.getBlockZ());
+                @NotNull Location above2 = new Location(indexLocation.getWorld(),
+                        indexLocation.getBlockX(),
+                        indexLocation.getBlockY() + 2,
+                        indexLocation.getBlockZ());
+
+                if (above1.getBlock().getType().equals(Material.AIR)
+                        && above2.getBlock().getType().equals(Material.AIR)) {
+                    result.add(indexLocation);
+                }
+            }
+
+            index++;
+        }
+
+        return ImmutableList.copyOf(result);
+    }
+
     private boolean oneOrMore() {
         return LOCATIONS.size() >= 1;
     }
@@ -137,43 +175,5 @@ public final class IronElevatorChain {
 
     public int getFloorCount() {
         return LOCATIONS.size();
-    }
-
-    @NotNull
-    private static ImmutableList<Location> searchLocsFrom(@NotNull Location location) {
-        Objects.requireNonNull(location);
-
-        @NotNull List<Location> result = new ArrayList<>();
-        @NotNull Chunk chunk = location.getChunk();
-
-        int index = location.getWorld().getMinHeight();
-        while (index < location.getWorld().getMaxHeight()) {
-            @NotNull Location indexLocation = new Location(
-                    location.getWorld(),
-                    location.getBlockX(),
-                    index,
-                    location.getBlockZ()
-            );
-
-            if (IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType())) {
-                @NotNull Location above1 = new Location(indexLocation.getWorld(),
-                        indexLocation.getBlockX(),
-                        indexLocation.getBlockY() + 1,
-                        indexLocation.getBlockZ());
-                @NotNull Location above2 = new Location(indexLocation.getWorld(),
-                        indexLocation.getBlockX(),
-                        indexLocation.getBlockY() + 2,
-                        indexLocation.getBlockZ());
-
-                if (above1.getBlock().getType().equals(Material.AIR)
-                        && above2.getBlock().getType().equals(Material.AIR)) {
-                    result.add(indexLocation);
-                }
-            }
-
-            index++;
-        }
-
-        return ImmutableList.copyOf(result);
     }
 }
