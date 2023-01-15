@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.shared.utilies.colorpattle;
+package ltd.kumo.plutomc.framework.shared.utilities.colorpattle;
 
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;

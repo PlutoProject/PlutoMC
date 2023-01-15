@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.modules.ironelevator.utilites;
+package ltd.kumo.plutomc.modules.ironelevator.utilities;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

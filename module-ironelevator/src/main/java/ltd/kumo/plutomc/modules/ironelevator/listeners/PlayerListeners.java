@@ -3,7 +3,7 @@ package ltd.kumo.plutomc.modules.ironelevator.listeners;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorChain;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
-import ltd.kumo.plutomc.modules.ironelevator.utilites.LocationUtility;
+import ltd.kumo.plutomc.modules.ironelevator.utilities.LocationUtility;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

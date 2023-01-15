@@ -1,7 +1,7 @@
 package ltd.kumo.plutomc.modules.ironelevator;
 
 import com.google.common.collect.ImmutableList;
-import ltd.kumo.plutomc.modules.ironelevator.utilites.LocationUtility;
+import ltd.kumo.plutomc.modules.ironelevator.utilities.LocationUtility;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;

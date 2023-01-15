@@ -2,6 +2,7 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
+import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +26,7 @@ public class SurvivalBootstrap extends JavaPlugin {
     }
 
     @NotNull
-    public static JavaPlugin instance() {
+    public static SurvivalBootstrap instance() {
         return SurvivalBootstrap.getPlugin(SurvivalBootstrap.class);
     }
 
@@ -34,7 +35,8 @@ public class SurvivalBootstrap extends JavaPlugin {
         bukkitPlatform = BukkitPlatform.of(this);
 
         bukkitPlatform.modules(ImmutableList.of(
-                new IronElevatorModule(bukkitPlatform)
+                new IronElevatorModule(bukkitPlatform),
+                new CactusRotatorModule(bukkitPlatform)
         ));
 
         Objects.requireNonNull(bukkitPlatform).enableModules();

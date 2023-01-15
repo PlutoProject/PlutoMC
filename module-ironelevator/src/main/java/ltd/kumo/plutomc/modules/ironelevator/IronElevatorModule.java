@@ -3,7 +3,7 @@ package ltd.kumo.plutomc.modules.ironelevator;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.modules.BukkitModule;
-import ltd.kumo.plutomc.framework.shared.utilies.colorpattle.Catppuccin;
+import ltd.kumo.plutomc.framework.shared.utilities.colorpattle.Catppuccin;
 import ltd.kumo.plutomc.modules.ironelevator.listeners.PlayerListeners;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
