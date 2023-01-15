@@ -13,15 +13,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
+import static ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule.ELEVATOR_MATERIALS;
+
 @SuppressWarnings("unused")
 public class PlayerListeners implements Listener {
 
     @EventHandler
     public void playerJumpEvent(PlayerJumpEvent event) {
         @NotNull Player player = event.getPlayer();
-        @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
+        @NotNull Location location = player.getLocation().toBlockLocation();
 
-        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType()))
+        if (!LocationUtility.isOnSomething(location, ELEVATOR_MATERIALS))
             return;
         CompletableFuture.supplyAsync(() -> IronElevatorChain.from(location))
                 .thenAccept(ironElevatorChain -> {
@@ -41,9 +43,9 @@ public class PlayerListeners implements Listener {
         if (!event.isSneaking())
             return;
         @NotNull Player player = event.getPlayer();
-        @NotNull Location location = LocationUtility.cleanedLocation(player.getLocation());
+        @NotNull Location location = player.getLocation().toBlockLocation();
 
-        if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(location).getBlock().getType()))
+        if (!LocationUtility.isOnSomething(location, ELEVATOR_MATERIALS))
             return;
         CompletableFuture.supplyAsync(() -> IronElevatorChain.from(location))
                 .thenAccept(ironElevatorChain -> {

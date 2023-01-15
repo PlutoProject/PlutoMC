@@ -63,7 +63,7 @@ public final class IronElevatorChain {
     public int getNextFloorNumber(@NotNull Location location) {
         Objects.requireNonNull(location);
 
-        @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
+        @NotNull Location cleanedLocation = location.toBlockLocation();
 
         if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
@@ -87,7 +87,7 @@ public final class IronElevatorChain {
     public int getPreviousFloorNumber(@NotNull Location location) {
         Objects.requireNonNull(location);
 
-        @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
+        @NotNull Location cleanedLocation = location.toBlockLocation();
 
         if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
@@ -111,7 +111,7 @@ public final class IronElevatorChain {
     public int getCurrentFloorNumber(@NotNull Location location) {
         Objects.requireNonNull(location);
 
-        @NotNull Location cleanedLocation = LocationUtility.cleanedLocation(location);
+        @NotNull Location cleanedLocation = location.toBlockLocation();
 
         if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(LocationUtility.getUnder(cleanedLocation).getBlock().getType()))
             throw new RuntimeException("Not on a legal elevator block!");
