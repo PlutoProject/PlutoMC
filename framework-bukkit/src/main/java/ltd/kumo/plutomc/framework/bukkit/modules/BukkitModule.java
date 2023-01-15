@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 public abstract class BukkitModule extends Module {
@@ -28,5 +29,11 @@ public abstract class BukkitModule extends Module {
         } else if (command instanceof CommandExecutor commandExecutor) {
             Objects.requireNonNull(((JavaPlugin) platform.plugin()).getServer().getPluginCommand(name)).setExecutor(commandExecutor);
         }
+    }
+
+    @Override
+    @NotNull
+    public Logger logger() {
+        return Logger.getLogger("[BukkitPlatform - " + name() + "]");
     }
 }

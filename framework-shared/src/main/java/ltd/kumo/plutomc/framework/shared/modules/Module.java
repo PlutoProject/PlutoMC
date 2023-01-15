@@ -4,17 +4,21 @@ import ltd.kumo.plutomc.framework.shared.Platform;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 public abstract class Module {
-    public @NotNull Platform<?> platform;
+
+    @NotNull
+    public Platform<?> platform;
 
     public Module(@NotNull Platform<?> platform) {
         Objects.requireNonNull(platform);
         this.platform = platform;
     }
 
-    public abstract @NotNull String name();
+    @NotNull
+    public abstract String name();
 
     public abstract boolean shouldBeEnabled();
 
@@ -23,4 +27,7 @@ public abstract class Module {
     public abstract void terminate();
 
     public abstract void reload();
+
+    @NotNull
+    public abstract Logger logger();
 }

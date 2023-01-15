@@ -14,4 +14,6 @@ include 'main-survival'
 include 'framework-shared'
 include 'framework-bukkit'
 include 'framework-velocity'
+include 'module-ironelevator'
+include 'survival-bootstrap'
 

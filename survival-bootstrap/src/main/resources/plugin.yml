@@ -1,0 +1,6 @@
+main: ltd.kumo.plutomc.survival.bootstrap
+name: survival-bootstrap
+version: 1.0.0
+authors:
+  - "PlutoMC Team"
+  - "ALl contributors"

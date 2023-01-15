@@ -2,7 +2,6 @@ package ltd.kumo.plutomc.framework.bukkit;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.shared.Platform;
-import ltd.kumo.plutomc.framework.shared.modules.Module;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +14,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
     }
 
     public @NotNull
-    static Platform<JavaPlugin> of(@NotNull JavaPlugin plugin) {
+    static BukkitPlatform of(@NotNull JavaPlugin plugin) {
         Objects.requireNonNull(plugin);
         return new BukkitPlatform(plugin);
     }
@@ -37,16 +36,28 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
 
     @Override
     public void enableModules() {
-        modules().forEach(Module::initial);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled()) {
+                module.initial();
+            }
+        });
     }
 
     @Override
     public void disableModules() {
-        modules().forEach(Module::terminate);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled()) {
+                module.terminate();
+            }
+        });
     }
 
     @Override
     public void reloadModules() {
-        modules().forEach(Module::reload);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled()) {
+                module.reload();
+            }
+        });
     }
 }

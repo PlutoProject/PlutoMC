@@ -20,7 +20,7 @@ public final class VelocityPlatform extends Platform<Plugin> {
         this.proxyServer = proxyServer;
     }
 
-    public static Platform<Plugin> of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
+    public static VelocityPlatform of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
         Objects.requireNonNull(plugin);
         Objects.requireNonNull(proxyServer);
 
