@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class NMS_1_9 extends NMS {
 
     private static final int ARMOR_STAND_ID = Version.before(13) ? 30 : 1;
-    private static int DROPPED_ITEM_ID = 2;
     // UTILITY
     private static final Class<?> ENTITY_CLASS;
     private static final Class<?> ITEM_STACK_CLASS;
@@ -54,6 +53,8 @@ public class NMS_1_9 extends NMS {
     private static final Object DWO_ENTITY_DATA;
     private static final Object DWO_ARMOR_STAND_DATA;
     private static final Object DWO_ITEM;
+    private static final ReflectField<Object> ENTITY_COUNTER_FIELD;
+    private static int DROPPED_ITEM_ID = 2;
     // ENTITY TYPES
     private static Class<?> ENTITY_TYPES_CLASS;
     private static ReflectField<?> I_REGISTRY_ENTITY_TYPE_FIELD;
@@ -64,8 +65,7 @@ public class NMS_1_9 extends NMS {
     private static ReflectMethod NAMESPACED_KEY_GET_KEY_METHOD;
     private static ReflectMethod ENTITY_TYPES_GET_SIZE_METHOD;
     private static ReflectField<Float> ENTITY_SIZE_HEIGHT_FIELD;
-
-    private static final ReflectField<Object> ENTITY_COUNTER_FIELD;
+    private static Object ENUM_ITEM_SLOT_HEAD;
 
     static {
         DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");
@@ -313,8 +313,6 @@ public class NMS_1_9 extends NMS {
         ReflectionUtil.setFieldValue(teleport, "g", true);
         sendPacket(player, teleport);
     }
-
-    private static Object ENUM_ITEM_SLOT_HEAD;
 
     @Override
     public void helmetFakeEntity(Player player, ItemStack itemStack, int entityId) {

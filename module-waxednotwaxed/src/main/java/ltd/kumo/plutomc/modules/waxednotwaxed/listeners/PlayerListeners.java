@@ -36,12 +36,12 @@ public final class PlayerListeners implements Listener {
             player.sendActionBar(Component.text("这个方块被打蜡了").color(Catppuccin.MOCHA.GREEN));
             Location location = block.getLocation();
             player.playSound(location, Sound.BLOCK_BEEHIVE_WORK, 0.5f, 1.0f);
-            location.getWorld().spawnParticle(Particle.WAX_ON, location.add(.5,.5,.5), 25, 0.3, 0.3, 0.3);
+            location.getWorld().spawnParticle(Particle.WAX_ON, location.add(.5, .5, .5), 25, 0.3, 0.3, 0.3);
         } else {
             player.sendActionBar(Component.text("这个方块没有被打蜡").color(Catppuccin.MOCHA.MAROON));
             Location location = block.getLocation();
             player.playSound(location, Sound.BLOCK_BEEHIVE_WORK, 0.5f, 1.0f);
-            location.getWorld().spawnParticle(Particle.WAX_OFF, location.add(.5,.5,.5), 25, 0.3, 0.3, 0.3);
+            location.getWorld().spawnParticle(Particle.WAX_OFF, location.add(.5, .5, .5), 25, 0.3, 0.3, 0.3);
         }
     }
 

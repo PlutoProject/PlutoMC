@@ -2,9 +2,9 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
-import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
+import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
 import ltd.kumo.plutomc.modules.waxednotwaxed.WaxedNotWaxedModule;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

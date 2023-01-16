@@ -20,9 +20,9 @@ public abstract class HologramObject extends FlagHolder {
      *	Fields
      */
 
+    protected final @NonNull Set<UUID> viewers = Collections.synchronizedSet(new HashSet<>());
     protected boolean enabled = true;
     protected @NonNull DisableCause cause = DisableCause.NONE;
-    protected final @NonNull Set<UUID> viewers = Collections.synchronizedSet(new HashSet<>());
     protected @NonNull Location location;
     protected String permission = null;
     protected float facing = 0.0f;

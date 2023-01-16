@@ -34,11 +34,11 @@ import java.util.function.Function;
  * Factory for obtaining instances of {@link Commodore}.
  */
 public final class CommodoreProvider {
+    private static final Function<Plugin, Commodore> PROVIDER = checkSupported();
+
     private CommodoreProvider() {
         throw new AssertionError();
     }
-
-    private static final Function<Plugin, Commodore> PROVIDER = checkSupported();
 
     private static Function<Plugin, Commodore> checkSupported() {
         try {
@@ -89,14 +89,14 @@ public final class CommodoreProvider {
      * @param plugin the plugin
      * @return the commodore instance
      * @throws BrigadierUnsupportedException if brigadier is not {@link #isSupported() supported}
-     * by the server.
+     *                                       by the server.
      */
     public static Commodore getCommodore(Plugin plugin) throws BrigadierUnsupportedException {
         Objects.requireNonNull(plugin, "plugin");
         if (PROVIDER == null) {
             throw new BrigadierUnsupportedException(
                     "Brigadier is not supported by the server. " +
-                    "Set -Dcommodore.debug=true for debug info."
+                            "Set -Dcommodore.debug=true for debug info."
             );
         }
         return PROVIDER.apply(plugin);

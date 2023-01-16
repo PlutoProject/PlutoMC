@@ -17,13 +17,12 @@ import org.jetbrains.annotations.NotNull;
 public class HologramClickEvent extends Event implements Cancellable {
 
     private final static HandlerList handlerList = new HandlerList();
-
-    private boolean cancelled = false;
     private final @NotNull Player player;
     private final @NotNull Hologram hologram;
     private final @NotNull HologramPage page;
     private final @NotNull ClickType click;
     private final int entityId;
+    private boolean cancelled = false;
 
     public HologramClickEvent(@NotNull Player player, @NotNull Hologram hologram, @NotNull HologramPage page, @NotNull ClickType click, int entityId) {
         super(true);
@@ -32,6 +31,10 @@ public class HologramClickEvent extends Event implements Cancellable {
         this.page = page;
         this.click = click;
         this.entityId = entityId;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlerList;
     }
 
     @Override
@@ -46,10 +49,6 @@ public class HologramClickEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return handlerList;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlerList;
     }
 

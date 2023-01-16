@@ -9,7 +9,9 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandSender;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class BrigadierUtility {
 
@@ -31,11 +33,11 @@ public class BrigadierUtility {
             CommandContext<BukkitCommandSender> original = parse.getContext().build(command);
             List<CommandContext<BukkitCommandSender>> contexts = Collections.singletonList(original);
 
-            for(ArrayList<CommandContext<BukkitCommandSender>> next = null; contexts != null; next = null) {
+            for (ArrayList<CommandContext<BukkitCommandSender>> next = null; contexts != null; next = null) {
                 int size = contexts.size();
 
-                for(int i = 0; i < size; ++i) {
-                    CommandContext context = (CommandContext) ((List<?>)contexts).get(i);
+                for (int i = 0; i < size; ++i) {
+                    CommandContext context = (CommandContext) ((List<?>) contexts).get(i);
                     CommandContext<BukkitCommandSender> child = context.getChild();
                     if (child != null) {
                         if (child.hasNodes())

@@ -18,6 +18,10 @@ public final class BukkitPlayer extends BukkitCommandSender implements Player<or
         this.player = player;
     }
 
+    public static @NotNull BukkitPlayer of(org.bukkit.entity.Player player) {
+        return new BukkitPlayer(player.getUniqueId());
+    }
+
     @Override
     public @Nullable org.bukkit.entity.Player player() {
         return Bukkit.getPlayer(uuid());
@@ -26,10 +30,6 @@ public final class BukkitPlayer extends BukkitCommandSender implements Player<or
     @Override
     public @NotNull UUID uuid() {
         return this.player;
-    }
-
-    public static @NotNull BukkitPlayer of(org.bukkit.entity.Player player) {
-        return new BukkitPlayer(player.getUniqueId());
     }
 
     @Override

@@ -19,11 +19,11 @@ public class HologramPage extends FlagHolder {
      *	Fields
      */
 
-    private int index;
     private final @NonNull Hologram parent;
     private final @NonNull List<Integer> clickableEntityIds;
     private final @NonNull List<HologramLine> lines;
     protected boolean alwaysFacePlayer;
+    private int index;
 
     /*
      *	Constructors

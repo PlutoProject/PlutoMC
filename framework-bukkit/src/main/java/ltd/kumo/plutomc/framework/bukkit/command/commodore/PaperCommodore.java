@@ -30,7 +30,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,6 +56,10 @@ final class PaperCommodore extends AbstractCommodore implements Commodore, Liste
 
     PaperCommodore(Plugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    static void ensureSetup() {
+        // do nothing - this is only called to trigger the static initializer
     }
 
     @Override
@@ -121,10 +124,6 @@ final class PaperCommodore extends AbstractCommodore implements Commodore, Liste
             removeChild(root, this.node.getName());
             root.addChild((CommandNode) this.node);
         }
-    }
-
-    static void ensureSetup() {
-        // do nothing - this is only called to trigger the static initializer
     }
 
 }

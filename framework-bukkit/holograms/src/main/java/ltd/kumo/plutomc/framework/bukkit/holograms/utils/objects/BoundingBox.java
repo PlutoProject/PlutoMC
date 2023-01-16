@@ -18,6 +18,14 @@ public class BoundingBox {
     private double maxY;
     private double maxZ;
 
+    public BoundingBox() {
+        this.resize(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+    }
+
+    public BoundingBox(double x1, double y1, double z1, double x2, double y2, double z2) {
+        this.resize(x1, y1, z1, x2, y2, z2);
+    }
+
     @NotNull
     public static BoundingBox of(@NotNull Vector corner1, @NotNull Vector corner2) {
         Validate.notNull(corner1, "Corner1 is null!");
@@ -69,14 +77,6 @@ public class BoundingBox {
     public static BoundingBox of(@NotNull Location center, double x, double y, double z) {
         Validate.notNull(center, "Center is null!");
         return new BoundingBox(center.getX() - x, center.getY() - y, center.getZ() - z, center.getX() + x, center.getY() + y, center.getZ() + z);
-    }
-
-    public BoundingBox() {
-        this.resize(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
-    }
-
-    public BoundingBox(double x1, double y1, double z1, double x2, double y2, double z2) {
-        this.resize(x1, y1, z1, x2, y2, z2);
     }
 
     @NotNull

@@ -32,6 +32,8 @@ public abstract class NMS {
     // PACKET LISTENER
     protected static ReflectField<?> PLAYER_CONNECTION_NETWORK_MANAGER_FIELD;
     protected static ReflectField<?> NETWORK_MANAGER_CHANNEL_FIELD;
+    @Getter
+    private static NMS instance;
 
     static {
         // SEND PACKET
@@ -209,9 +211,6 @@ public abstract class NMS {
             mapEntityTypes.put("FIREWORK", new Pair<>(76, 0.25f));
         }
     }
-
-    @Getter
-    private static NMS instance;
 
     public static void init() {
         if (Version.before(9)) {

@@ -29,7 +29,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -52,8 +51,8 @@ public interface Commodore {
      * <p>Players will only be sent argument data if they pass the provided
      * {@code permissionTest}.</p>
      *
-     * @param command the command to read aliases from
-     * @param node the argument data
+     * @param command        the command to read aliases from
+     * @param node           the argument data
      * @param permissionTest the predicate to check whether players should be sent argument data
      */
     void register(Command command, LiteralCommandNode<?> node, Predicate<? super Player> permissionTest);
@@ -69,9 +68,9 @@ public interface Commodore {
      * <p>Players will only be sent argument data if they pass the provided
      * {@code permissionTest}.</p>
      *
-     * @param command the command to read aliases from
+     * @param command         the command to read aliases from
      * @param argumentBuilder the argument data, in a builder form
-     * @param permissionTest the predicate to check whether players should be sent argument data
+     * @param permissionTest  the predicate to check whether players should be sent argument data
      */
     default void register(Command command, LiteralArgumentBuilder<?> argumentBuilder, Predicate<? super Player> permissionTest) {
         Objects.requireNonNull(command, "command");
@@ -89,7 +88,7 @@ public interface Commodore {
      * to function for the command.</p>
      *
      * @param command the command to read aliases from
-     * @param node the argument data
+     * @param node    the argument data
      */
     default void register(Command command, LiteralCommandNode<?> node) {
         Objects.requireNonNull(command, "command");
@@ -105,7 +104,7 @@ public interface Commodore {
      * to all arguments within the node, so ASK_SERVER suggestions can continue
      * to function for the command.</p>
      *
-     * @param command the command to read aliases from
+     * @param command         the command to read aliases from
      * @param argumentBuilder the argument data, in a builder form
      */
     default void register(Command command, LiteralArgumentBuilder<?> argumentBuilder) {

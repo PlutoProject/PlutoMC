@@ -28,8 +28,8 @@ public final class HologramService implements Service<HologramService> {
     /**
      * Create a new hologram with the given name on the specified location.
      *
-     * @param name       The name.
-     * @param location   The location.
+     * @param name     The name.
+     * @param location The location.
      * @return The new hologram.
      * @throws IllegalArgumentException If name or location is null or hologram with the given name already exists.
      */
@@ -40,9 +40,9 @@ public final class HologramService implements Service<HologramService> {
     /**
      * Create a new hologram with the given name on the specified location with the given lines.
      *
-     * @param name       The name.
-     * @param location   The location.
-     * @param lines      The lines of this hologram.
+     * @param name     The name.
+     * @param location The location.
+     * @param lines    The lines of this hologram.
      * @return The new hologram.
      * @throws IllegalArgumentException If name or location is null or hologram with the given name already exists.
      */

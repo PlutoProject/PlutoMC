@@ -3,7 +3,6 @@ package ltd.kumo.plutomc.framework.bukkit.command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import com.mojang.brigadier.tree.CommandNode;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitInteger;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
@@ -23,11 +22,10 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     private final BukkitPlatform platform;
     private final String name;
     private final Supplier<ArgumentBuilder<BukkitCommandSender, ?>> supplier;
+    private final boolean argument;
+    private final List<BukkitCommand> children = new ArrayList<>();
     private BiConsumer<BukkitCommandSender, CommandContext> executor;
     private BiConsumer<BukkitPlayer, CommandContext> executorPlayer;
-    private final boolean argument;
-
-    private final List<BukkitCommand> children = new ArrayList<>();
 
     public BukkitCommand(BukkitPlatform platform, String name, boolean argument) {
         this(platform, name, () -> LiteralArgumentBuilder.literal(name), argument);
@@ -64,7 +62,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
 
     @Override
     public Command<BukkitCommandSender, BukkitPlayer> then(String name) {
-        BukkitCommand command =  new BukkitCommand(this.platform, name, () -> LiteralArgumentBuilder.literal(name), false);
+        BukkitCommand command = new BukkitCommand(this.platform, name, () -> LiteralArgumentBuilder.literal(name), false);
         this.children.add(command);
         return command;
     }

@@ -18,9 +18,8 @@ import java.util.Map;
 
 public class IridiumColorAPI {
 
-    private static final ReflectMethod METHOD_OF = new ReflectMethod(ChatColor.class, "of", Color.class);
     public static final List<String> SPECIAL_COLORS = Arrays.asList("&l", "&n", "&o", "&k", "&m");
-
+    private static final ReflectMethod METHOD_OF = new ReflectMethod(ChatColor.class, "of", Color.class);
     private static final LruCache LRU_CACHE = new LruCache(500);
 
     /**

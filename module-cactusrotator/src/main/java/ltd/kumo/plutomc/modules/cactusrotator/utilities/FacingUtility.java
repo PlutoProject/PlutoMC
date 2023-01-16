@@ -4,6 +4,9 @@ import org.bukkit.block.BlockFace;
 
 public final class FacingUtility {
 
+    private FacingUtility() {
+    }
+
     public static BlockFace rotate(BlockFace blockFace) {
         return switch (blockFace) {
             case UP -> BlockFace.DOWN;
@@ -26,9 +29,6 @@ public final class FacingUtility {
             case SOUTH -> BlockFace.NORTH;
             default -> null;
         };
-    }
-
-    private FacingUtility() {
     }
 
 }

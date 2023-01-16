@@ -7,7 +7,7 @@ import ltd.kumo.plutomc.modules.waxednotwaxed.listeners.PlayerListeners;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-public final class WaxedNotWaxedModule  extends BukkitModule {
+public final class WaxedNotWaxedModule extends BukkitModule {
 
     @NotNull
     private final static ImmutableList<Listener> LISTENERS = ImmutableList.of(
