@@ -44,12 +44,14 @@ public final class IronElevatorChain {
 
             if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType()))
                 continue;
+
             @NotNull Location above1 = LocationUtility.getAbove(indexLocation);
             @NotNull Location above2 = LocationUtility.getAbove(above1);
 
             if (!above1.getBlock().getType().equals(Material.AIR)
                     || !above2.getBlock().getType().equals(Material.AIR))
                 continue;
+
             result.add(indexLocation);
         }
 

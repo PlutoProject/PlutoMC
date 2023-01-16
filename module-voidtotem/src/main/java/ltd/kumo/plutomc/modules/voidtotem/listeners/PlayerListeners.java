@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.modules.listeners;
+package ltd.kumo.plutomc.modules.voidtotem.listeners;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public final class PlayerListeners implements Listener {
 
     private final Collection<PotionEffect> totemEffects = List.of(

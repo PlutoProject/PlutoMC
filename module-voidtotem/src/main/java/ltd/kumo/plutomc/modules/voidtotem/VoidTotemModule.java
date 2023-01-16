@@ -1,9 +1,9 @@
-package ltd.kumo.plutomc.modules;
+package ltd.kumo.plutomc.modules.voidtotem;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.modules.BukkitModule;
-import ltd.kumo.plutomc.modules.listeners.PlayerListeners;
+import ltd.kumo.plutomc.modules.voidtotem.listeners.PlayerListeners;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
