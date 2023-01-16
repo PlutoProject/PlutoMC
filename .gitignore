@@ -30,3 +30,6 @@ build/
 
 # Ignore IntelliJ IDEA related directory
 .idea/
+
+# Ignore Paper plugin test directory
+run/

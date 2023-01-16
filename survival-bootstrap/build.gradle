@@ -1,3 +1,7 @@
+plugins {
+    id 'xyz.jpenilla.run-paper' version '2.0.0'
+}
+
 dependencies {
     implementation(project(":framework-bukkit"))
     compileOnly(project(":framework-shared"))
@@ -6,4 +10,10 @@ dependencies {
     implementation(project(":module-ironelevator"))
     implementation(project(":module-cactusrotator"))
     implementation(project(":module-voidtotem"))
+}
+
+tasks {
+    runServer {
+        minecraftVersion("1.19.3")
+    }
 }

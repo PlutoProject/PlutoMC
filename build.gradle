@@ -14,9 +14,9 @@ version "2.0.0"
 
 allprojects {
     apply {
-        plugin("com.github.johnrengelman.shadow")
         plugin("java")
         plugin("idea")
+        plugin("com.github.johnrengelman.shadow")
     }
 
     repositories {

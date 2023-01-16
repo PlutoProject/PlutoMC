@@ -30,7 +30,7 @@ public class PlayerListeners implements Listener {
                     if (ironElevatorChain.getNextFloorNumber(location) == -1)
                         return;
                     @NotNull Location target = player.getLocation();
-                    target.setY(ironElevatorChain.getNextFloor(location).getBlockY());
+                    target.setY(ironElevatorChain.getNextFloor(location).getBlockY() + 2);
 
                     IronElevatorModule.prompt(player, ironElevatorChain.getNextFloorNumber(location), ironElevatorChain.getFloorCount());
                     player.teleportAsync(target);

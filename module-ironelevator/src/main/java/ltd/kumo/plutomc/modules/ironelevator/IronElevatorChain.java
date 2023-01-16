@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.modules.ironelevator.utilities.LocationUtility;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -42,7 +43,8 @@ public final class IronElevatorChain {
         while (indexLocation.getBlockY() <= location.getWorld().getMaxHeight()) {
             indexLocation.add(0, 1, 0);
 
-            if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType()))
+            Block block = indexLocation.getBlock();
+            if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(block.getType()))
                 continue;
 
             @NotNull Location above1 = LocationUtility.getAbove(indexLocation);
@@ -51,8 +53,8 @@ public final class IronElevatorChain {
             if (!above1.getBlock().getType().equals(Material.AIR)
                     || !above2.getBlock().getType().equals(Material.AIR))
                 continue;
-
-            result.add(indexLocation);
+            indexLocation = above2;
+            result.add(block.getLocation());
         }
 
         return ImmutableList.copyOf(result);
