@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":module-ironelevator"))
     implementation(project(":module-cactusrotator"))
     implementation(project(":module-voidtotem"))
+    implementation(project(":module-waxednotwaxed"))
 }
 
 tasks {

@@ -20,4 +20,5 @@ include 'module-cactusrotator'
 include 'module-voidtotem'
 include 'holograms'
 project(':holograms').projectDir = new File("./framework-bukkit/holograms")
+include 'module-waxednotwaxed'
 
