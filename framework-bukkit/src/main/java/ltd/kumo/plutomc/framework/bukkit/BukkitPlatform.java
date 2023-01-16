@@ -1,16 +1,24 @@
 package ltd.kumo.plutomc.framework.bukkit;
 
 import com.google.common.collect.ImmutableList;
+import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
+import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
+import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "unchecked"})
 public class BukkitPlatform extends Platform<JavaPlugin> {
+
+    private final Map<Class<? extends Service<?>>, Service<?>> services = new HashMap<>();
+
     private BukkitPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);
     }
@@ -48,6 +56,11 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
     }
 
     @Override
+    public <E extends Service<E>> E getService(Class<E> clazz) {
+        return (E) this.services.get(clazz);
+    }
+
+    @Override
     public void enableModules() {
         modules().forEach(module -> {
             if (module.shouldBeEnabled()) {
@@ -73,4 +86,21 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
             }
         });
     }
+
+    @Override
+    public void load() {
+        PlutoHologramsAPI.onLoad(this.plugin());
+    }
+
+    @Override
+    public void enable() {
+        PlutoHologramsAPI.onEnable();
+        this.services.put(HologramService.class, new HologramService());
+    }
+
+    @Override
+    public void disable() {
+        PlutoHologramsAPI.onDisable();
+    }
+
 }

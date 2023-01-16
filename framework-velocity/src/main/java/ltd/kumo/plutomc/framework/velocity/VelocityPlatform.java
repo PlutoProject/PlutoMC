@@ -5,6 +5,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.NonNull;
 import ltd.kumo.plutomc.framework.shared.Platform;
+import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
@@ -56,6 +57,12 @@ public final class VelocityPlatform extends Platform<Plugin> {
     }
 
     @Override
+    public <E extends Service<E>> E getService(Class<E> clazz) {
+        // TODO
+        return null;
+    }
+
+    @Override
     public void enableModules() {
         modules().forEach(Module::initial);
     }
@@ -68,5 +75,20 @@ public final class VelocityPlatform extends Platform<Plugin> {
     @Override
     public void reloadModules() {
         modules().forEach(Module::reload);
+    }
+
+    @Override
+    public void load() {
+
+    }
+
+    @Override
+    public void enable() {
+
+    }
+
+    @Override
+    public void disable() {
+
     }
 }

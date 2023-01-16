@@ -45,9 +45,16 @@ public abstract class Platform<T> {
 
     public abstract <E extends CommandSender> void registerCommand(String prefix, Command<E> command);
 
+    public abstract <E extends Service<E>> E getService(Class<E> clazz);
+
     public abstract void enableModules();
 
     public abstract void disableModules();
 
     public abstract void reloadModules();
+
+    public abstract void load();
+    public abstract void enable();
+    public abstract void disable();
+
 }

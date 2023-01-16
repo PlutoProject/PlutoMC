@@ -32,9 +32,14 @@ public class SurvivalBootstrap extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         bukkitPlatform = BukkitPlatform.of(this);
+        bukkitPlatform.load();
+    }
 
+    @Override
+    public void onEnable() {
+        bukkitPlatform.enable();
         bukkitPlatform.modules(ImmutableList.of(
                 new IronElevatorModule(bukkitPlatform),
                 new CactusRotatorModule(bukkitPlatform),
@@ -46,6 +51,8 @@ public class SurvivalBootstrap extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        bukkitPlatform.disable();
         Objects.requireNonNull(bukkitPlatform).disableModules();
     }
+
 }
