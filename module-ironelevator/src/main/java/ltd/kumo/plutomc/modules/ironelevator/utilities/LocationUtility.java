@@ -22,13 +22,19 @@ public final class LocationUtility {
     @NotNull
     public static Location getUnder(@NotNull Location location) {
         Objects.requireNonNull(location);
-        return location.clone().subtract(0, 1, 0);
+        return clone(location).subtract(0, 1, 0);
     }
 
     @NotNull
     public static Location getAbove(@NotNull Location location) {
         Objects.requireNonNull(location);
-        return location.clone().add(0, 1, 0);
+        return clone(location).add(0, 1, 0);
+    }
+
+    @NotNull
+    public static Location clone(@NotNull Location location) {
+        Objects.requireNonNull(location);
+        return new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
     }
 
 }

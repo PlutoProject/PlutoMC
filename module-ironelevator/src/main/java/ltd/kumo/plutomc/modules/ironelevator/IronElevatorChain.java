@@ -33,14 +33,14 @@ public final class IronElevatorChain {
 
         @NotNull List<Location> result = new ArrayList<>();
 
-        for (int index = location.getWorld().getMinHeight();
-             index < location.getWorld().getMaxHeight(); index++) {
-            @NotNull Location indexLocation = new Location(
-                    location.getWorld(),
-                    location.getBlockX(),
-                    index,
-                    location.getBlockZ()
-            );
+        @NotNull Location indexLocation = new Location(
+                location.getWorld(),
+                location.getBlockX(),
+                location.getWorld().getMinHeight() - 1,
+                location.getBlockZ()
+        );
+        while (indexLocation.getBlockY() <= location.getWorld().getMaxHeight()) {
+            indexLocation.add(0, 1, 0);
 
             if (!IronElevatorModule.ELEVATOR_MATERIALS.contains(indexLocation.getBlock().getType()))
                 continue;
