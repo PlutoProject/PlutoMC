@@ -25,7 +25,6 @@ public final class CommandListeners implements Listener {
         if (!BrigadierUtility.findValid(command, this.platform.getCommandManager().dispatcher()))
             return;
         event.setCancelled(true);
-        System.out.println("11111");
         try {
             this.platform.getCommandManager().dispatcher().execute(command, bukkitPlayer);
         } catch (CommandSyntaxException e) {
