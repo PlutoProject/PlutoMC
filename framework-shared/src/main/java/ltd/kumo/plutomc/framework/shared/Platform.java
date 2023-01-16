@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
+import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -41,9 +42,9 @@ public abstract class Platform<T> {
         this.modules = Objects.requireNonNull(modules);
     }
 
-    public abstract <E extends CommandSender> Command<E> createCommand(String name);
+    public abstract <E extends CommandSender, P extends Player<?>> Command<E, P> createCommand(String name);
 
-    public abstract <E extends CommandSender> void registerCommand(String prefix, Command<E> command);
+    public abstract <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command);
 
     public abstract <E extends Service<E>> E getService(Class<E> clazz);
 

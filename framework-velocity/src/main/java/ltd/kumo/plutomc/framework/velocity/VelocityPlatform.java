@@ -9,6 +9,7 @@ import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
+import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -46,13 +47,13 @@ public final class VelocityPlatform extends Platform<Plugin> {
     }
 
     @Override
-    public <E extends CommandSender> Command<E> createCommand(String name) {
+    public <E extends CommandSender, P extends Player<?>> Command<E, P> createCommand(String name) {
         // TODO
         return null;
     }
 
     @Override
-    public <E extends CommandSender> void registerCommand(String prefix, Command<E> command) {
+    public <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command) {
         // TODO
     }
 

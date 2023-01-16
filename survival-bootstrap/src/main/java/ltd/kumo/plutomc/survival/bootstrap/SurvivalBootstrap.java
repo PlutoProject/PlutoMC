@@ -48,6 +48,17 @@ public class SurvivalBootstrap extends JavaPlugin {
                 new WaxedNotWaxedModule(bukkitPlatform)
         ));
 
+        // Test code, don't delete! Test is still in need!
+        // BukkitCommand command = bukkitPlatform.createCommand("test");
+        // command.executes((bukkitCommandSender, context) -> {
+        //     bukkitCommandSender.send("Hello world!");
+        // })
+        //         .thenInteger("age", 1, 18)
+        //         .executes((bukkitCommandSender, context) -> {
+        //             bukkitCommandSender.send("Your age is " + context.argument(ArgumentInteger.class, "age"));
+        //         });
+        // bukkitPlatform.registerCommand("pluto", command);
+
         Objects.requireNonNull(bukkitPlatform).enableModules();
     }
 

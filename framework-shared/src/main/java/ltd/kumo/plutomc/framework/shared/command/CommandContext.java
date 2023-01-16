@@ -9,6 +9,6 @@ public interface CommandContext {
      * @return 参数内容
      * @param <T> 参数类型
      */
-    <T> T argument(Class<T> type, String name);
+    <T extends Argument<E>, E> E argument(Class<T> type, String name);
 
 }

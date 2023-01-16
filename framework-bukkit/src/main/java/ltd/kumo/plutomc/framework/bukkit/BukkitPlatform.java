@@ -1,12 +1,18 @@
 package ltd.kumo.plutomc.framework.bukkit;
 
 import com.google.common.collect.ImmutableList;
+import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
+import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
+import ltd.kumo.plutomc.framework.bukkit.command.commodore.CommodoreProvider;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
+import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import ltd.kumo.plutomc.framework.shared.player.Player;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +24,7 @@ import java.util.Objects;
 public class BukkitPlatform extends Platform<JavaPlugin> {
 
     private final Map<Class<? extends Service<?>>, Service<?>> services = new HashMap<>();
+    private BukkitCommandManager commandManager;
 
     private BukkitPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);
@@ -45,19 +52,22 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
     }
 
     @Override
-    public <E extends CommandSender> Command<E> createCommand(String name) {
-        // TODO
-        return null;
+    public BukkitCommand createCommand(String name) {
+        return new BukkitCommand(this, name, false);
     }
 
     @Override
-    public <E extends CommandSender> void registerCommand(String prefix, Command<E> command) {
-        // TODO
+    public <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command) {
+        this.commandManager.register(prefix, (BukkitCommand) command);
     }
 
     @Override
     public <E extends Service<E>> E getService(Class<E> clazz) {
         return (E) this.services.get(clazz);
+    }
+
+    public BukkitCommandManager getCommandManager() {
+        return commandManager;
     }
 
     @Override
@@ -94,8 +104,10 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
 
     @Override
     public void enable() {
+        this.commandManager = new BukkitCommandManager(this);
         PlutoHologramsAPI.onEnable();
         this.services.put(HologramService.class, new HologramService());
+        Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
     }
 
     @Override

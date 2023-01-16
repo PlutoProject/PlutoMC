@@ -28,7 +28,7 @@ public final class BukkitPlayer extends BukkitCommandSender implements Player<or
         return this.player;
     }
 
-    public @NotNull Player<org.bukkit.entity.Player> of(org.bukkit.entity.Player player) {
+    public static @NotNull BukkitPlayer of(org.bukkit.entity.Player player) {
         return new BukkitPlayer(player.getUniqueId());
     }
 

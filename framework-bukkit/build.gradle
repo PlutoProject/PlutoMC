@@ -1,5 +1,8 @@
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-mojangapi:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("com.mojang:brigadier:1.0.18")
+
     implementation(project(':holograms'))
     implementation(project(":framework-shared"))
 }
