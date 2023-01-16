@@ -32,7 +32,7 @@ public final class PlayerListeners implements Listener {
         if (event.getAction().isLeftClick())
             tryOpposite(block, directional);
         else
-            tryOpposite(block, directional);
+            tryRotate(block, directional);
     }
 
     public void tryOpposite(Block block, Directional directional) {
@@ -43,7 +43,7 @@ public final class PlayerListeners implements Listener {
         block.setBlockData(directional);
     }
 
-    public void tryRotate(PlayerInteractEvent event, Block block, Directional directional) {
+    public void tryRotate(Block block, Directional directional) {
         BlockFace blockFace = FacingUtility.rotate(directional.getFacing());
         if (blockFace == null)
             return;
