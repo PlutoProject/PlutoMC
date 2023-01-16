@@ -8,9 +8,6 @@
  */
 
 rootProject.name = 'PlutoMC'
-include 'framework'
-include 'proxy'
-include 'main-survival'
 include 'framework-shared'
 include 'framework-bukkit'
 include 'framework-velocity'
@@ -18,7 +15,6 @@ include 'module-ironelevator'
 include 'survival-bootstrap'
 include 'module-cactusrotator'
 include 'module-voidtotem'
+include 'module-waxednotwaxed'
 include 'holograms'
 project(':holograms').projectDir = new File("./framework-bukkit/holograms")
-include 'module-waxednotwaxed'
-
