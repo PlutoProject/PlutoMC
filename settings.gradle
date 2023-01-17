@@ -18,5 +18,5 @@ include 'module-voidtotem'
 include 'module-waxednotwaxed'
 include 'holograms'
 project(':holograms').projectDir = new File("./framework-bukkit/holograms")
-include 'common-mongohelper'
+include 'common-whitelistmanager'
 
