@@ -43,6 +43,7 @@ public final class CommodoreProvider {
     private static Function<Plugin, Commodore> checkSupported() {
         try {
             Class.forName("com.mojang.brigadier.CommandDispatcher");
+            MinecraftArgumentType.ensureSetup();
         } catch (Throwable e) {
             printDebugInfo(e);
             return null;
@@ -89,14 +90,14 @@ public final class CommodoreProvider {
      * @param plugin the plugin
      * @return the commodore instance
      * @throws BrigadierUnsupportedException if brigadier is not {@link #isSupported() supported}
-     * by the server.
+     *                                       by the server.
      */
     public static Commodore getCommodore(Plugin plugin) throws BrigadierUnsupportedException {
         Objects.requireNonNull(plugin, "plugin");
         if (PROVIDER == null) {
             throw new BrigadierUnsupportedException(
                     "Brigadier is not supported by the server. " +
-                    "Set -Dcommodore.debug=true for debug info."
+                            "Set -Dcommodore.debug=true for debug info."
             );
         }
         return PROVIDER.apply(plugin);

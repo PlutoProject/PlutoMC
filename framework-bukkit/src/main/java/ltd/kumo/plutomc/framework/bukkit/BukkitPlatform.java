@@ -3,7 +3,6 @@ package ltd.kumo.plutomc.framework.bukkit;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
-import ltd.kumo.plutomc.framework.bukkit.command.commodore.CommodoreProvider;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
 import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
@@ -53,7 +52,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
 
     @Override
     public BukkitCommand createCommand(String name) {
-        return new BukkitCommand(this, name, false);
+        return new BukkitCommand(this, name);
     }
 
     @Override

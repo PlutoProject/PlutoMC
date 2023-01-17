@@ -7,4 +7,8 @@ public interface BukkitArgument<T> extends Argument<T> {
 
     ArgumentType<?> brigadier();
 
+    default ArgumentType<?> commodore() {
+        return brigadier();
+    }
+
 }

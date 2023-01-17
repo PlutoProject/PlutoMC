@@ -5,20 +5,22 @@ import ltd.kumo.plutomc.framework.bukkit.command.BukkitArgument;
 import ltd.kumo.plutomc.framework.bukkit.command.commodore.MinecraftArgumentType;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.shared.command.CommandContext;
-import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentPlayer;
+import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentPlayers;
 import org.bukkit.entity.Player;
 
-public class ArgumentBukkitPlayer extends ArgumentPlayer<BukkitPlayer, Player> implements BukkitArgument<BukkitPlayer> {
+import java.util.List;
+
+public class ArgumentBukkitPlayers extends ArgumentPlayers<BukkitPlayer, Player> implements BukkitArgument<List<BukkitPlayer>> {
 
     @Override
-    public BukkitPlayer parse(CommandContext context, String name) {
+    public List<BukkitPlayer> parse(CommandContext context, String name) {
         // TODO
         return null;
     }
 
     @Override
     public ArgumentType<?> brigadier() {
-        return MinecraftArgumentType.ENTITY.create(true, true);
+        return MinecraftArgumentType.ENTITY.create(false, true);
     }
 
 }

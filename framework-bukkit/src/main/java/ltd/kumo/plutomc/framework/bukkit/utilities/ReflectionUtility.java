@@ -25,9 +25,10 @@
 
 package ltd.kumo.plutomc.framework.bukkit.utilities;
 
+import org.bukkit.Bukkit;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.bukkit.Bukkit;
 
 public final class ReflectionUtility {
     private static final String SERVER_VERSION = getServerVersion();
@@ -83,6 +84,7 @@ public final class ReflectionUtility {
         }
     }
 
-    private ReflectionUtility() {}
+    private ReflectionUtility() {
+    }
 
 }

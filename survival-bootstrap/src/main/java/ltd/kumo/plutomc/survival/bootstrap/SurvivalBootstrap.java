@@ -39,6 +39,7 @@ public class SurvivalBootstrap extends JavaPlugin {
     }
 
     @Override
+    // @SuppressWarnings("unchecked")
     public void onEnable() {
         bukkitPlatform.enable();
         bukkitPlatform.modules(ImmutableList.of(
@@ -54,9 +55,14 @@ public class SurvivalBootstrap extends JavaPlugin {
         //     bukkitCommandSender.send("Hello world!");
         // })
         //         .thenInteger("age", 1, 18)
+        //         .suggests(suggestion -> suggestion.suggests(1))
         //         .executes((bukkitCommandSender, context) -> {
         //             bukkitCommandSender.send("Your age is " + context.argument(ArgumentInteger.class, "age"));
-        //         });
+        //         })
+        //             .then("message", ArgumentMessage.class)
+        //             .executes((sender, context) -> {
+        //                 sender.send("You send: " + context.argument(ArgumentMessage.class, "message"));
+        //             });
         // bukkitPlatform.registerCommand("pluto", command);
 
         Objects.requireNonNull(bukkitPlatform).enableModules();

@@ -30,7 +30,6 @@ import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
 
@@ -81,10 +80,14 @@ abstract class AbstractCommodore implements Commodore {
             // should never be called
             // if ReflectionCommodore: bukkit handling should override
             // if PaperCommodore: this is only sent to the client, not used for actual command handling
-            DUMMY_COMMAND = (ctx) -> { throw new UnsupportedOperationException(); };
+            DUMMY_COMMAND = (ctx) -> {
+                throw new UnsupportedOperationException();
+            };
             // should never be called - only used in clientbound root node, and the server impl will pass anything through
             // SuggestionProviders#safelySwap (swap it for the ASK_SERVER provider) before sending
-            DUMMY_SUGGESTION_PROVIDER = (context, builder) -> { throw new UnsupportedOperationException(); };
+            DUMMY_SUGGESTION_PROVIDER = (context, builder) -> {
+                throw new UnsupportedOperationException();
+            };
 
         } catch (ReflectiveOperationException e) {
             throw new ExceptionInInitializerError(e);
@@ -111,8 +114,7 @@ abstract class AbstractCommodore implements Commodore {
             e.printStackTrace();
         }
 
-        if (suggestionProvider != null && node instanceof ArgumentCommandNode) {
-            ArgumentCommandNode<?, ?> argumentNode = (ArgumentCommandNode<?, ?>) node;
+        if (suggestionProvider != null && node instanceof ArgumentCommandNode<?, ?> argumentNode) {
 
             // set the custom suggestion provider field so tab completions work
             try {
