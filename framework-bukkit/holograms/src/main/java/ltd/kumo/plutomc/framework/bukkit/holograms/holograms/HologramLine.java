@@ -42,11 +42,11 @@ public class HologramLine extends HologramObject {
     private final @Nullable HologramPage parent;
     private final @NonNull Map<UUID, String> playerTextMap = new ConcurrentHashMap<>();
     private final @NonNull Map<UUID, String> lastTextMap = new ConcurrentHashMap<>();
-    private HologramLineType type;
-    private int[] entityIds = new int[2];
     private final @NonNull AtomicDouble offsetX = new AtomicDouble(0d);
     private final @NonNull AtomicDouble offsetY = new AtomicDouble(0d);
     private final @NonNull AtomicDouble offsetZ = new AtomicDouble(0d);
+    private HologramLineType type;
+    private int[] entityIds = new int[2];
     private double height;
     private @NonNull String content;
     private String text;
@@ -465,20 +465,20 @@ public class HologramLine extends HologramObject {
         return offsetX.get();
     }
 
-    public double getOffsetY() {
-        return offsetY.get();
-    }
-
-    public double getOffsetZ() {
-        return offsetZ.get();
-    }
-
     public void setOffsetX(double offsetX) {
         this.offsetX.set(offsetX);
     }
 
+    public double getOffsetY() {
+        return offsetY.get();
+    }
+
     public void setOffsetY(double offsetY) {
         this.offsetY.set(offsetY);
+    }
+
+    public double getOffsetZ() {
+        return offsetZ.get();
     }
 
     public void setOffsetZ(double offsetZ) {

@@ -34,11 +34,11 @@ import java.util.function.Function;
  * Factory for obtaining instances of {@link Commodore}.
  */
 public final class CommodoreProvider {
+    private static final Function<Plugin, Commodore> PROVIDER = checkSupported();
+
     private CommodoreProvider() {
         throw new AssertionError();
     }
-
-    private static final Function<Plugin, Commodore> PROVIDER = checkSupported();
 
     private static Function<Plugin, Commodore> checkSupported() {
         try {

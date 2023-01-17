@@ -30,6 +30,40 @@ public class HologramItem {
         this.parseContent();
     }
 
+    @SuppressWarnings("deprecation")
+    public static HologramItem fromItemStack(ItemStack itemStack) {
+        Validate.notNull(itemStack);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        ItemBuilder itemBuilder = new ItemBuilder(itemStack);
+        Material material = itemStack.getType();
+        stringBuilder.append(material.name());
+        int durability = itemStack.getDurability();
+        if (durability > 0) {
+            stringBuilder.append(":").append(durability);
+        }
+        stringBuilder.append(" ");
+        Map<Enchantment, Integer> enchants = itemStack.getEnchantments();
+        if (enchants != null && !enchants.isEmpty()) {
+            stringBuilder.append("!ENCHANTED").append(" ");
+        }
+        if (material.name().contains("HEAD") || material.name().contains("SKULL")) {
+            String owner = itemBuilder.getSkullOwner();
+            String texture = itemBuilder.getSkullTexture();
+            if (owner != null) {
+                stringBuilder.append("(").append(owner).append(")");
+            } else if (texture != null) {
+                stringBuilder.append("(").append(texture).append(")");
+            }
+        }
+        return new HologramItem(stringBuilder.toString());
+    }
+
+    public static ItemStack parseItemStack(String string, Player player) {
+        string = PAPI.setPlaceholders(player, string);
+        return new HologramItem(string).parse();
+    }
+
     public ItemStack parse() {
         return this.parse(null);
     }
@@ -113,40 +147,6 @@ public class HologramItem {
         if (this.material == null) {
             this.material = Material.STONE;
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    public static HologramItem fromItemStack(ItemStack itemStack) {
-        Validate.notNull(itemStack);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        ItemBuilder itemBuilder = new ItemBuilder(itemStack);
-        Material material = itemStack.getType();
-        stringBuilder.append(material.name());
-        int durability = itemStack.getDurability();
-        if (durability > 0) {
-            stringBuilder.append(":").append(durability);
-        }
-        stringBuilder.append(" ");
-        Map<Enchantment, Integer> enchants = itemStack.getEnchantments();
-        if (enchants != null && !enchants.isEmpty()) {
-            stringBuilder.append("!ENCHANTED").append(" ");
-        }
-        if (material.name().contains("HEAD") || material.name().contains("SKULL")) {
-            String owner = itemBuilder.getSkullOwner();
-            String texture = itemBuilder.getSkullTexture();
-            if (owner != null) {
-                stringBuilder.append("(").append(owner).append(")");
-            } else if (texture != null) {
-                stringBuilder.append("(").append(texture).append(")");
-            }
-        }
-        return new HologramItem(stringBuilder.toString());
-    }
-
-    public static ItemStack parseItemStack(String string, Player player) {
-        string = PAPI.setPlaceholders(player, string);
-        return new HologramItem(string).parse();
     }
 
 }

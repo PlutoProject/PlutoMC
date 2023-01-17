@@ -110,6 +110,10 @@ final class ReflectionCommodore extends AbstractCommodore implements Commodore {
         this.plugin.getServer().getPluginManager().registerEvents(new ServerReloadListener(this), this.plugin);
     }
 
+    static void ensureSetup() {
+        // do nothing - this is only called to trigger the static initializer
+    }
+
     private CommandDispatcher<?> getDispatcher() {
         try {
             Object mcServerObject = CONSOLE_FIELD.get(Bukkit.getServer());
@@ -212,10 +216,6 @@ final class ReflectionCommodore extends AbstractCommodore implements Commodore {
                 e.getCommands().removeAll(this.aliases);
             }
         }
-    }
-
-    static void ensureSetup() {
-        // do nothing - this is only called to trigger the static initializer
     }
 
 }

@@ -40,6 +40,12 @@ public enum Version {
         CURRENT = Version.fromString(ReflectionUtil.getVersion());
     }
 
+    private final int minor;
+
+    Version(int minor) {
+        this.minor = minor;
+    }
+
     /**
      * Parse a Version from string.
      *
@@ -96,22 +102,16 @@ public enum Version {
         return CURRENT.getMinor() <= minor;
     }
 
+    /*
+     *  Version
+     */
+
     public static boolean beforeOrEqual(@NonNull Version version) {
         return CURRENT.ordinal() <= version.ordinal();
     }
 
     public static boolean supportsHex() {
         return afterOrEqual(16);
-    }
-
-    /*
-     *  Version
-     */
-
-    private final int minor;
-
-    Version(int minor) {
-        this.minor = minor;
     }
 
     public int getMinor() {

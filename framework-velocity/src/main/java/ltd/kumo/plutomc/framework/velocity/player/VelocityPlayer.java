@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 public final class VelocityPlayer extends VelocityCommandSender implements Player<com.velocitypowered.api.proxy.Player> {
-    @NotNull ProxyServer proxyServer;
     private final UUID uuid;
+    @NotNull ProxyServer proxyServer;
 
     private VelocityPlayer(@NotNull com.velocitypowered.api.proxy.Player player, @NotNull ProxyServer proxyServer) {
         Objects.requireNonNull(proxyServer);

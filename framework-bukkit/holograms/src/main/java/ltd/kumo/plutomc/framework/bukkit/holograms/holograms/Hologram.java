@@ -41,9 +41,38 @@ public class Hologram extends UpdatingHologramObject implements ITicked {
         CACHED_HOLOGRAMS = new ConcurrentHashMap<>();
     }
 
+    protected final @NonNull String name;
+    protected final @NonNull Map<UUID, Integer> viewerPages = new ConcurrentHashMap<>();
+    protected final @NonNull Set<UUID> hidePlayers = Collections.synchronizedSet(new HashSet<>());
+
+    /*
+     *	Fields
+     */
+    protected final @NonNull Set<UUID> showPlayers = Collections.synchronizedSet(new HashSet<>());
+    protected final @NonNull PList<HologramPage> pages = new PList<>();
+    private final @NonNull AtomicInteger tickCounter;
+    protected boolean defaultVisibleState = true;
+    protected boolean downOrigin = false;
+    protected boolean alwaysFacePlayer = false;
+    public Hologram(@NonNull String name, @NonNull Location location) {
+        this(name, location, true);
+    }
+    public Hologram(@NonNull String name, @NonNull Location location, boolean enabled) {
+        super(location);
+        this.name = name;
+        this.enabled = enabled;
+        this.tickCounter = new AtomicInteger();
+        this.addPage();
+        this.register();
+    }
+
     public static Hologram getCachedHologram(@NonNull String name) {
         return CACHED_HOLOGRAMS.get(name);
     }
+
+    /*
+     *	Constructors
+     */
 
     @NonNull
     @Contract(pure = true)
@@ -55,37 +84,6 @@ public class Hologram extends UpdatingHologramObject implements ITicked {
     @Contract(pure = true)
     public static Collection<Hologram> getCachedHolograms() {
         return CACHED_HOLOGRAMS.values();
-    }
-
-    /*
-     *	Fields
-     */
-
-    protected final @NonNull String name;
-    protected final @NonNull Map<UUID, Integer> viewerPages = new ConcurrentHashMap<>();
-    protected final @NonNull Set<UUID> hidePlayers = Collections.synchronizedSet(new HashSet<>());
-    protected final @NonNull Set<UUID> showPlayers = Collections.synchronizedSet(new HashSet<>());
-    protected boolean defaultVisibleState = true;
-    protected final @NonNull PList<HologramPage> pages = new PList<>();
-    protected boolean downOrigin = false;
-    protected boolean alwaysFacePlayer = false;
-    private final @NonNull AtomicInteger tickCounter;
-
-    /*
-     *	Constructors
-     */
-
-    public Hologram(@NonNull String name, @NonNull Location location) {
-        this(name, location, true);
-    }
-
-    public Hologram(@NonNull String name, @NonNull Location location, boolean enabled) {
-        super(location);
-        this.name = name;
-        this.enabled = enabled;
-        this.tickCounter = new AtomicInteger();
-        this.addPage();
-        this.register();
     }
 
     /*

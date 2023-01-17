@@ -58,6 +58,10 @@ final class PaperCommodore extends AbstractCommodore implements Commodore, Liste
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    static void ensureSetup() {
+        // do nothing - this is only called to trigger the static initializer
+    }
+
     @Override
     public void register(LiteralCommandNode<?> node) {
         Objects.requireNonNull(node, "node");
@@ -120,10 +124,6 @@ final class PaperCommodore extends AbstractCommodore implements Commodore, Liste
             removeChild(root, this.node.getName());
             root.addChild((CommandNode) this.node);
         }
-    }
-
-    static void ensureSetup() {
-        // do nothing - this is only called to trigger the static initializer
     }
 
 }

@@ -1,6 +1,9 @@
 # PlutoMC
 
-![](https://img.shields.io/github/last-commit/nostalgic853/PlutoMC-Engine?logo=artstation&style=for-the-badge&color=9266CC)
+[![CodeFactor](https://www.codefactor.io/repository/github/plutosmp/plutomc/badge)](https://www.codefactor.io/repository/github/plutosmp/plutomc)
+![GitHub language count](https://img.shields.io/github/languages/count/plutosmp/PlutoMC)
+![GitHub](https://img.shields.io/github/license/plutosmp/PlutoMC)
+![](https://img.shields.io/github/last-commit/nostalgic853/PlutoMC-Engine?logo=artstation&flat&color=9266CC)
 
 ⚡ PlutoMC Season 2 自研内容。
 

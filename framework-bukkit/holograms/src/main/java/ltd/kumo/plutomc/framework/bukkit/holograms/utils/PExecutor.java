@@ -14,6 +14,13 @@ public class PExecutor {
     private static boolean initialized = false;
     private static ExecutorService service;
     private static int threadId;
+    private final @NonNull ExecutorService executor;
+    private final @NonNull PList<CompletableFuture<Void>> running;
+
+    PExecutor(@NonNull ExecutorService executor, int estimate) {
+        this.executor = executor;
+        this.running = new PList<>(estimate);
+    }
 
     /**
      * Initialize DExecutor. This method will set up ExecutorService for DecentHolograms.
@@ -84,14 +91,6 @@ public class PExecutor {
      */
     public static void execute(@NonNull Runnable runnable) {
         service.execute(runnable);
-    }
-
-    private final @NonNull ExecutorService executor;
-    private final @NonNull PList<CompletableFuture<Void>> running;
-
-    PExecutor(@NonNull ExecutorService executor, int estimate) {
-        this.executor = executor;
-        this.running = new PList<>(estimate);
     }
 
     /**
