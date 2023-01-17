@@ -17,17 +17,17 @@ public abstract class BukkitModule extends Module {
         super(bukkitPlatform);
     }
 
-    public <T> void listener(@NotNull Listener listener) {
+    public void listener(@NotNull Listener listener) {
         Objects.requireNonNull(listener);
         ((JavaPlugin) platform.plugin()).getServer().getPluginManager().registerEvents(listener, ((JavaPlugin) platform.plugin()));
     }
 
-    public <T> void command(@NotNull String name, @NotNull T command) {
+    public void command(@NotNull String name, @NotNull CommandExecutor command) {
+        Objects.requireNonNull(((JavaPlugin) platform.plugin()).getServer().getPluginCommand(name)).setExecutor(command);
+
         if (command instanceof TabExecutor tabExecutor) {
             Objects.requireNonNull(((JavaPlugin) platform.plugin()).getServer().getPluginCommand(name)).setExecutor(tabExecutor);
             Objects.requireNonNull(((JavaPlugin) platform.plugin()).getServer().getPluginCommand(name)).setTabCompleter(tabExecutor);
-        } else if (command instanceof CommandExecutor commandExecutor) {
-            Objects.requireNonNull(((JavaPlugin) platform.plugin()).getServer().getPluginCommand(name)).setExecutor(commandExecutor);
         }
     }
 
