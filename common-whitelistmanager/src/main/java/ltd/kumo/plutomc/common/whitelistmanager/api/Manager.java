@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 public interface Manager {
-    void createUser(@NotNull String userName, long qqNumber, UUID uuid);
+    void createUser(@NotNull String userName, long qqNumber, @NotNull UUID uuid);
 
     boolean hasWhitelist(@NotNull String userName);
 

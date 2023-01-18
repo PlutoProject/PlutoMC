@@ -40,8 +40,14 @@ public final class WhitelistManager implements Manager {
     }
 
     @Override
-    public void createUser(@NotNull String userName, long qqNumber, UUID uuid) {
+    public void createUser(@NotNull String userName, long qqNumber, @NotNull UUID uuid) {
+        @NotNull final Document document = new Document();
 
+        document.append("name", userName);
+        document.append("qq_number", qqNumber);
+        document.append("uuid", uuid.toString());
+
+        userCollection.insertOne(document);
     }
 
     @Override

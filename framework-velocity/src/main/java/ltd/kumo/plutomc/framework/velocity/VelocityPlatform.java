@@ -65,17 +65,26 @@ public final class VelocityPlatform extends Platform<Plugin> {
 
     @Override
     public void enableModules() {
-        modules().forEach(Module::initial);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled())
+                module.initial();
+        });
     }
 
     @Override
     public void disableModules() {
-        modules().forEach(Module::terminate);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled())
+                module.terminate();
+        });
     }
 
     @Override
     public void reloadModules() {
-        modules().forEach(Module::reload);
+        modules().forEach(module -> {
+            if (module.shouldBeEnabled())
+                module.reload();
+        });
     }
 
     @Override
