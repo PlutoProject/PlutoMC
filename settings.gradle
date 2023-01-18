@@ -8,17 +8,18 @@
  */
 
 rootProject.name = 'PlutoMC'
+include 'common-whitelistmanager'
 include 'framework-shared'
 include 'framework-bukkit'
 include 'framework-velocity'
+include 'holograms'
 include 'module-ironelevator'
-include 'survival-bootstrap'
 include 'module-cactusrotator'
 include 'module-voidtotem'
 include 'module-waxednotwaxed'
-include 'holograms'
-project(':holograms').projectDir = new File("./framework-bukkit/holograms")
-include 'common-whitelistmanager'
 include 'module-whitelist'
 include 'proxy-bootstrap'
+include 'survival-bootstrap'
+
+project(':holograms').projectDir = new File("./framework-bukkit/holograms")
 
