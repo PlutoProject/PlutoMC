@@ -1,0 +1,12 @@
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    compileOnly 'com.github.SNWCreations:JKook:0.45.0'
+
+    implementation(project(":bot-shared"))
+    implementation(project(":common-whitelistmanager"))
+}

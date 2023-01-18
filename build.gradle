@@ -20,16 +20,16 @@ allprojects {
     }
 
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
         maven {
             url = uri("https://libraries.minecraft.net")
         }
         maven {
-            url = uri("https://repo.purpurmc.org/snapshots")
+            url = uri("https://repo.papermc.io/repository/maven-public/")
         }
         maven {
-            url = uri("https://repo.papermc.io/repository/maven-public/")
+            url = uri("https://repo.purpurmc.org/snapshots")
         }
         maven {
             url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
@@ -37,19 +37,27 @@ allprojects {
     }
 
     dependencies {
+        implementation project(':dutil')
         implementation("com.google.code.gson:gson:2.10.1")
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")
-        implementation("org.jetbrains:annotations:24.0.0")
         implementation("com.electronwill.night-config:toml:3.6.6")
         implementation("org.apache.commons:commons-lang3:3.12.0")
 
+        compileOnly("org.jetbrains:annotations:24.0.0")
         compileOnly("org.projectlombok:lombok:1.18.24")
         compileOnly("net.luckperms:api:5.4")
         testCompileOnly("org.projectlombok:lombok:1.18.24")
 
         annotationProcessor("org.projectlombok:lombok:1.18.24")
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     tasks.withType(JavaCompile).tap {

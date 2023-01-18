@@ -1,0 +1,3 @@
+[submodule "dutil"]
+	path = dutil
+	url = https://www.github.com/DeeChael/dutil

@@ -1,0 +1,12 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.20'
+    id 'net.mamoe.mirai-console' version '2.13.2'
+}
+
+dependencies {
+    implementation(project(":bot-shared"))
+    implementation(project(":common-whitelistmanager"))
+}
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
