@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.framework.bukkit.holograms.utils.objects;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.util.NumberConversions;
@@ -28,24 +28,26 @@ public class BoundingBox {
 
     @NotNull
     public static BoundingBox of(@NotNull Vector corner1, @NotNull Vector corner2) {
-        Validate.notNull(corner1, "Corner1 is null!");
-        Validate.notNull(corner2, "Corner2 is null!");
+        Preconditions.checkNotNull(corner1, "Corner1 is null!");
+        Preconditions.checkNotNull(corner2, "Corner2 is null!");
         return new BoundingBox(corner1.getX(), corner1.getY(), corner1.getZ(), corner2.getX(), corner2.getY(), corner2.getZ());
     }
 
     @NotNull
     public static BoundingBox of(@NotNull Location corner1, @NotNull Location corner2) {
-        Validate.notNull(corner1, "Corner1 is null!");
-        Validate.notNull(corner2, "Corner2 is null!");
-        Validate.isTrue(Objects.equals(corner1.getWorld(), corner2.getWorld()), "Locations from different worlds!");
+        Preconditions.checkNotNull(corner1, "Corner1 is null!");
+        Preconditions.checkNotNull(corner2, "Corner2 is null!");
+        if (!Objects.equals(corner1.getWorld(), corner2.getWorld()))
+            throw new RuntimeException("Locations from different worlds!");
         return new BoundingBox(corner1.getX(), corner1.getY(), corner1.getZ(), corner2.getX(), corner2.getY(), corner2.getZ());
     }
 
     @NotNull
     public static BoundingBox of(@NotNull Block corner1, @NotNull Block corner2) {
-        Validate.notNull(corner1, "Corner1 is null!");
-        Validate.notNull(corner2, "Corner2 is null!");
-        Validate.isTrue(Objects.equals(corner1.getWorld(), corner2.getWorld()), "Blocks from different worlds!");
+        Preconditions.checkNotNull(corner1, "Corner1 is null!");
+        Preconditions.checkNotNull(corner2, "Corner2 is null!");
+        if (!Objects.equals(corner1.getWorld(), corner2.getWorld()))
+            throw new RuntimeException("Blocks from different worlds!");
         int x1 = corner1.getX();
         int y1 = corner1.getY();
         int z1 = corner1.getZ();
@@ -63,19 +65,19 @@ public class BoundingBox {
 
     @NotNull
     public static BoundingBox of(@NotNull Block block) {
-        Validate.notNull(block, "Block is null!");
+        Preconditions.checkNotNull(block, "Block is null!");
         return new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1);
     }
 
     @NotNull
     public static BoundingBox of(@NotNull Vector center, double x, double y, double z) {
-        Validate.notNull(center, "Center is null!");
+        Preconditions.checkNotNull(center, "Center is null!");
         return new BoundingBox(center.getX() - x, center.getY() - y, center.getZ() - z, center.getX() + x, center.getY() + y, center.getZ() + z);
     }
 
     @NotNull
     public static BoundingBox of(@NotNull Location center, double x, double y, double z) {
-        Validate.notNull(center, "Center is null!");
+        Preconditions.checkNotNull(center, "Center is null!");
         return new BoundingBox(center.getX() - x, center.getY() - y, center.getZ() - z, center.getX() + x, center.getY() + y, center.getZ() + z);
     }
 
@@ -168,7 +170,7 @@ public class BoundingBox {
     }
 
     public boolean contains(@NotNull Vector position) {
-        Validate.notNull(position);
+        Preconditions.checkNotNull(position);
         return this.contains(position.getX(), position.getY(), position.getZ());
     }
 

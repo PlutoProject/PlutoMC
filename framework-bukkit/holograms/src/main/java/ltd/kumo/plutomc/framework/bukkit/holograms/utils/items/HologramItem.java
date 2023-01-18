@@ -1,10 +1,10 @@
 package ltd.kumo.plutomc.framework.bukkit.holograms.utils.items;
 
+import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.HeadDatabaseUtils;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.PAPI;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -32,7 +32,7 @@ public class HologramItem {
 
     @SuppressWarnings("deprecation")
     public static HologramItem fromItemStack(ItemStack itemStack) {
-        Validate.notNull(itemStack);
+        Preconditions.checkNotNull(itemStack);
 
         StringBuilder stringBuilder = new StringBuilder();
         ItemBuilder itemBuilder = new ItemBuilder(itemStack);
@@ -44,7 +44,7 @@ public class HologramItem {
         }
         stringBuilder.append(" ");
         Map<Enchantment, Integer> enchants = itemStack.getEnchantments();
-        if (enchants != null && !enchants.isEmpty()) {
+        if (!enchants.isEmpty()) {
             stringBuilder.append("!ENCHANTED").append(" ");
         }
         if (material.name().contains("HEAD") || material.name().contains("SKULL")) {

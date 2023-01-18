@@ -1,11 +1,11 @@
 package ltd.kumo.plutomc.framework.bukkit.holograms.nms.versions;
 
+import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import ltd.kumo.plutomc.framework.bukkit.holograms.nms.NMS;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.RandomUtils;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.*;
-import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -72,13 +72,12 @@ public class NMS_1_17 extends NMS {
     private static final ReflectField<AtomicInteger> ENTITY_COUNTER_FIELD;
     private static final Object VEC_3D_A;
     private static final Class<?> DWR_CLASS = ReflectionUtil.getNMClass("network.syncher.DataWatcherRegistry");
-    private static final ReflectMethod DWI_GET_OBJECT_METHOD = new ReflectMethod(DWI_CLASS, "a");
-    private static final ReflectMethod DWI_GET_VALUE_METHOD = new ReflectMethod(DWI_CLASS, "b");
-    private static final ReflectMethod DWO_GET_SERIALIZER_METHOD = new ReflectMethod(DWO_CLASS, "b");
-    private static final ReflectMethod DWO_GET_INDEX_METHOD = new ReflectMethod(DWO_CLASS, "a");
-    private static final ReflectMethod DWS_GET_TYPE_ID_METHOD = new ReflectMethod(DWR_CLASS, "b", DWS_CLASS);
-    private static final ReflectMethod DWS_SERIALIZE_METHOD = new ReflectMethod(DWS_CLASS, "a",
-            PACKET_DATA_SERIALIZER_CLASS, Object.class);
+    private static final ReflectMethod DWI_GET_OBJECT_METHOD;
+    private static final ReflectMethod DWI_GET_VALUE_METHOD;
+    private static final ReflectMethod DWO_GET_SERIALIZER_METHOD;
+    private static final ReflectMethod DWO_GET_INDEX_METHOD;
+    private static final ReflectMethod DWS_GET_TYPE_ID_METHOD;
+    private static final ReflectMethod DWS_SERIALIZE_METHOD;
 
     static {
         DWO_CLASS = ReflectionUtil.getNMClass("network.syncher.DataWatcherObject");
@@ -181,6 +180,13 @@ public class NMS_1_17 extends NMS {
 
         ENTITY_COUNTER_FIELD = new ReflectField<>(ENTITY_CLASS, Version.CURRENT.equals(Version.v1_18_R2) || Version.afterOrEqual(19) ? "c" : "b");
         VEC_3D_A = new ReflectField<>(VEC_3D_CLASS, Version.afterOrEqual(19) ? "b" : "a").getValue(null);
+
+        DWI_GET_OBJECT_METHOD = new ReflectMethod(DWI_CLASS, "a");
+        DWI_GET_VALUE_METHOD = new ReflectMethod(DWI_CLASS, "b");
+        DWO_GET_SERIALIZER_METHOD = new ReflectMethod(DWO_CLASS, "b");
+        DWO_GET_INDEX_METHOD = new ReflectMethod(DWO_CLASS, "a");
+        DWS_GET_TYPE_ID_METHOD = new ReflectMethod(DWR_CLASS, "b", DWS_CLASS);
+        DWS_SERIALIZE_METHOD = new ReflectMethod(DWS_CLASS, "a", PACKET_DATA_SERIALIZER_CLASS, Object.class);
     }
 
     @Override
@@ -214,9 +220,9 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void showFakeEntity(Player player, Location location, EntityType entityType, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
-        Validate.notNull(entityType);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        Preconditions.checkNotNull(entityType);
 
         int entityTypeId = getEntityTypeId(entityType);
         if (entityTypeId == -1) return;
@@ -224,8 +230,8 @@ public class NMS_1_17 extends NMS {
     }
 
     private void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         if (Version.afterOrEqual(19)) {
             sendPacket(player, PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance(
@@ -260,9 +266,9 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void showFakeEntityLiving(Player player, Location location, EntityType entityType, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
-        Validate.notNull(entityType);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        Preconditions.checkNotNull(entityType);
 
         int entityTypeId = getEntityTypeId(entityType);
         if (entityTypeId == -1) return;
@@ -274,8 +280,8 @@ public class NMS_1_17 extends NMS {
     }
 
     private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         Object packetDataSerializer = PACKET_DATA_SERIALIZER_CONSTRUCTOR.newInstance(Unpooled.buffer());
         PACKET_DATA_SERIALIZER_WRITE_INT_METHOD.invoke(packetDataSerializer, entityId);
@@ -294,8 +300,8 @@ public class NMS_1_17 extends NMS {
     }
 
     private void sendEntityMetadata(Player player, int entityId, List<Object> items) {
-        Validate.notNull(player);
-        Validate.notNull(items);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(items);
 
         Object packetDataSerializer = PACKET_DATA_SERIALIZER_CONSTRUCTOR.newInstance(Unpooled.buffer());
         PACKET_DATA_SERIALIZER_WRITE_INT_METHOD.invoke(packetDataSerializer, entityId);
@@ -321,8 +327,8 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void showFakeEntityArmorStand(Player player, Location location, int entityId, boolean invisible, boolean small, boolean clickable) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         List<Object> dataWatcherItems = new ArrayList<>();
         dataWatcherItems.add(DATA_WATCHER_ITEM_CONSTRUCTOR.newInstance(DWO_ENTITY_DATA, (byte) (invisible ? 0x20 : 0)));
@@ -333,9 +339,9 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void showFakeEntityItem(Player player, Location location, ItemStack itemStack, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
-        Validate.notNull(itemStack);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        Preconditions.checkNotNull(itemStack);
 
         List<Object> dataWatcherItems = new ArrayList<>();
         dataWatcherItems.add(DATA_WATCHER_ITEM_CONSTRUCTOR.newInstance(DWO_ITEM, CRAFT_ITEM_NMS_COPY_METHOD.invokeStatic(itemStack)));
@@ -346,8 +352,8 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void updateFakeEntityCustomName(Player player, String name, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(name);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(name);
 
         List<Object> dataWatcherItems = new ArrayList<>();
         dataWatcherItems.add(DATA_WATCHER_ITEM_CONSTRUCTOR.newInstance(DWO_CUSTOM_NAME, Optional.ofNullable(CRAFT_CHAT_MESSAGE_FROM_STRING_METHOD.invokeStatic(name))));
@@ -357,8 +363,8 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void teleportFakeEntity(Player player, Location location, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         Object packetDataSerializer = PACKET_DATA_SERIALIZER_CONSTRUCTOR.newInstance(Unpooled.buffer());
         PACKET_DATA_SERIALIZER_WRITE_INT_METHOD.invoke(packetDataSerializer, entityId);
@@ -373,8 +379,8 @@ public class NMS_1_17 extends NMS {
 
     @Override
     public void helmetFakeEntity(Player player, ItemStack itemStack, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(itemStack);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(itemStack);
 
         List<Object> items = new ArrayList<>();
         items.add(PAIR_OF_METHOD.invokeStatic(ENUM_ITEM_SLOT_FROM_NAME_METHOD.invokeStatic("head"), CRAFT_ITEM_NMS_COPY_METHOD.invokeStatic(itemStack)));
@@ -384,7 +390,7 @@ public class NMS_1_17 extends NMS {
     @SuppressWarnings("RedundantCast")
     @Override
     public void attachFakeEntity(Player player, int vehicleId, int entityId) {
-        Validate.notNull(player);
+        Preconditions.checkNotNull(player);
         Object packetDataSerializer = PACKET_DATA_SERIALIZER_CONSTRUCTOR.newInstance(Unpooled.buffer());
         PACKET_DATA_SERIALIZER_WRITE_INT_METHOD.invoke(packetDataSerializer, vehicleId);
         PACKET_DATA_SERIALIZER_WRITE_INTS_METHOD.invoke(packetDataSerializer, (Object) new int[]{entityId});
@@ -394,7 +400,7 @@ public class NMS_1_17 extends NMS {
     @SuppressWarnings("RedundantCast")
     @Override
     public void hideFakeEntities(Player player, int... entityIds) {
-        Validate.notNull(player);
+        Preconditions.checkNotNull(player);
         sendPacket(player, PACKET_ENTITY_DESTROY_CONSTRUCTOR.newInstance((Object) entityIds));
     }
 

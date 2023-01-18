@@ -1,11 +1,11 @@
 package ltd.kumo.plutomc.framework.bukkit.holograms.nms.versions;
 
+import com.google.common.base.Preconditions;
 import ltd.kumo.plutomc.framework.bukkit.holograms.nms.NMS;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.ReflectConstructor;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.ReflectField;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.ReflectMethod;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.ReflectionUtil;
-import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -72,7 +72,7 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void showFakeEntity(Player player, Location location, EntityType entityType, int entityId) {
-        Validate.notNull(entityType);
+        Preconditions.checkNotNull(entityType);
         showFakeEntity(player, location, getEntityTypeId(entityType), entityId);
     }
 
@@ -96,9 +96,9 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void showFakeEntityItem(Player player, Location location, ItemStack itemStack, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
-        Validate.notNull(itemStack);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        Preconditions.checkNotNull(itemStack);
 
         Object nmsItemStack = CRAFT_ITEM_NMS_COPY_METHOD.invokeStatic(itemStack);
         Object dataWatcher = DATA_WATCHER_CONSTRUCTOR.newInstance(ENTITY_CLASS.cast(null));
@@ -111,8 +111,8 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void updateFakeEntityCustomName(Player player, String name, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(name);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(name);
 
         Object dataWatcher = DATA_WATCHER_CONSTRUCTOR.newInstance(ENTITY_CLASS.cast(null));
         DATA_WATCHER_A_METHOD.invoke(dataWatcher, 2, name); // Custom Name
@@ -122,8 +122,8 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void teleportFakeEntity(Player player, Location location, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         Object teleport = PACKET_ENTITY_TELEPORT_CONSTRUCTOR.newInstance();
         if (teleport == null) return;
@@ -139,8 +139,8 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void helmetFakeEntity(Player player, ItemStack itemStack, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(itemStack);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(itemStack);
         Object nmsItemStack = CRAFT_ITEM_NMS_COPY_METHOD.invokeStatic(itemStack);
         if (nmsItemStack == null) return;
         Object packet = PACKET_ENTITY_EQUIPMENT_CONSTRUCTOR.newInstance(entityId, 4, nmsItemStack);
@@ -150,7 +150,7 @@ public class NMS_1_8 extends NMS {
 
     @Override
     public void attachFakeEntity(Player player, int vehicleId, int entityId) {
-        Validate.notNull(player);
+        Preconditions.checkNotNull(player);
         Object packet = PACKET_ATTACH_ENTITY_CONSTRUCTOR.newInstance();
         if (packet == null) return;
         ReflectionUtil.setFieldValue(packet, "a", 0);
@@ -162,13 +162,13 @@ public class NMS_1_8 extends NMS {
     @SuppressWarnings("RedundantCast")
     @Override
     public void hideFakeEntities(Player player, int... entityIds) {
-        Validate.notNull(player);
+        Preconditions.checkNotNull(player);
         sendPacket(player, PACKET_ENTITY_DESTROY_CONSTRUCTOR.newInstance((Object) entityIds));
     }
 
     public void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
 
         Object spawn = PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance();
         if (spawn == null) return;
@@ -183,8 +183,8 @@ public class NMS_1_8 extends NMS {
     }
 
     private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
-        Validate.notNull(player);
-        Validate.notNull(location);
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
         if (dataWatcher == null || !DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass())) return;
 
         Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();

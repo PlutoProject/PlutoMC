@@ -54,9 +54,11 @@ public class Hologram extends UpdatingHologramObject implements ITicked {
     protected boolean defaultVisibleState = true;
     protected boolean downOrigin = false;
     protected boolean alwaysFacePlayer = false;
+
     public Hologram(@NonNull String name, @NonNull Location location) {
         this(name, location, true);
     }
+
     public Hologram(@NonNull String name, @NonNull Location location, boolean enabled) {
         super(location);
         this.name = name;
