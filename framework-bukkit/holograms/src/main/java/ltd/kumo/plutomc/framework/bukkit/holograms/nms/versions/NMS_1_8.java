@@ -63,6 +63,41 @@ public class NMS_1_8 extends NMS {
         ENTITY_COUNTER_FIELD = new ReflectField<>(ENTITY_CLASS, "entityCount");
     }
 
+    public void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+
+        Object spawn = PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance();
+        if (spawn == null) return;
+        ReflectionUtil.setFieldValue(spawn, "a", entityId);
+        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getX() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "c", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getY() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "d", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getZ() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "h", MATH_HELPER_D_METHOD.invokeStatic(location.getPitch() * 256.0F / 360.0F));
+        ReflectionUtil.setFieldValue(spawn, "i", MATH_HELPER_D_METHOD.invokeStatic(location.getYaw() * 256.0F / 360.0F));
+        ReflectionUtil.setFieldValue(spawn, "j", entityTypeId);
+        sendPacket(player, spawn);
+    }
+
+    private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        if (dataWatcher == null || !DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass())) return;
+
+        Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();
+        if (spawn == null) return;
+        ReflectionUtil.setFieldValue(spawn, "a", entityId);
+        ReflectionUtil.setFieldValue(spawn, "b", entityTypeId);
+        ReflectionUtil.setFieldValue(spawn, "c", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getX() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "d", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getY() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "e", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getZ() * 32.0D));
+        ReflectionUtil.setFieldValue(spawn, "i", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "j", (byte) ((int) (location.getPitch() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "k", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "l", dataWatcher);
+        sendPacket(player, spawn);
+    }
+
     @Override
     public int getFreeEntityId() {
         int entityCount = ENTITY_COUNTER_FIELD.getValue(null);
@@ -164,41 +199,6 @@ public class NMS_1_8 extends NMS {
     public void hideFakeEntities(Player player, int... entityIds) {
         Preconditions.checkNotNull(player);
         sendPacket(player, PACKET_ENTITY_DESTROY_CONSTRUCTOR.newInstance((Object) entityIds));
-    }
-
-    public void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
-        Preconditions.checkNotNull(player);
-        Preconditions.checkNotNull(location);
-
-        Object spawn = PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance();
-        if (spawn == null) return;
-        ReflectionUtil.setFieldValue(spawn, "a", entityId);
-        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getX() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "c", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getY() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "d", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getZ() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "h", MATH_HELPER_D_METHOD.invokeStatic(location.getPitch() * 256.0F / 360.0F));
-        ReflectionUtil.setFieldValue(spawn, "i", MATH_HELPER_D_METHOD.invokeStatic(location.getYaw() * 256.0F / 360.0F));
-        ReflectionUtil.setFieldValue(spawn, "j", entityTypeId);
-        sendPacket(player, spawn);
-    }
-
-    private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
-        Preconditions.checkNotNull(player);
-        Preconditions.checkNotNull(location);
-        if (dataWatcher == null || !DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass())) return;
-
-        Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();
-        if (spawn == null) return;
-        ReflectionUtil.setFieldValue(spawn, "a", entityId);
-        ReflectionUtil.setFieldValue(spawn, "b", entityTypeId);
-        ReflectionUtil.setFieldValue(spawn, "c", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getX() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "d", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getY() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "e", MATH_HELPER_FLOOR_METHOD.invokeStatic(location.getZ() * 32.0D));
-        ReflectionUtil.setFieldValue(spawn, "i", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "j", (byte) ((int) (location.getPitch() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "k", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "l", dataWatcher);
-        sendPacket(player, spawn);
     }
 
 }
