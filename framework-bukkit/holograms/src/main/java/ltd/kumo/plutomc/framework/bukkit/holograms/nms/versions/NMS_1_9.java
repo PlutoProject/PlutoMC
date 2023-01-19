@@ -19,41 +19,42 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class NMS_1_9 extends NMS {
 
+    private static final Class<?> DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");;
+
     private static final int ARMOR_STAND_ID = Version.before(13) ? 30 : 1;
     // UTILITY
-    private static final Class<?> ENTITY_CLASS;
-    private static final Class<?> ITEM_STACK_CLASS;
-    private static final Class<?> ENTITY_ARMOR_STAND_CLASS;
-    private static final Class<?> ENTITY_ITEM_CLASS;
-    private static final Class<?> ENUM_ITEM_SLOT_CLASS;
-    private static final ReflectMethod ENUM_ITEM_SLOT_FROM_NAME_METHOD;
-    private static final ReflectMethod CRAFT_ITEM_NMS_COPY_METHOD;
-    private static final ReflectMethod CRAFT_CHAT_MESSAGE_FROM_STRING_METHOD;
+    private static final Class<?> ENTITY_CLASS = ReflectionUtil.getNMSClass("Entity");
+    private static final Class<?> ITEM_STACK_CLASS = ReflectionUtil.getNMSClass("ItemStack");
+    private static final Class<?> ENTITY_ARMOR_STAND_CLASS = ReflectionUtil.getNMSClass("EntityArmorStand");
+    private static final Class<?> ENTITY_ITEM_CLASS = ReflectionUtil.getNMSClass("EntityItem");
+    private static final Class<?> ENUM_ITEM_SLOT_CLASS = ReflectionUtil.getNMSClass("EnumItemSlot");
+    private static final ReflectMethod ENUM_ITEM_SLOT_FROM_NAME_METHOD = new ReflectMethod(ENUM_ITEM_SLOT_CLASS, Version.afterOrEqual(14) ? "fromName" : "a", String.class);
+    private static final ReflectMethod CRAFT_ITEM_NMS_COPY_METHOD = new ReflectMethod(ReflectionUtil.getObcClass("inventory.CraftItemStack"), "asNMSCopy", ItemStack.class);
+    private static final ReflectMethod CRAFT_CHAT_MESSAGE_FROM_STRING_METHOD = new ReflectMethod(ReflectionUtil.getObcClass("util.CraftChatMessage"), "fromStringOrNull", String.class);
     private static final ReflectMethod PAIR_OF_METHOD;
     // DATA WATCHER
-    private static final Class<?> DATA_WATCHER_CLASS;
-    private static final ReflectConstructor DATA_WATCHER_CONSTRUCTOR;
-    private static final ReflectMethod DATA_WATCHER_REGISTER_METHOD;
+    private static final Class<?> DATA_WATCHER_CLASS = ReflectionUtil.getNMSClass("DataWatcher");
+    private static final ReflectConstructor DATA_WATCHER_CONSTRUCTOR = new ReflectConstructor(DATA_WATCHER_CLASS, ENTITY_CLASS);
+    private static final ReflectMethod DATA_WATCHER_REGISTER_METHOD = new ReflectMethod(DATA_WATCHER_CLASS, "register", DWO_CLASS, Object.class);
     // MATH HELPER
-    private static final Class<?> MATH_HELPER_CLASS;
-    private static final ReflectMethod MATH_HELPER_D_METHOD;
-    private static final ReflectMethod MATH_HELPER_A_METHOD;
+    private static final Class<?> MATH_HELPER_CLASS = ReflectionUtil.getNMSClass("MathHelper");
+    private static final ReflectMethod MATH_HELPER_D_METHOD = new ReflectMethod(MATH_HELPER_CLASS, "d", float.class);
+    private static final ReflectMethod MATH_HELPER_A_METHOD = new ReflectMethod(MATH_HELPER_CLASS, "a", Random.class);
     // PACKETS
-    private static final ReflectConstructor PACKET_SPAWN_ENTITY_CONSTRUCTOR;
-    private static final ReflectConstructor PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR;
-    private static final ReflectConstructor PACKET_ENTITY_METADATA_CONSTRUCTOR;
-    private static final ReflectConstructor PACKET_ENTITY_TELEPORT_CONSTRUCTOR;
-    private static final ReflectConstructor PACKET_MOUNT_CONSTRUCTOR;
+    private static final ReflectConstructor PACKET_SPAWN_ENTITY_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutSpawnEntity"));
+    private static final ReflectConstructor PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutSpawnEntityLiving"));
+    private static final ReflectConstructor PACKET_ENTITY_METADATA_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityMetadata"), int.class, DATA_WATCHER_CLASS, boolean.class);
+    private static final ReflectConstructor PACKET_ENTITY_TELEPORT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityTeleport"));
+    private static final ReflectConstructor PACKET_MOUNT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutMount"));
     private static final ReflectConstructor PACKET_ENTITY_EQUIPMENT_CONSTRUCTOR;
-    private static final ReflectConstructor PACKET_ENTITY_DESTROY_CONSTRUCTOR;
+    private static final ReflectConstructor PACKET_ENTITY_DESTROY_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityDestroy"), int[].class);
     // DATA WATCHER OBJECT
-    private static final Class<?> DWO_CLASS;
     private static final Object DWO_CUSTOM_NAME;
     private static final Object DWO_CUSTOM_NAME_VISIBLE;
     private static final Object DWO_ENTITY_DATA;
     private static final Object DWO_ARMOR_STAND_DATA;
     private static final Object DWO_ITEM;
-    private static final ReflectField<Object> ENTITY_COUNTER_FIELD;
+    private static final ReflectField<Object> ENTITY_COUNTER_FIELD = new ReflectField<>(ENTITY_CLASS, "entityCount");
     private static int DROPPED_ITEM_ID = 2;
     // ENTITY TYPES
     private static Class<?> ENTITY_TYPES_CLASS;
@@ -68,130 +69,103 @@ public class NMS_1_9 extends NMS {
     private static Object ENUM_ITEM_SLOT_HEAD;
 
     static {
-        DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");
-        // UTILITY
-        ENTITY_CLASS = ReflectionUtil.getNMSClass("Entity");
-        ITEM_STACK_CLASS = ReflectionUtil.getNMSClass("ItemStack");
-        ENTITY_ARMOR_STAND_CLASS = ReflectionUtil.getNMSClass("EntityArmorStand");
-        ENTITY_ITEM_CLASS = ReflectionUtil.getNMSClass("EntityItem");
-        ENUM_ITEM_SLOT_CLASS = ReflectionUtil.getNMSClass("EnumItemSlot");
-        ENUM_ITEM_SLOT_FROM_NAME_METHOD = new ReflectMethod(ENUM_ITEM_SLOT_CLASS, Version.afterOrEqual(14) ? "fromName" : "a", String.class);
-        CRAFT_ITEM_NMS_COPY_METHOD = new ReflectMethod(ReflectionUtil.getObcClass("inventory.CraftItemStack"), "asNMSCopy", ItemStack.class);
-        CRAFT_CHAT_MESSAGE_FROM_STRING_METHOD = new ReflectMethod(ReflectionUtil.getObcClass("util.CraftChatMessage"), "fromStringOrNull", String.class);
-        // DATA WATCHER
-        DATA_WATCHER_CLASS = ReflectionUtil.getNMSClass("DataWatcher");
-        DATA_WATCHER_CONSTRUCTOR = new ReflectConstructor(DATA_WATCHER_CLASS, ENTITY_CLASS);
-        DATA_WATCHER_REGISTER_METHOD = new ReflectMethod(DATA_WATCHER_CLASS, "register", DWO_CLASS, Object.class);
-        // MATH HELPER
-        MATH_HELPER_CLASS = ReflectionUtil.getNMSClass("MathHelper");
-        MATH_HELPER_D_METHOD = new ReflectMethod(MATH_HELPER_CLASS, "d", float.class);
-        MATH_HELPER_A_METHOD = new ReflectMethod(MATH_HELPER_CLASS, "a", Random.class);
         // PACKETS
-        PACKET_SPAWN_ENTITY_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutSpawnEntity"));
-        PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutSpawnEntityLiving"));
-        PACKET_ENTITY_METADATA_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityMetadata"), int.class, DATA_WATCHER_CLASS, boolean.class);
-        PACKET_ENTITY_TELEPORT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityTeleport"));
-        PACKET_MOUNT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutMount"));
         if (Version.afterOrEqual(16)) {
             PACKET_ENTITY_EQUIPMENT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityEquipment"), int.class, List.class);
-            PAIR_OF_METHOD = new ReflectMethod(ReflectionUtil.getClass("com.mojang.datafixers.util.Pair"), "of", Object.class, Object.class);
         } else {
             PACKET_ENTITY_EQUIPMENT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityEquipment"), int.class, ENUM_ITEM_SLOT_CLASS, ITEM_STACK_CLASS);
-            PAIR_OF_METHOD = null;
         }
-        PACKET_ENTITY_DESTROY_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityDestroy"), int[].class);
+        PAIR_OF_METHOD = Version.afterOrEqual(16) ? new ReflectMethod(ReflectionUtil.getClass("com.mojang.datafixers.util.Pair"), "of", Object.class, Object.class): null;
         // DATA WATCHER OBJECT
         switch (Version.CURRENT) {
-            case v1_9_R1:
+            case v1_9_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "ax").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "az").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
-                break;
-            case v1_9_R2:
+            }
+            case v1_9_R2 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "ay").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aB").getValue(null);
-                break;
-            case v1_10_R1:
+            }
+            case v1_10_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "aa").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aB").getValue(null);
-                break;
-            case v1_11_R1:
+            }
+            case v1_11_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "Z").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aB").getValue(null);
-                break;
-            case v1_12_R1:
+            }
+            case v1_12_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "Z").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aB").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aC").getValue(null);
-                break;
-            case v1_13_R1:
-            case v1_13_R2:
+            }
+            case v1_13_R1, v1_13_R2 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "ac").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aE").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aF").getValue(null);
                 DROPPED_ITEM_ID = 34;
-                break;
-            case v1_14_R1:
+            }
+            case v1_14_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "W").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "az").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
                 DROPPED_ITEM_ID = 34;
-                break;
-            case v1_15_R1:
+            }
+            case v1_15_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "T").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "az").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "aA").getValue(null);
                 DROPPED_ITEM_ID = 35;
-                break;
-            case v1_16_R1:
+            }
+            case v1_16_R1 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "T").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "ax").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "ay").getValue(null);
                 DROPPED_ITEM_ID = 37;
-                break;
-            case v1_16_R2:
-            case v1_16_R3:
+            }
+            case v1_16_R2, v1_16_R3 -> {
                 DWO_ENTITY_DATA = new ReflectField<>(ENTITY_CLASS, "S").getValue(null);
                 DWO_CUSTOM_NAME = new ReflectField<>(ENTITY_CLASS, "aq").getValue(null);
                 DWO_CUSTOM_NAME_VISIBLE = new ReflectField<>(ENTITY_CLASS, "ar").getValue(null);
                 DROPPED_ITEM_ID = 37;
-                break;
-            default:
+            }
+            default -> {
                 DWO_ENTITY_DATA = null;
                 DWO_CUSTOM_NAME = null;
                 DWO_CUSTOM_NAME_VISIBLE = null;
+            }
         }
 
-        if (Version.before(13)) {
+        if (Version.before(14)) {
             DWO_ARMOR_STAND_DATA = new ReflectField<>(ENTITY_ARMOR_STAND_CLASS, "a").getValue(null);
-            DWO_ITEM = new ReflectField<>(ENTITY_ITEM_CLASS, "c").getValue(null);
-        } else if (Version.before(14)) {
-            DWO_ARMOR_STAND_DATA = new ReflectField<>(ENTITY_ARMOR_STAND_CLASS, "a").getValue(null);
-            DWO_ITEM = new ReflectField<>(ENTITY_ITEM_CLASS, "b").getValue(null);
+            DWO_ITEM = new ReflectField<>(ENTITY_ITEM_CLASS, Version.before(13) ? "c" : "b").getValue(null);
         } else {
             DWO_ARMOR_STAND_DATA = new ReflectField<>(ENTITY_ARMOR_STAND_CLASS, "b").getValue(null);
             DWO_ITEM = new ReflectField<>(ENTITY_ITEM_CLASS, "ITEM").getValue(null);
-            // ENTITY TYPES
-            Class<?> registryBlocksClass = ReflectionUtil.getNMSClass("RegistryBlocks");
-            ENTITY_TYPES_CLASS = ReflectionUtil.getNMSClass("EntityTypes");
-            I_REGISTRY_ENTITY_TYPE_FIELD = new ReflectField<>(ReflectionUtil.getNMSClass("IRegistry"), "ENTITY_TYPE");
-            ENTITY_TYPES_A_METHOD = new ReflectMethod(ENTITY_TYPES_CLASS, "a", String.class);
-            ENTITY_TYPE_GET_KEY_METHOD = new ReflectMethod(EntityType.class, "getKey");
-            REGISTRY_BLOCKS_GET_ID_METHOD = new ReflectMethod(registryBlocksClass, "a", Object.class);
-            REGISTRY_BLOCKS_FROM_ID_METHOD = new ReflectMethod(registryBlocksClass, "fromId", int.class);
-            NAMESPACED_KEY_GET_KEY_METHOD = new ReflectMethod(ReflectionUtil.getClass("org.bukkit.NamespacedKey"), "getKey");
-            for (Method method : ENTITY_TYPES_CLASS.getMethods()) {
-                if (method.getReturnType().getName().contains("EntitySize")) {
-                    ENTITY_TYPES_GET_SIZE_METHOD = new ReflectMethod(ENTITY_TYPES_CLASS, method.getName());
-                }
-            }
-            ENTITY_SIZE_HEIGHT_FIELD = new ReflectField<>(ReflectionUtil.getNMSClass("EntitySize"), "height");
+            initNewNms();
         }
+    }
 
-        ENTITY_COUNTER_FIELD = new ReflectField<>(ENTITY_CLASS, "entityCount");
+    private static void initNewNms() {
+        // ENTITY TYPES
+        Class<?> registryBlocksClass = ReflectionUtil.getNMSClass("RegistryBlocks");
+        ENTITY_TYPES_CLASS = ReflectionUtil.getNMSClass("EntityTypes");
+        I_REGISTRY_ENTITY_TYPE_FIELD = new ReflectField<>(ReflectionUtil.getNMSClass("IRegistry"), "ENTITY_TYPE");
+        ENTITY_TYPES_A_METHOD = new ReflectMethod(ENTITY_TYPES_CLASS, "a", String.class);
+        ENTITY_TYPE_GET_KEY_METHOD = new ReflectMethod(EntityType.class, "getKey");
+        REGISTRY_BLOCKS_GET_ID_METHOD = new ReflectMethod(registryBlocksClass, "a", Object.class);
+        REGISTRY_BLOCKS_FROM_ID_METHOD = new ReflectMethod(registryBlocksClass, "fromId", int.class);
+        NAMESPACED_KEY_GET_KEY_METHOD = new ReflectMethod(ReflectionUtil.getClass("org.bukkit.NamespacedKey"), "getKey");
+        for (Method method : ENTITY_TYPES_CLASS.getMethods()) {
+            if (method.getReturnType().getName().contains("EntitySize")) {
+                ENTITY_TYPES_GET_SIZE_METHOD = new ReflectMethod(ENTITY_TYPES_CLASS, method.getName());
+            }
+        }
+        ENTITY_SIZE_HEIGHT_FIELD = new ReflectField<>(ReflectionUtil.getNMSClass("EntitySize"), "height");
     }
 
     private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
