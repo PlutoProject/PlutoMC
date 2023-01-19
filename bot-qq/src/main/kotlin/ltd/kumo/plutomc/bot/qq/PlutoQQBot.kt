@@ -9,11 +9,14 @@ import ltd.kumo.plutomc.bot.shared.utilities.MongoDBConfig
 import ltd.kumo.plutomc.common.whitelistmanager.impl.WhitelistManager
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
+import net.mamoe.mirai.console.command.CommandManager
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder
 import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.Listener
 import net.mamoe.mirai.event.events.BotOnlineEvent
+import net.mamoe.mirai.event.events.MemberLeaveEvent
+import net.mamoe.mirai.network.WrongPasswordException
 import java.io.File
 import java.io.FileReader
 import java.lang.RuntimeException
@@ -33,8 +36,10 @@ object PlutoQQBot : JavaPlugin(JvmPluginDescriptionBuilder("ltd.kumo.plutomc.bot
 
     val EXECUTOR_SERVICE: ExecutorService = Executors.newFixedThreadPool(4)
     private var bot: Bot? = null
-    private var whitelistManager: WhitelistManager? = null
+    var whitelistManager: WhitelistManager? = null
+        private set
     private var loginSubscriber: Listener<BotOnlineEvent>? = null
+    private var memberLeaveListener: Listener<MemberLeaveEvent>? = null
     private var config: PlutoQQBotConfig? = null
 
     override fun onEnable() {
@@ -44,18 +49,23 @@ object PlutoQQBot : JavaPlugin(JvmPluginDescriptionBuilder("ltd.kumo.plutomc.bot
             return
         }
         config = configuration()
-        if (bot == null) {
-            bot = BotFactory.newBot(config!!.account, config!!.password)
-        }
-        if (!bot!!.isOnline) {
-            launch {
-                logger.info("正常尝试登录账号")
-                bot!!.login()
-            }
-        }
+        // if (bot == null) {
+        //     bot = BotFactory.newBot(config!!.account, config!!.password)
+        // }
+        // if (!bot!!.isOnline) {
+        //     launch {
+        //         logger.info("正常尝试登录账号")
+        //         try {
+        //             bot!!.login()
+        //         } catch (e: WrongPasswordException) {
+        //             logger.error("密码错误！", e)
+        //         }
+        //     }
+        // }
         if (loginSubscriber == null) {
             loginSubscriber = GlobalEventChannel.subscribeAlways { event ->
                 if (event.bot.id == config!!.account) {
+                    PlutoQQBot.bot = event.bot
                     logger.info("账号登录成功")
                     if (whitelistManager == null) {
                         val mongo = config!!.mongo
@@ -72,6 +82,35 @@ object PlutoQQBot : JavaPlugin(JvmPluginDescriptionBuilder("ltd.kumo.plutomc.bot
                     }
                 }
             }
+        }
+        if (memberLeaveListener == null) {
+            memberLeaveListener = GlobalEventChannel.subscribeAlways { event ->
+                if (event.bot.id != config!!.account)
+                    return@subscribeAlways
+                val userId = event.user.id
+                if (!whitelistManager!!.connected())
+                    return@subscribeAlways
+                if (whitelistManager!!.hasWhitelist(userId)) {
+                    whitelistManager!!.removeUser(userId)
+                }
+
+            }
+        }
+        CommandManager.registerCommand(CommandWhitelist, true)
+    }
+
+    override fun onDisable() {
+        if (loginSubscriber != null) {
+            loginSubscriber!!.complete()
+            loginSubscriber = null
+        }
+        if (memberLeaveListener != null) {
+            memberLeaveListener!!.complete()
+            memberLeaveListener = null
+        }
+        if (whitelistManager != null) {
+            whitelistManager!!.close()
+            whitelistManager = null
         }
     }
 
