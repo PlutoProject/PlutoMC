@@ -3,6 +3,8 @@ package ltd.kumo.plutomc.bot.qq
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import ltd.kumo.plutomc.bot.shared.utilities.FileUtility
+import net.deechael.dutil.gson.JOBuilder
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder
 import java.io.File
@@ -40,6 +42,11 @@ object PlutoQQBot : JavaPlugin(
     }
 
     fun saveDefaultConfiguration() {
+        val defaultConfiguration = GSON.toJson(JOBuilder.of()
+                .number("account", 0L)
+                .string("password", "123456")
+                .build())
+        FileUtility.write(getConfigurationFile(), defaultConfiguration)
     }
 
 }
