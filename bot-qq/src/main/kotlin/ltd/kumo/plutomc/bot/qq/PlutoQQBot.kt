@@ -49,14 +49,14 @@ object PlutoQQBot : JavaPlugin(JvmPluginDescriptionBuilder("ltd.kumo.plutomc.bot
         }
         if (!bot!!.isOnline) {
             launch {
-                println("正常尝试登录账号")
+                logger.info("正常尝试登录账号")
                 bot!!.login()
             }
         }
         if (loginSubscriber == null) {
             loginSubscriber = GlobalEventChannel.subscribeAlways { event ->
                 if (event.bot.id == config!!.account) {
-                    println("账号登录成功")
+                    logger.info("账号登录成功")
                     if (whitelistManager == null) {
                         val mongo = config!!.mongo
                         whitelistManager = WhitelistManager(
