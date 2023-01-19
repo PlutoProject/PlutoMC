@@ -2,6 +2,7 @@ package ltd.kumo.plutomc.modules.whitelist;
 
 import cc.keyimc.keyi.config.ConfigHelper;
 import com.google.common.collect.ImmutableList;
+import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
@@ -40,7 +41,7 @@ public final class WhitelistModule extends VelocityModule {
 
     @NotNull
     private static final ImmutableList<Command> COMMANDS = ImmutableList.of(
-            new WhitelistCommand()
+            WhitelistCommand.brigadier()
     );
 
     @NotNull

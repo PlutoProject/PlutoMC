@@ -1,4 +1,6 @@
 dependencies {
+    implementation(project(":dutil"))
+
     implementation(project(":common-whitelistmanager"))
     implementation("org.mongodb:mongodb-driver-sync:4.8.2")
     implementation('com.squareup.okhttp3:okhttp:4.10.0')
