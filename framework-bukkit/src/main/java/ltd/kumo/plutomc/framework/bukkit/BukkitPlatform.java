@@ -3,6 +3,8 @@ package ltd.kumo.plutomc.framework.bukkit;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
+import ltd.kumo.plutomc.framework.bukkit.guis.Menu;
+import ltd.kumo.plutomc.framework.bukkit.guis.impl.MenuImpl;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
 import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
@@ -12,6 +14,7 @@ import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @SuppressWarnings({"unused", "unchecked"})
-public class BukkitPlatform extends Platform<JavaPlugin> {
+public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
     private final Map<Class<? extends Service<?>>, Service<?>> services = new HashMap<>();
     private BukkitCommandManager commandManager;
@@ -53,6 +56,10 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
     @Override
     public BukkitCommand createCommand(String name) {
         return new BukkitCommand(this, name);
+    }
+
+    public Menu createMenu() {
+        return new MenuImpl(this);
     }
 
     @Override
@@ -107,6 +114,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> {
         PlutoHologramsAPI.onEnable();
         this.services.put(HologramService.class, new HologramService());
         Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
+        Bukkit.getPluginManager().registerEvents(this, this.plugin());
     }
 
     @Override

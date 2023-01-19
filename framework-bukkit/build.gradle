@@ -5,4 +5,6 @@ dependencies {
 
     implementation(project(':holograms'))
     implementation(project(":framework-shared"))
+
+    implementation(project(':dutil'))
 }

@@ -77,7 +77,6 @@ public class BukkitCommandManager {
         this.commandMap.register(prefix, cmd);
         this.dispatcher.getRoot().addChild(command.toBrigadier().build());
         this.dispatcher.getRoot().addChild(command.clone(prefix + ":" + command.name()).toBrigadier().build());
-        System.out.println(command.toBrigadier());
         this.commodore.register(cmd, (LiteralArgumentBuilder<?>) command.toCommodore());
     }
 

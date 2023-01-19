@@ -65,6 +65,68 @@ public class SurvivalBootstrap extends JavaPlugin {
         //             });
         // bukkitPlatform.registerCommand("pluto", command);
 
+        // GUI test
+        /*
+        BukkitCommand command = bukkitPlatform.createCommand("test");
+        Menu menu = bukkitPlatform.createMenu();
+        command.executesPlayer((bukkitPlayer, context) -> {
+            menu.add(bukkitPlayer)
+                    .title("Hello, world!")
+                    .slot(0)
+                    .image()
+                    .render(((currentSlot, scene) -> {
+                        ItemStack itemStack = new ItemStack(Material.DIAMOND);
+                        ItemMeta itemMeta = itemStack.getItemMeta();
+                        itemMeta.displayName(Component.text("Click to refresh"));
+                        itemStack.setItemMeta(itemMeta);
+                        return itemStack;
+                    }))
+                    .done()
+                    .clicker()
+                    .clicks(ClickType.LEFT, ClickType.SHIFT_LEFT)
+                    .actions(InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                    .executes((currentSlot, scene, cursor) -> {
+                        ((BukkitPlayer) scene.viewer()).send("hello, world!");
+                        scene.refresh(true)
+                                .slot(4)
+                                .image()
+                                .render(((slot1, scene1) -> {
+                                    ItemStack itemStack = new ItemStack(Material.EMERALD);
+                                    ItemMeta itemMeta = itemStack.getItemMeta();
+                                    itemMeta.displayName(Component.text("Click to reduce lines"));
+                                    itemStack.setItemMeta(itemMeta);
+                                    return itemStack;
+                                }))
+                                .done()
+                                .clicker()
+                                .clicks(ClickType.LEFT, ClickType.SHIFT_LEFT)
+                                .actions(InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                                .executes((slot1, scene1, cursor1) -> {
+                                    scene1.refresh(false)
+                                            .line(5)
+                                            .slot(8)
+                                            .image()
+                                            .render(((slot2, scene2) -> {
+                                                ItemStack itemStack = new ItemStack(Material.PAPER);
+                                                ItemMeta itemMeta = itemStack.getItemMeta();
+                                                itemMeta.displayName(Component.text("Current slot index: " + slot2));
+                                                return itemStack;
+                                            }))
+                                            .done()
+                                            .done()
+                                            .render();
+                                })
+                                .done()
+                                .done()
+                                .render();
+                    })
+                    .done()
+                    .done()
+                    .render();
+        });
+        bukkitPlatform.registerCommand("pluto", command);
+        */
+
         Objects.requireNonNull(bukkitPlatform).enableModules();
     }
 
