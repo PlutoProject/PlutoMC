@@ -194,6 +194,47 @@ public class NMS_1_9 extends NMS {
         ENTITY_COUNTER_FIELD = new ReflectField<>(ENTITY_CLASS, "entityCount");
     }
 
+    private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+        if (dataWatcher == null || !(DATA_WATCHER_CLASS != null && DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass()))) return;
+
+        if (entityTypeId == -1) return;
+        Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();
+        if (spawn == null) return;
+        ReflectionUtil.setFieldValue(spawn, "a", entityId);
+        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_A_METHOD.invokeStatic(RandomUtils.RANDOM));
+        ReflectionUtil.setFieldValue(spawn, "c", entityTypeId);
+        ReflectionUtil.setFieldValue(spawn, "d", location.getX());
+        ReflectionUtil.setFieldValue(spawn, "e", location.getY());
+        ReflectionUtil.setFieldValue(spawn, "f", location.getZ());
+        ReflectionUtil.setFieldValue(spawn, "j", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "k", (byte) ((int) (location.getPitch() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "l", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
+        ReflectionUtil.setFieldValue(spawn, "m", dataWatcher);
+        sendPacket(player, spawn);
+    }
+
+    public void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
+        Preconditions.checkNotNull(player);
+        Preconditions.checkNotNull(location);
+
+        if (entityTypeId == -1) return;
+        Object spawn = PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance();
+        if (spawn == null) return;
+        ReflectionUtil.setFieldValue(spawn, "a", entityId);
+        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_A_METHOD.invokeStatic(RandomUtils.RANDOM));
+        ReflectionUtil.setFieldValue(spawn, "c", location.getX());
+        ReflectionUtil.setFieldValue(spawn, "d", location.getY());
+        ReflectionUtil.setFieldValue(spawn, "e", location.getZ());
+        ReflectionUtil.setFieldValue(spawn, "i", MATH_HELPER_D_METHOD.invokeStatic(location.getPitch() * 256.0F / 360.0F));
+        ReflectionUtil.setFieldValue(spawn, "j", MATH_HELPER_D_METHOD.invokeStatic(location.getYaw() * 256.0F / 360.0F));
+        ReflectionUtil.setFieldValue(spawn, "k", Version.afterOrEqual(14) ?
+                ENTITY_TYPES_CLASS.cast(REGISTRY_BLOCKS_FROM_ID_METHOD.invoke(I_REGISTRY_ENTITY_TYPE_FIELD.getValue(null), entityTypeId)) :
+                entityTypeId);
+        sendPacket(player, spawn);
+    }
+
     @Override
     public int getFreeEntityId() {
         Object entityCounter = ENTITY_COUNTER_FIELD.getValue(null);
@@ -348,47 +389,6 @@ public class NMS_1_9 extends NMS {
     public void hideFakeEntities(Player player, int... entityIds) {
         Preconditions.checkNotNull(player);
         sendPacket(player, PACKET_ENTITY_DESTROY_CONSTRUCTOR.newInstance((Object) entityIds));
-    }
-
-    private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
-        Preconditions.checkNotNull(player);
-        Preconditions.checkNotNull(location);
-        if (dataWatcher == null || !DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass())) return;
-
-        if (entityTypeId == -1) return;
-        Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();
-        if (spawn == null) return;
-        ReflectionUtil.setFieldValue(spawn, "a", entityId);
-        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_A_METHOD.invokeStatic(RandomUtils.RANDOM));
-        ReflectionUtil.setFieldValue(spawn, "c", entityTypeId);
-        ReflectionUtil.setFieldValue(spawn, "d", location.getX());
-        ReflectionUtil.setFieldValue(spawn, "e", location.getY());
-        ReflectionUtil.setFieldValue(spawn, "f", location.getZ());
-        ReflectionUtil.setFieldValue(spawn, "j", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "k", (byte) ((int) (location.getPitch() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "l", (byte) ((int) (location.getYaw() * 256.0F / 360.0F)));
-        ReflectionUtil.setFieldValue(spawn, "m", dataWatcher);
-        sendPacket(player, spawn);
-    }
-
-    public void showFakeEntity(Player player, Location location, int entityTypeId, int entityId) {
-        Preconditions.checkNotNull(player);
-        Preconditions.checkNotNull(location);
-
-        if (entityTypeId == -1) return;
-        Object spawn = PACKET_SPAWN_ENTITY_CONSTRUCTOR.newInstance();
-        if (spawn == null) return;
-        ReflectionUtil.setFieldValue(spawn, "a", entityId);
-        ReflectionUtil.setFieldValue(spawn, "b", MATH_HELPER_A_METHOD.invokeStatic(RandomUtils.RANDOM));
-        ReflectionUtil.setFieldValue(spawn, "c", location.getX());
-        ReflectionUtil.setFieldValue(spawn, "d", location.getY());
-        ReflectionUtil.setFieldValue(spawn, "e", location.getZ());
-        ReflectionUtil.setFieldValue(spawn, "i", MATH_HELPER_D_METHOD.invokeStatic(location.getPitch() * 256.0F / 360.0F));
-        ReflectionUtil.setFieldValue(spawn, "j", MATH_HELPER_D_METHOD.invokeStatic(location.getYaw() * 256.0F / 360.0F));
-        ReflectionUtil.setFieldValue(spawn, "k", Version.afterOrEqual(14) ?
-                ENTITY_TYPES_CLASS.cast(REGISTRY_BLOCKS_FROM_ID_METHOD.invoke(I_REGISTRY_ENTITY_TYPE_FIELD.getValue(null), entityTypeId)) :
-                entityTypeId);
-        sendPacket(player, spawn);
     }
 
 }
