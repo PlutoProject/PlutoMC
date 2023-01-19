@@ -1,11 +1,17 @@
 package ltd.kumo.plutomc.common.whitelistmanager.impl;
 
 import com.google.common.collect.ImmutableList;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.event.ServerHeartbeatFailedEvent;
+import com.mongodb.event.ServerHeartbeatStartedEvent;
+import com.mongodb.event.ServerHeartbeatSucceededEvent;
+import com.mongodb.event.ServerMonitorListener;
 import lombok.Getter;
 import ltd.kumo.plutomc.common.whitelistmanager.api.Manager;
 import ltd.kumo.plutomc.common.whitelistmanager.api.User;
@@ -16,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public final class WhitelistManager implements Manager {
+public final class WhitelistManager implements Manager, ServerMonitorListener {
 
     @NotNull
     @Getter
@@ -24,19 +30,29 @@ public final class WhitelistManager implements Manager {
 
     @NotNull
     @Getter
+    private final MongoDatabase database;
+
+    @NotNull
+    @Getter
     private final MongoCollection<Document> userCollection;
+
+    private boolean status = false;
 
     public WhitelistManager(@NotNull String connection, @NotNull String databaseName) {
         Objects.requireNonNull(connection);
         Objects.requireNonNull(databaseName);
 
-        mongoClient = MongoClients.create(connection);
-        @NotNull MongoDatabase database = mongoClient.getDatabase(databaseName);
-        userCollection = database.getCollection("whitelist_users");
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(connection))
+                .applyToServerSettings(builder -> builder.addServerMonitorListener(WhitelistManager.this))
+                .build();
+        this.mongoClient = MongoClients.create(settings);
+        this.database = this.mongoClient.getDatabase(databaseName);
+        this.userCollection = this.database.getCollection("whitelist_users");
     }
 
-    public WhitelistManager(@NotNull String host, @NotNull String user, @NotNull String password, @NotNull String databaseName) {
-        this("mongodb://" + Objects.requireNonNull(user) + ":" + Objects.requireNonNull(password) + "@" + Objects.requireNonNull(host) + "/", Objects.requireNonNull(databaseName));
+    public WhitelistManager(@NotNull String host, int port, @NotNull String user, @NotNull String password, @NotNull String databaseName) {
+        this("mongodb://" + Objects.requireNonNull(user) + ":" + Objects.requireNonNull(password) + "@" + Objects.requireNonNull(host) + ":" + port + "/", Objects.requireNonNull(databaseName));
     }
 
     @Override
@@ -137,4 +153,25 @@ public final class WhitelistManager implements Manager {
     public void close() {
         mongoClient.close();
     }
+
+    @Override
+    public boolean connected() {
+        return this.status;
+    }
+
+    @Override
+    public void serverHearbeatStarted(ServerHeartbeatStartedEvent event) {
+        this.status = true;
+    }
+
+    @Override
+    public void serverHeartbeatSucceeded(ServerHeartbeatSucceededEvent event) {
+        this.status = true;
+    }
+
+    @Override
+    public void serverHeartbeatFailed(ServerHeartbeatFailedEvent event) {
+        this.status = false;
+    }
+
 }

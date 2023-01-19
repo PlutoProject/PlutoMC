@@ -33,3 +33,6 @@ build/
 
 # Ignore Paper plugin test directory
 run/
+
+# Other
+out/

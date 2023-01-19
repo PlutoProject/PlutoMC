@@ -37,7 +37,6 @@ allprojects {
     }
 
     dependencies {
-        implementation project(':dutil')
         implementation("com.google.code.gson:gson:2.10.1")
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:31.1-jre")

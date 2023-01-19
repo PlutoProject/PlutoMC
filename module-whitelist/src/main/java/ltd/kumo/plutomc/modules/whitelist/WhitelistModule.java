@@ -67,7 +67,8 @@ public final class WhitelistModule extends VelocityModule {
     public void initial() {
         configHelper = new ConfigHelper(new File(dataDir, "config.yml"));
         whitelistManager = new WhitelistManager(
-                configHelper.get("mongodb.host", "127.0.0.1:27017"),
+                configHelper.get("mongodb.host", "127.0.0.1"),
+                configHelper.get("mongodb.port", 27017),
                 configHelper.get("mongodb.user", "minecraft"),
                 configHelper.get("mongodb.password", "GoodPassword123"),
                 configHelper.get("mongodb.database", "whitelist")

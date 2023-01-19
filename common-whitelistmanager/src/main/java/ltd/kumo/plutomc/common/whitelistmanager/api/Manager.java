@@ -37,4 +37,6 @@ public interface Manager {
     ImmutableList<User> getAllUser();
 
     void close();
+
+    boolean connected();
 }

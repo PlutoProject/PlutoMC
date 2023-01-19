@@ -8,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 public final class FileUtility {
 
     public static void write(File file, String content) {
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists())
+            parent.mkdirs();
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
             byte[] bytes = content.getBytes(StandardCharsets.UTF_8);

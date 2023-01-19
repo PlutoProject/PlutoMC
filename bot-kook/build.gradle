@@ -6,7 +6,10 @@ repositories {
 
 dependencies {
     compileOnly 'com.github.SNWCreations:JKook:0.45.0'
+    compileOnly("org.mongodb:mongodb-driver-sync:4.8.2")
+    compileOnly("org.mongodb:bson:4.8.2")
 
     implementation(project(":bot-shared"))
+    implementation(project(':dutil'))
     implementation(project(":common-whitelistmanager"))
 }
