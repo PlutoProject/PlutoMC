@@ -63,12 +63,11 @@ public final class WhitelistCommand {
                 uuid = ProfileUtil.getUUID(playerName.toLowerCase());
                 return uuid;
             } catch (IOException e) {
+                source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return null;
             }
-
         }).thenAcceptAsync(uuid -> {
             if (uuid == null) {
-                source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return;
             }
 
@@ -107,5 +106,4 @@ public final class WhitelistCommand {
             return null;
         });
     }
-
 }

@@ -44,6 +44,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
 
         this.mongoClient = MongoClients.create(connection);
         this.database = this.mongoClient.getDatabase(databaseName);
+        this.database.createCollection("whitelist_users");
         this.userCollection = this.database.getCollection("whitelist_users");
     }
 
