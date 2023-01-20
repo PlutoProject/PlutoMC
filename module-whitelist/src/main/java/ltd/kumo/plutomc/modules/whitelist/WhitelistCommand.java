@@ -57,6 +57,7 @@ public final class WhitelistCommand {
         source.sendMessage(Component.text("正在验证，请稍等。").color(Catppuccin.MOCHA.GREEN));
 
         CompletableFuture.supplyAsync(() -> {
+            System.out.println(1);
             UUID uuid;
 
             try {
@@ -84,6 +85,7 @@ public final class WhitelistCommand {
 
     private static void executeRemove(CommandSource source, String playerName) {
         CompletableFuture.runAsync(() -> {
+            System.out.println(2);
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             if (!WhitelistModule.getWhitelistManager().hasWhitelist(playerName.toLowerCase())) {
@@ -98,6 +100,7 @@ public final class WhitelistCommand {
 
     private static void executeList(CommandSource source) {
         CompletableFuture.supplyAsync(() -> {
+            System.out.println(3);
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             final int size = WhitelistModule.getWhitelistManager().getAllUser().size();

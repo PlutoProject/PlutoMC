@@ -17,6 +17,7 @@ public final class PlayerListeners {
         Player player = loginEvent.getPlayer();
 
         if (!Objects.requireNonNull(WhitelistModule.getWhitelistManager()).hasWhitelist(player.getUniqueId())) {
+            System.out.println(1);
             loginEvent.setResult(ResultedEvent.ComponentResult.denied(Component.text("您需要先获得白名单才可以进行游戏。").color(Catppuccin.MOCHA.RED)));
         }
     }
