@@ -75,7 +75,7 @@ public final class WhitelistModule extends VelocityModule {
                 dataDir.mkdirs();
             }
 
-            configHelper = new ConfigHelper(new File(dataDir, "config.yml"));
+            configHelper = new ConfigHelper(new File(dataDir, "config.toml"));
             whitelistManager = new WhitelistManager(
                     configHelper.get("mongodb.host", "127.0.0.1"),
                     configHelper.get("mongodb.port", 27017),
