@@ -67,7 +67,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
 
         document.append("name", userName);
         document.append("qq_number", qqNumber);
-        document.append("uuid", uuid.toString());
+        document.append("uuid", uuid.toString().toLowerCase());
 
         userCollection.insertOne(document);
     }
@@ -114,7 +114,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull UUID uuid) {
-        var list = IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString())));
+        var list = IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString().toLowerCase())));
 
         System.out.println(list);
 
