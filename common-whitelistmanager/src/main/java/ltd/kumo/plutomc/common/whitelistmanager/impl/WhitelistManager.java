@@ -81,31 +81,37 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull String userName) {
-        if (IterableUtils.toList(userCollection.find(Filters.gt("name", userName.toLowerCase()))).size() != 1) {
+        var list = IterableUtils.toList(userCollection.find(Filters.gt("name", userName.toLowerCase())));
+
+        if (list.size() != 1) {
             return Optional.empty();
         }
 
-        return WhitelistUser.from(this, IterableUtils.toList(userCollection.find(Filters.gt("name", userName.toLowerCase()))).get(0));
+        return WhitelistUser.from(this, list.get(0));
     }
 
     @Override
     @NotNull
     public Optional<User> getUser(long qqNumber) {
-        if (IterableUtils.toList(userCollection.find(Filters.gt("qq_number", qqNumber))).size() != 1) {
+        var list = IterableUtils.toList(userCollection.find(Filters.gt("qq_number", qqNumber)));
+
+        if (list.size() != 1) {
             return Optional.empty();
         }
 
-        return WhitelistUser.from(this, IterableUtils.toList(userCollection.find(Filters.gt("qq_number", qqNumber))).get(0));
+        return WhitelistUser.from(this, list.get(0));
     }
 
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull UUID uuid) {
-        if (IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString()))).size() != 1) {
+        var list = IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString())));
+
+        if (list.size() != 1) {
             return Optional.empty();
         }
 
-        return WhitelistUser.from(this, IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString()))).get(0));
+        return WhitelistUser.from(this, list.get(0));
     }
 
     @Override
