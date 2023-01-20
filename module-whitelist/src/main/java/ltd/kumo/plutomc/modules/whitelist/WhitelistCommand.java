@@ -64,8 +64,9 @@ public final class WhitelistCommand {
                 System.out.println("1-1");
                 uuid = ProfileUtil.getUUID(playerName.toLowerCase());
                 System.out.println(uuid);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("1-2");
+                e.printStackTrace();
                 source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return;
             }
