@@ -48,7 +48,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     }
 
     public WhitelistManager(@NotNull String host, int port, @NotNull String user, @NotNull String password, @NotNull String databaseName) {
-        this("mongodb://" + Objects.requireNonNull(user) + ":" + Objects.requireNonNull(password) + "@" + Objects.requireNonNull(host) + ":" + port, databaseName);
+        this("mongodb://" + Objects.requireNonNull(user) + ":" + Objects.requireNonNull(password) + "@" + Objects.requireNonNull(host) + ":" + port + "/?authSource=" + databaseName, databaseName);
     }
 
     @Override
