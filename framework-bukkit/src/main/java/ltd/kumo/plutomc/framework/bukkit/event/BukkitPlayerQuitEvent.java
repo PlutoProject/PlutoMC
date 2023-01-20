@@ -25,7 +25,7 @@ public class BukkitPlayerQuitEvent extends Event {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return null;
+        return handlerList;
     }
 
 }
