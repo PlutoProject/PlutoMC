@@ -20,3 +20,5 @@ include 'dutil'
 
 project(':holograms').projectDir = new File("./framework-bukkit/holograms")
 project(':dutil').projectDir = new File("./library-dutil")
+include 'common-profile'
+
