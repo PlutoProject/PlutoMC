@@ -83,6 +83,8 @@ public final class WhitelistModule extends VelocityModule {
                     configHelper.get("mongodb.password", "12345"),
                     configHelper.get("mongodb.database", "whitelist")
             );
+
+            configHelper.getFileConfig().save();
         }catch (Exception e) {
             logger().log(Level.SEVERE, "Failed to connect database!", e);
         }
