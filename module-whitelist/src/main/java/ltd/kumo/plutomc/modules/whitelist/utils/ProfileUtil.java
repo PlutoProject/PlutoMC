@@ -27,7 +27,7 @@ public final class ProfileUtil {
         ResponseBody responseBody = response.body();
 
         if (responseBody != null) {
-            String responseBodyString = responseBody.toString();
+            String responseBodyString = responseBody.string();
             JsonObject jsonObject = JsonParser.parseString(responseBodyString).getAsJsonObject();
             return trimmedUUIDtoFull(jsonObject.get("id").getAsString());
         }
