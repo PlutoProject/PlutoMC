@@ -116,10 +116,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     public Optional<User> getUser(@NotNull UUID uuid) {
         var list = IterableUtils.toList(userCollection.find(Filters.eq("uuid", uuid.toString().toLowerCase())));
 
-        System.out.println(list);
-
         if (list.size() != 1) {
-            System.out.println(1);
             return Optional.empty();
         }
 
