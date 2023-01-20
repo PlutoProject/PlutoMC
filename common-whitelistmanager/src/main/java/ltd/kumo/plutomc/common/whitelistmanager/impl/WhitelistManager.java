@@ -90,7 +90,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull String userName) {
-        var list = IterableUtils.toList(userCollection.find(Filters.gt("name", userName.toLowerCase())));
+        var list = IterableUtils.toList(userCollection.find(Filters.eq("name", userName.toLowerCase())));
 
         if (list.size() != 1) {
             return Optional.empty();
@@ -102,7 +102,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(long qqNumber) {
-        var list = IterableUtils.toList(userCollection.find(Filters.gt("qq_number", qqNumber)));
+        var list = IterableUtils.toList(userCollection.find(Filters.eq("qq_number", qqNumber)));
 
         if (list.size() != 1) {
             return Optional.empty();
@@ -114,7 +114,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull UUID uuid) {
-        var list = IterableUtils.toList(userCollection.find(Filters.gt("uuid", uuid.toString().toLowerCase())));
+        var list = IterableUtils.toList(userCollection.find(Filters.eq("uuid", uuid.toString().toLowerCase())));
 
         System.out.println(list);
 
@@ -132,7 +132,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
             return;
         }
 
-        userCollection.deleteOne(Filters.gt("name", userName.toLowerCase()));
+        userCollection.deleteOne(Filters.eq("name", userName.toLowerCase()));
     }
 
     @Override
@@ -141,7 +141,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
             return;
         }
 
-        userCollection.deleteOne(Filters.gt("qq_number", qqNumber));
+        userCollection.deleteOne(Filters.eq("qq_number", qqNumber));
     }
 
     @Override
@@ -150,12 +150,12 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
             return;
         }
 
-        userCollection.deleteOne(Filters.gt("uuid", uuid.toString()));
+        userCollection.deleteOne(Filters.eq("uuid", uuid.toString()));
     }
 
     @Override
     public void removeUser(@NotNull User user) {
-        userCollection.deleteOne(Filters.gt("uuid", user.getUUID().toString()));
+        userCollection.deleteOne(Filters.eq("uuid", user.getUUID().toString()));
     }
 
     @Override
