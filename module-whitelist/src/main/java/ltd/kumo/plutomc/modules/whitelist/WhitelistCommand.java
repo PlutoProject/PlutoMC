@@ -107,14 +107,12 @@ public final class WhitelistCommand {
     }
 
     private static void executeList(CommandSource source) {
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture.runAsync(() -> {
             System.out.println(3);
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             final int size = WhitelistModule.getWhitelistManager().getAllUser().size();
             source.sendMessage(Component.text("数据库中一共有 " + size + " 条白名单数据。").color(Catppuccin.MOCHA.GREEN));
-
-            return null;
         });
     }
 }
