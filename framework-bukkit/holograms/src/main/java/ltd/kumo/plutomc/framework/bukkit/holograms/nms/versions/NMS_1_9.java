@@ -20,8 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class NMS_1_9 extends NMS {
 
     private static final Class<?> DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");
-    ;
-
     private static final int ARMOR_STAND_ID = Version.before(13) ? 30 : 1;
     // UTILITY
     private static final Class<?> ENTITY_CLASS = ReflectionUtil.getNMSClass("Entity");
