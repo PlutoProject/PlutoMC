@@ -56,7 +56,7 @@ public final class WhitelistCommand {
     private static void executeAdd(CommandSource source, String playerName, long qqNumber) {
         source.sendMessage(Component.text("正在验证，请稍等。").color(Catppuccin.MOCHA.GREEN));
 
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture.runAsync(() -> {
             System.out.println(1);
             UUID uuid;
 
@@ -64,26 +64,27 @@ public final class WhitelistCommand {
                 System.out.println("1-1");
                 uuid = ProfileUtil.getUUID(playerName.toLowerCase());
                 System.out.println(uuid);
-                return uuid;
             } catch (IOException e) {
                 System.out.println("1-2");
                 source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
-                return null;
+                return;
             }
-        }).thenAcceptAsync(uuid -> {
+
             if (uuid == null) {
                 System.out.println("1-3");
+                source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return;
             }
 
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
+
             if (WhitelistModule.getWhitelistManager().hasWhitelist(uuid)) {
                 System.out.println("1-4");
                 source.sendMessage(Component.text("该用户已有白名单。"));
                 return;
             }
-            System.out.println("1-5");
 
+            System.out.println("1-5");
             WhitelistModule.getWhitelistManager().createUser(playerName.toLowerCase(), qqNumber, uuid);
             source.sendMessage(Component.text("添加成功。").color(Catppuccin.MOCHA.GREEN));
         });
