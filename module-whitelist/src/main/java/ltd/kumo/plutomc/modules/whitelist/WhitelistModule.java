@@ -71,6 +71,10 @@ public final class WhitelistModule extends VelocityModule {
         try {
             logger().info("Trying to connect database...");
 
+            if (!dataDir.exists()) {
+                dataDir.mkdirs();
+            }
+
             configHelper = new ConfigHelper(new File(dataDir, "config.yml"));
             whitelistManager = new WhitelistManager(
                     configHelper.get("mongodb.host", "127.0.0.1"),

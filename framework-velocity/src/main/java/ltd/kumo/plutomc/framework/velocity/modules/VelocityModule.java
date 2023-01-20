@@ -19,7 +19,7 @@ public abstract class VelocityModule extends Module {
 
     @Override
     public @NotNull Logger logger() {
-        return Logger.getLogger("[VelocityPlatform - " + name() + "]");
+        return Logger.getLogger("VelocityPlatform - " + name());
     }
 
     public <T> void listener(@NotNull ProxyServer proxyServer, @NotNull T listener) {

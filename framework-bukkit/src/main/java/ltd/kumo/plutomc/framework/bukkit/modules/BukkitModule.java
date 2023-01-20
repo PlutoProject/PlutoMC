@@ -34,6 +34,6 @@ public abstract class BukkitModule extends Module {
     @Override
     @NotNull
     public Logger logger() {
-        return Logger.getLogger("[BukkitPlatform - " + name() + "]");
+        return Logger.getLogger("BukkitPlatform - " + name());
     }
 }
