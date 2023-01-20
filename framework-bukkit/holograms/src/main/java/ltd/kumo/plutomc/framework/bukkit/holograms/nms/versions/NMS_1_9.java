@@ -19,7 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class NMS_1_9 extends NMS {
 
-    private static final Class<?> DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");;
+    private static final Class<?> DWO_CLASS = ReflectionUtil.getNMSClass("DataWatcherObject");
+    ;
 
     private static final int ARMOR_STAND_ID = Version.before(13) ? 30 : 1;
     // UTILITY
@@ -75,7 +76,7 @@ public class NMS_1_9 extends NMS {
         } else {
             PACKET_ENTITY_EQUIPMENT_CONSTRUCTOR = new ReflectConstructor(ReflectionUtil.getNMSClass("PacketPlayOutEntityEquipment"), int.class, ENUM_ITEM_SLOT_CLASS, ITEM_STACK_CLASS);
         }
-        PAIR_OF_METHOD = Version.afterOrEqual(16) ? new ReflectMethod(ReflectionUtil.getClass("com.mojang.datafixers.util.Pair"), "of", Object.class, Object.class): null;
+        PAIR_OF_METHOD = Version.afterOrEqual(16) ? new ReflectMethod(ReflectionUtil.getClass("com.mojang.datafixers.util.Pair"), "of", Object.class, Object.class) : null;
         // DATA WATCHER OBJECT
         switch (Version.CURRENT) {
             case v1_9_R1 -> {
@@ -171,7 +172,8 @@ public class NMS_1_9 extends NMS {
     private void showFakeEntityLiving(Player player, Location location, int entityTypeId, int entityId, Object dataWatcher) {
         Preconditions.checkNotNull(player);
         Preconditions.checkNotNull(location);
-        if (dataWatcher == null || !(DATA_WATCHER_CLASS != null && DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass()))) return;
+        if (dataWatcher == null || !(DATA_WATCHER_CLASS != null && DATA_WATCHER_CLASS.isAssignableFrom(dataWatcher.getClass())))
+            return;
 
         if (entityTypeId == -1) return;
         Object spawn = PACKET_SPAWN_ENTITY_LIVING_CONSTRUCTOR.newInstance();

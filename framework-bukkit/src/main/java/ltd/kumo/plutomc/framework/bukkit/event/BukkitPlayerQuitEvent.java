@@ -15,6 +15,10 @@ public class BukkitPlayerQuitEvent extends Event {
         this.bukkitPlayer = bukkitPlayer;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlerList;
+    }
+
     public BukkitPlayer getBukkitPlayer() {
         return bukkitPlayer;
     }
@@ -22,10 +26,6 @@ public class BukkitPlayerQuitEvent extends Event {
     @Override
     public @NotNull HandlerList getHandlers() {
         return null;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlerList;
     }
 
 }

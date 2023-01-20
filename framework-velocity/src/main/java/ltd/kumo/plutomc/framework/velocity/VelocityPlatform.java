@@ -1,7 +1,6 @@
 package ltd.kumo.plutomc.framework.velocity;
 
 import com.google.common.collect.ImmutableList;
-import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.NonNull;
@@ -9,7 +8,6 @@ import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
-import ltd.kumo.plutomc.framework.shared.modules.Module;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.jetbrains.annotations.NotNull;
 

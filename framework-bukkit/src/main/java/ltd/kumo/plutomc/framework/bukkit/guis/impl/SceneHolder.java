@@ -30,13 +30,13 @@ public class SceneHolder implements InventoryHolder {
         this.scene = scene;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
     @Override
     public @NotNull Inventory getInventory() {
         return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 }

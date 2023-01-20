@@ -233,12 +233,12 @@ public enum MinecraftArgumentType {
      */
     TEMPLATE_ROTATION("TemplateRotationArgument");
 
+    private final Class<?>[] parameters;
     /**
      * A ready-to-use instance used for singleton argument types
      */
     private ArgumentType<?> argumentType;
     private Constructor<? extends ArgumentType> argumentConstructor;
-    private final Class<?>[] parameters;
 
     MinecraftArgumentType(String name, Class<?>... parameters) {
         Class<?> argumentClass = resolveArgumentClass(name);
@@ -261,6 +261,27 @@ public enum MinecraftArgumentType {
             argumentType = null;
             argumentConstructor = null;
         }
+    }
+
+    private static Class<?> resolveArgumentClass(String name) {
+        try {
+            if (ReflectionUtility.minecraftVersion() > 16) {
+                return ReflectionUtility.mcClass("commands.arguments." + name);
+            } else {
+                String stripped;
+                if (name.lastIndexOf('.') != -1)
+                    stripped = name.substring(name.lastIndexOf('.'));
+                else
+                    stripped = name;
+                return ReflectionUtility.nmsClass(stripped);
+            }
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    public static void ensureSetup() {
+        // do nothing - this is only called to trigger the static initializer
     }
 
     /**
@@ -353,27 +374,6 @@ public enum MinecraftArgumentType {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static Class<?> resolveArgumentClass(String name) {
-        try {
-            if (ReflectionUtility.minecraftVersion() > 16) {
-                return ReflectionUtility.mcClass("commands.arguments." + name);
-            } else {
-                String stripped;
-                if (name.lastIndexOf('.') != -1)
-                    stripped = name.substring(name.lastIndexOf('.'));
-                else
-                    stripped = name;
-                return ReflectionUtility.nmsClass(stripped);
-            }
-        } catch (Throwable t) {
-            return null;
-        }
-    }
-
-    public static void ensureSetup() {
-        // do nothing - this is only called to trigger the static initializer
     }
 
 }

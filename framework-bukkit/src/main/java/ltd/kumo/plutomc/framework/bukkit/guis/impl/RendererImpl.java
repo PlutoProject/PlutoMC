@@ -21,10 +21,10 @@ public class RendererImpl implements Renderer {
     private final BukkitPlatform platform;
     private final Audience audience;
     private final Menu menu;
+    private final Map<Integer, SlotBuilderImpl> slotBuilders = new HashMap<>();
     private Component title;
     private Closer closer;
     private int lines = 6;
-    private final Map<Integer, SlotBuilderImpl> slotBuilders = new HashMap<>();
 
     public RendererImpl(SceneImpl previousScene, BukkitPlatform platform, Menu menu, Audience audience) {
         this.previousScene = previousScene;

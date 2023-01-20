@@ -25,25 +25,21 @@ import java.util.logging.Logger;
 )
 public class ProxyBootstrap {
 
-    @NotNull
-    @Getter
-    private ProxyServer server;
-
-    @NotNull
-    @Getter
-    private Logger logger;
-
-    @NotNull
-    @Getter
-    private Path dataDir;
-
     @Nullable
     @Getter
     private static VelocityPlatform platform;
-
     @Nullable
     @Getter
     private static PluginContainer pluginContainer;
+    @NotNull
+    @Getter
+    private ProxyServer server;
+    @NotNull
+    @Getter
+    private Logger logger;
+    @NotNull
+    @Getter
+    private Path dataDir;
 
 
     @Inject

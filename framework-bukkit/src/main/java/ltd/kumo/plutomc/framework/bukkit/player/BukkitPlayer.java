@@ -56,13 +56,13 @@ public final class BukkitPlayer extends BukkitCommandSender implements Player<or
         return this.scene;
     }
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
     @Override
     public @NotNull UUID uuid() {
         return this.player;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
     }
 
     @Override

@@ -148,9 +148,9 @@ public class SceneImpl implements Scene {
         @Getter
         private final Closer closer;
         @Getter
-        private int lines = 6;
-        @Getter
         private final Map<Integer, SlotBuilderImpl> slotBuilders;
+        @Getter
+        private int lines = 6;
 
         public PreviousSettings(Component title, Closer closer, int lines, Map<Integer, SlotBuilderImpl> slotBuilders) {
             this.title = title;
@@ -171,6 +171,10 @@ public class SceneImpl implements Scene {
             private Map<Integer, SlotBuilderImpl> slotBuilders;
 
             private Builder() {
+            }
+
+            public static Builder of() {
+                return new Builder();
             }
 
             public Builder title(Component component) {
@@ -195,10 +199,6 @@ public class SceneImpl implements Scene {
 
             public PreviousSettings build() {
                 return new PreviousSettings(this.title, this.closer, this.lines, this.slotBuilders == null ? new HashMap<>() : this.slotBuilders);
-            }
-
-            public static Builder of() {
-                return new Builder();
             }
 
         }

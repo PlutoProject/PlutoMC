@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 
 public final class FileUtility {
 
+    private FileUtility() {
+    }
+
     public static void write(File file, String content) {
         File parent = file.getParentFile();
         if (parent != null && !parent.exists())
@@ -19,9 +22,6 @@ public final class FileUtility {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private FileUtility() {
     }
 
 }

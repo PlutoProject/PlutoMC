@@ -2,7 +2,6 @@ package ltd.kumo.plutomc.modules.whitelist;
 
 import cc.keyimc.keyi.config.ConfigHelper;
 import com.google.common.collect.ImmutableList;
-import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
@@ -17,38 +16,31 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 public final class WhitelistModule extends VelocityModule {
-    @Nullable
-    @Getter
-    private static WhitelistManager whitelistManager;
-
-    @Nullable
-    @Getter
-    private static ConfigHelper configHelper;
-
-    @NotNull
-    private final File dataDir;
-
-    @Nullable
-    @Getter
-    private static ProxyServer server;
-
     @NotNull
     private static final ImmutableList<?> LISTENERS = ImmutableList.of(
             new PlayerListeners()
     );
-
     @NotNull
     private static final ImmutableList<Command> COMMANDS = ImmutableList.of(
             WhitelistCommand.brigadier()
     );
-
+    @Nullable
+    @Getter
+    private static WhitelistManager whitelistManager;
+    @Nullable
+    @Getter
+    private static ConfigHelper configHelper;
+    @Nullable
+    @Getter
+    private static ProxyServer server;
     @NotNull
     @Getter
     private static OkHttpClient okHttpClient = new OkHttpClient();
+    @NotNull
+    private final File dataDir;
 
     public WhitelistModule(@NotNull Platform<?> platform, @NotNull File dataDir, @NotNull ProxyServer server) {
         super(platform);
@@ -85,7 +77,7 @@ public final class WhitelistModule extends VelocityModule {
             );
 
             configHelper.getFileConfig().save();
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger().log(Level.SEVERE, "Failed to connect database!", e);
         }
 

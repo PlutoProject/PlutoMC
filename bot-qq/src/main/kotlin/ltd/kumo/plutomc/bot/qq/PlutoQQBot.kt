@@ -3,12 +3,10 @@ package ltd.kumo.plutomc.bot.qq
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import kotlinx.coroutines.launch
 import ltd.kumo.plutomc.bot.shared.utilities.FileUtility
 import ltd.kumo.plutomc.bot.shared.utilities.MongoDBConfig
 import ltd.kumo.plutomc.common.whitelistmanager.impl.WhitelistManager
 import net.mamoe.mirai.Bot
-import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.console.command.CommandManager
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder
@@ -16,10 +14,8 @@ import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.Listener
 import net.mamoe.mirai.event.events.BotOnlineEvent
 import net.mamoe.mirai.event.events.MemberLeaveEvent
-import net.mamoe.mirai.network.WrongPasswordException
 import java.io.File
 import java.io.FileReader
-import java.lang.RuntimeException
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

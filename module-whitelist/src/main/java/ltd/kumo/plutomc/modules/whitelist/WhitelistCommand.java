@@ -1,12 +1,9 @@
 package ltd.kumo.plutomc.modules.whitelist;
 
-import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import com.mojang.brigadier.exceptions.CommandExceptionType;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
@@ -14,15 +11,12 @@ import ltd.kumo.plutomc.framework.shared.utilities.colorpattle.Catppuccin;
 import ltd.kumo.plutomc.modules.whitelist.utils.ProfileUtil;
 import net.kyori.adventure.text.Component;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings({"unused"})
 public final class WhitelistCommand {
-
-    private final static CommandExceptionType AUTHORIZED_FAILED = new SimpleCommandExceptionType(new LiteralMessage("验证失败。"));
 
     public static BrigadierCommand brigadier() {
         return new BrigadierCommand(commandNode());
@@ -57,22 +51,16 @@ public final class WhitelistCommand {
         source.sendMessage(Component.text("正在验证，请稍等。").color(Catppuccin.MOCHA.GREEN));
 
         CompletableFuture.runAsync(() -> {
-            System.out.println(1);
             UUID uuid;
 
             try {
-                System.out.println("1-1");
                 uuid = ProfileUtil.getUUID(playerName.toLowerCase());
-                System.out.println(uuid);
             } catch (Exception e) {
-                System.out.println("1-2");
-                e.printStackTrace();
                 source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return;
             }
 
             if (uuid == null) {
-                System.out.println("1-3");
                 source.sendMessage(Component.text("获取UUID失败。").color(Catppuccin.MOCHA.RED));
                 return;
             }
@@ -80,12 +68,10 @@ public final class WhitelistCommand {
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             if (WhitelistModule.getWhitelistManager().hasWhitelist(uuid)) {
-                System.out.println("1-4");
                 source.sendMessage(Component.text("该用户已有白名单。"));
                 return;
             }
 
-            System.out.println("1-5");
             WhitelistModule.getWhitelistManager().createUser(playerName.toLowerCase(), qqNumber, uuid);
             source.sendMessage(Component.text("添加成功。").color(Catppuccin.MOCHA.GREEN));
         });
@@ -93,7 +79,6 @@ public final class WhitelistCommand {
 
     private static void executeRemove(CommandSource source, String playerName) {
         CompletableFuture.runAsync(() -> {
-            System.out.println(2);
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             if (!WhitelistModule.getWhitelistManager().hasWhitelist(playerName.toLowerCase())) {
@@ -108,7 +93,6 @@ public final class WhitelistCommand {
 
     private static void executeList(CommandSource source) {
         CompletableFuture.runAsync(() -> {
-            System.out.println(3);
             Objects.requireNonNull(WhitelistModule.getWhitelistManager());
 
             final int size = WhitelistModule.getWhitelistManager().getAllUser().size();

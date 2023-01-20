@@ -6,10 +6,9 @@ import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.java.JRawCommand
 import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.SingleMessage
-import java.lang.StringBuilder
 import kotlin.math.min
 
-object CommandWhitelist: JRawCommand(PlutoQQBot, "whitelist", "白名单") {
+object CommandWhitelist : JRawCommand(PlutoQQBot, "whitelist", "白名单") {
 
     override fun onCommand(sender: CommandSender, args: MessageChain) {
         val args = args.map(SingleMessage::contentToString)

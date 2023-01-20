@@ -33,6 +33,9 @@ import java.util.regex.Pattern;
 public final class ReflectionUtility {
     private static final String SERVER_VERSION = getServerVersion();
 
+    private ReflectionUtility() {
+    }
+
     private static String getServerVersion() {
         Class<?> server = Bukkit.getServer().getClass();
         if (!server.getSimpleName().equals("CraftServer")) {
@@ -82,9 +85,6 @@ public final class ReflectionUtility {
         } catch (final IllegalArgumentException ex) {
             throw new RuntimeException("Failed to determine Minecraft version", ex);
         }
-    }
-
-    private ReflectionUtility() {
     }
 
 }

@@ -29,15 +29,14 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
 
     private final BukkitPlatform platform;
     private final String name;
+    private final boolean argument;
+    private final BukkitArgument<?> argumentType;
+    private final ArgumentType<?> brigadierType;
+    private final List<BukkitCommand> children = new ArrayList<>();
     private BiConsumer<BukkitCommandSender, CommandContext> executor;
     private BiConsumer<BukkitPlayer, CommandContext> executorPlayer;
     private Consumer<Suggestion> suggestion;
     private Predicate<BukkitCommandSender> requirement;
-    private final boolean argument;
-    private final BukkitArgument<?> argumentType;
-    private final ArgumentType<?> brigadierType;
-
-    private final List<BukkitCommand> children = new ArrayList<>();
 
     public BukkitCommand(BukkitPlatform platform, String name) {
         this.platform = platform;
