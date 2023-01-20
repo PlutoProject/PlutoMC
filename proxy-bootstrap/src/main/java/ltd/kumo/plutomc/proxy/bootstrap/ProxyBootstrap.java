@@ -4,10 +4,11 @@ import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import lombok.Getter;
 import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
-import ltd.kumo.plutomc.framework.velocity.modules.VelocityModule;
 import ltd.kumo.plutomc.modules.whitelist.WhitelistModule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,26 +19,31 @@ import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 @Plugin(
-        id = "whitelist",
-        name = "Whitelist",
+        id = "proxy-bootstrap",
+        name = "proxy-bootstrap",
         authors = {"PlutoMC Team", "All contributors"}
 )
 public class ProxyBootstrap {
 
     @NotNull
+    @Getter
     private ProxyServer server;
 
     @NotNull
+    @Getter
     private Logger logger;
 
     @NotNull
+    @Getter
     private Path dataDir;
 
     @Nullable
+    @Getter
     private static VelocityPlatform platform;
 
     @Nullable
-    private static ImmutableList<VelocityModule> modules;
+    @Getter
+    private static PluginContainer pluginContainer;
 
 
     @Inject
@@ -49,11 +55,16 @@ public class ProxyBootstrap {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        platform = VelocityPlatform.of((Plugin) this, server);
+        if (server.getPluginManager().getPlugin("proxy-bootstrap").isEmpty()) {
+            return;
+        }
 
-        modules = ImmutableList.of(
+        pluginContainer = server.getPluginManager().getPlugin("proxy-bootstrap").get();
+        platform = VelocityPlatform.of(pluginContainer, server);
+
+        platform.modules(ImmutableList.of(
                 new WhitelistModule(platform, dataDir.toFile(), server)
-        );
+        ));
 
         platform.enable();
         platform.enableModules();

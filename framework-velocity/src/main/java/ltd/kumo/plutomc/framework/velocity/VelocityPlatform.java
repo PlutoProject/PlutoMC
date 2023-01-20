@@ -2,6 +2,7 @@ package ltd.kumo.plutomc.framework.velocity;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.NonNull;
 import ltd.kumo.plutomc.framework.shared.Platform;
@@ -15,16 +16,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public final class VelocityPlatform extends Platform<Plugin> {
+public final class VelocityPlatform extends Platform<PluginContainer> {
     @NotNull ProxyServer proxyServer;
 
-    private VelocityPlatform(@NotNull Plugin plugin, @NotNull ProxyServer proxyServer) {
+    private VelocityPlatform(@NotNull PluginContainer plugin, @NotNull ProxyServer proxyServer) {
         super(plugin);
         Objects.requireNonNull(proxyServer);
         this.proxyServer = proxyServer;
     }
 
-    public static VelocityPlatform of(@NonNull Plugin plugin, @NonNull ProxyServer proxyServer) {
+    public static VelocityPlatform of(@NonNull PluginContainer plugin, @NonNull ProxyServer proxyServer) {
         Objects.requireNonNull(plugin);
         Objects.requireNonNull(proxyServer);
 
@@ -32,18 +33,25 @@ public final class VelocityPlatform extends Platform<Plugin> {
     }
 
     @Override
-    public @NotNull ImmutableList<?> onlinePlayers() {
+    @NotNull
+    public ImmutableList<?> onlinePlayers() {
         return ImmutableList.copyOf(proxyServer.getAllPlayers());
     }
 
     @Override
-    public @NotNull String name() {
+    @NotNull
+    public String name() {
         return "Velocity";
     }
 
     @Override
-    public @NotNull String version() {
-        return plugin().version();
+    @NotNull
+    public String version() {
+        if (plugin().getDescription().getVersion().isEmpty()) {
+            return "null";
+        }
+
+        return plugin().getDescription().getVersion().get();
     }
 
     @Override

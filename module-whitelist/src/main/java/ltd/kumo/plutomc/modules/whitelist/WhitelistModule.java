@@ -16,6 +16,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
 public final class WhitelistModule extends VelocityModule {
@@ -66,14 +68,21 @@ public final class WhitelistModule extends VelocityModule {
 
     @Override
     public void initial() {
-        configHelper = new ConfigHelper(new File(dataDir, "config.yml"));
-        whitelistManager = new WhitelistManager(
-                configHelper.get("mongodb.host", "127.0.0.1"),
-                configHelper.get("mongodb.port", 27017),
-                configHelper.get("mongodb.user", "minecraft"),
-                configHelper.get("mongodb.password", "GoodPassword123"),
-                configHelper.get("mongodb.database", "whitelist")
-        );
+        try {
+            logger().info("Trying to connect database...");
+
+            configHelper = new ConfigHelper(new File(dataDir, "config.yml"));
+            whitelistManager = new WhitelistManager(
+                    configHelper.get("mongodb.host", "127.0.0.1"),
+                    configHelper.get("mongodb.port", 27017),
+                    configHelper.get("mongodb.user", "minecraft"),
+                    configHelper.get("mongodb.password", "GoodPassword123"),
+                    configHelper.get("mongodb.database", "whitelist")
+            );
+        }catch (Exception e) {
+            logger().log(Level.SEVERE, "Failed to connect database!", e);
+        }
+
 
         LISTENERS.forEach(listener -> listener(Objects.requireNonNull(server), listener));
         COMMANDS.forEach(command -> command(Objects.requireNonNull(server), "whitelist", Objects.requireNonNull(command), "wl"));
