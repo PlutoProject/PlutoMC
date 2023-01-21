@@ -56,13 +56,9 @@ public class BukkitCommandManager {
         this.argumentImplementers.put(ArgumentMessage.class, argumentBukkitMessage);
         this.argumentImplementers.put(ArgumentBukkitMessage.class, argumentBukkitMessage);
 
-        ArgumentBukkitPlayer argumentBukkitPlayer = new ArgumentBukkitPlayer();
-        this.argumentImplementers.put(ArgumentPlayer.class, argumentBukkitPlayer);
-        this.argumentImplementers.put(ArgumentBukkitPlayer.class, argumentBukkitPlayer);
+        this.argumentImplementers.put(ArgumentBukkitPlayer.class,  new ArgumentBukkitPlayer());
 
-        ArgumentBukkitPlayers argumentBukkitPlayers = new ArgumentBukkitPlayers();
-        this.argumentImplementers.put(ArgumentPlayers.class, argumentBukkitPlayers);
-        this.argumentImplementers.put(ArgumentBukkitPlayers.class, argumentBukkitPlayers);
+        this.argumentImplementers.put(ArgumentBukkitPlayers.class, new ArgumentBukkitPlayers());
 
         this.commandMap = Bukkit.getServer().getCommandMap();
 

@@ -10,19 +10,20 @@ import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 import ltd.kumo.plutomc.framework.shared.economy.EconomyService;
 import ltd.kumo.plutomc.framework.shared.player.Player;
+import ltd.kumo.plutomc.framework.velocity.command.VelocityCommand;
+import ltd.kumo.plutomc.framework.velocity.command.VelocityCommandManager;
 import ltd.kumo.plutomc.framework.velocity.economy.VelocityEconomyService;
+import ltd.kumo.plutomc.framework.velocity.player.VelocityPlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public final class VelocityPlatform extends Platform<PluginContainer> {
 
     private final Map<Class<?>, Service<?>> services = new HashMap<>();
     @NotNull ProxyServer proxyServer;
+    private VelocityCommandManager commandManager;
 
     private VelocityPlatform(@NotNull PluginContainer plugin, @NotNull ProxyServer proxyServer) {
         super(plugin);
@@ -60,14 +61,14 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
     }
 
     @Override
-    public <E extends CommandSender, P extends Player<?>> Command<E, P> createCommand(String name) {
-        // TODO
-        return null;
+    @SuppressWarnings("unchecked")
+    public VelocityCommand createCommand(String name) {
+        return new VelocityCommand(this, name);
     }
 
     @Override
     public <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command) {
-        // TODO
+        this.commandManager.register(prefix, (VelocityCommand) command);
     }
 
     @Override
@@ -107,6 +108,8 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
 
     @Override
     public void enable() {
+        this.commandManager = new VelocityCommandManager(this);
+
         this.services.put(EconomyService.class, new VelocityEconomyService());
     }
 
@@ -114,4 +117,18 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
     public void disable() {
 
     }
+
+    @Override
+    public @NotNull VelocityPlayer player(UUID uuid) {
+        return VelocityPlayer.of(uuid, this);
+    }
+
+    public @NotNull ProxyServer getProxyServer() {
+        return proxyServer;
+    }
+
+    public VelocityCommandManager getCommandManager() {
+        return commandManager;
+    }
+
 }

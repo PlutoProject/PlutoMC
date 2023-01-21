@@ -3,6 +3,7 @@ package ltd.kumo.plutomc.framework.velocity.player;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.shared.player.Player;
+import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import ltd.kumo.plutomc.framework.velocity.command.VelocityCommandSender;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -16,10 +17,15 @@ public final class VelocityPlayer extends VelocityCommandSender implements Playe
     private final UUID uuid;
     @NotNull ProxyServer proxyServer;
 
-    private VelocityPlayer(@NotNull com.velocitypowered.api.proxy.Player player, @NotNull ProxyServer proxyServer) {
-        Objects.requireNonNull(proxyServer);
-        this.proxyServer = proxyServer;
-        this.uuid = player.getUniqueId();
+    private VelocityPlayer(@NotNull com.velocitypowered.api.proxy.Player player, @NotNull VelocityPlatform platform) {
+        this(player.getUniqueId(), platform);
+    }
+
+    private VelocityPlayer(@NotNull UUID player, @NotNull VelocityPlatform platform) {
+        super(platform, platform.getProxyServer().getPlayer(player).orElseThrow());
+        Objects.requireNonNull(platform);
+        this.proxyServer = platform.getProxyServer();
+        this.uuid = player;
     }
 
     @Nullable
@@ -28,7 +34,6 @@ public final class VelocityPlayer extends VelocityCommandSender implements Playe
         if (proxyServer.getPlayer(uuid()).isPresent()) {
             return proxyServer.getPlayer(uuid()).get();
         }
-
         return null;
     }
 
@@ -37,8 +42,12 @@ public final class VelocityPlayer extends VelocityCommandSender implements Playe
         return this.uuid;
     }
 
-    public @NotNull Player<com.velocitypowered.api.proxy.Player> of(@NotNull com.velocitypowered.api.proxy.Player player, @NotNull ProxyServer proxyServer) {
-        return new VelocityPlayer(player, proxyServer);
+    public static @NotNull VelocityPlayer of(@NotNull com.velocitypowered.api.proxy.Player player, @NotNull VelocityPlatform platform) {
+        return new VelocityPlayer(player, platform);
+    }
+
+    public static @NotNull VelocityPlayer of(@NotNull UUID player, @NotNull VelocityPlatform platform) {
+        return new VelocityPlayer(player, platform);
     }
 
     @Override
