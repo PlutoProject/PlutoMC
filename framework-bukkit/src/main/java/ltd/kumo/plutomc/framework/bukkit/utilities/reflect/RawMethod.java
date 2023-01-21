@@ -9,6 +9,7 @@ public class RawMethod {
 
     public RawMethod(Method method) {
         this.method = method;
+        this.method.trySetAccessible();
     }
 
     public Object invokeStatic(Object... parameters) {

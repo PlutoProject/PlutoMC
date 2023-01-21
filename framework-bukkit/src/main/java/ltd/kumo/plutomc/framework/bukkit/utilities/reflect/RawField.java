@@ -2,33 +2,34 @@ package ltd.kumo.plutomc.framework.bukkit.utilities.reflect;
 
 import java.lang.reflect.Field;
 
-public class RawField<T> {
+public class RawField {
 
     private final Field field;
 
     public RawField(Field field) {
         this.field = field;
+        this.field.trySetAccessible();
     }
 
     @SuppressWarnings("unchecked")
-    public T get(Object object) {
+    public Object get(Object object) {
         try {
-            return (T) this.field.get(object);
+            return this.field.get(object);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public T getStatic() {
+    public Object getStatic() {
         try {
-            return (T) this.field.get(null);
+            return this.field.get(null);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void set(Object object, T t) {
+    public void set(Object object, Object t) {
         try {
             this.field.set(object, t);
         } catch (IllegalAccessException e) {
@@ -36,7 +37,7 @@ public class RawField<T> {
         }
     }
 
-    public void setStatic(T t) {
+    public void setStatic(Object t) {
         try {
             this.field.set(null, t);
         } catch (IllegalAccessException e) {

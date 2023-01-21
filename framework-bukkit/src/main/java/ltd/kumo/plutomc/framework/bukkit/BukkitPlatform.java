@@ -7,7 +7,6 @@ import ltd.kumo.plutomc.framework.bukkit.economy.BukkitEconomyService;
 import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
-import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
@@ -120,7 +119,8 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
         this.services.put(EconomyService.class, economyService);
         this.services.put(BukkitEconomyService.class, economyService);
 
-        Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
+        // Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
+        Bukkit.getPluginManager().registerEvents(this.commandManager, this.plugin());
         Bukkit.getPluginManager().registerEvents(this, this.plugin());
     }
 

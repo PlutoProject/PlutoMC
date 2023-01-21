@@ -40,6 +40,7 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
     private BiConsumer<VelocityPlayer, CommandContext> executorPlayer;
     private Consumer<Suggestion> suggestion;
     private Predicate<VelocityCommandSender> requirement;
+    private final List<String> aliases = new ArrayList<>();
 
     public VelocityCommand(VelocityPlatform platform, String name) {
         this.platform = platform;
@@ -72,6 +73,11 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
     public VelocityCommand requires(Predicate<VelocityCommandSender> requirement) {
         this.requirement = requirement;
         return this;
+    }
+
+    @Override
+    public VelocityCommand aliases(String... aliases) {
+        return null;
     }
 
     @Override
@@ -144,6 +150,10 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
         newCommand.suggestion = this.suggestion;
         newCommand.requirement = this.requirement;
         return newCommand;
+    }
+
+    public List<String> getAliases() {
+        return aliases;
     }
 
     @SuppressWarnings("unchecked")

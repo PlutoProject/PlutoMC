@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.bukkit.command.commodore;
+package ltd.kumo.plutomc.framework.bukkit.command;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import ltd.kumo.plutomc.framework.bukkit.utilities.ReflectionUtility;

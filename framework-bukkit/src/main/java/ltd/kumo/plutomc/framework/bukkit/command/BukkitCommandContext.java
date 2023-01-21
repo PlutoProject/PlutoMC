@@ -7,9 +7,9 @@ import ltd.kumo.plutomc.framework.shared.command.CommandContext;
 public class BukkitCommandContext implements CommandContext {
 
     private final BukkitPlatform platform;
-    private final com.mojang.brigadier.context.CommandContext<BukkitCommandSender> brigadier;
+    private final com.mojang.brigadier.context.CommandContext<?> brigadier;
 
-    public BukkitCommandContext(BukkitPlatform platform, com.mojang.brigadier.context.CommandContext<BukkitCommandSender> context) {
+    public BukkitCommandContext(BukkitPlatform platform, com.mojang.brigadier.context.CommandContext<?> context) {
         this.platform = platform;
         this.brigadier = context;
     }
@@ -20,7 +20,7 @@ public class BukkitCommandContext implements CommandContext {
         return argument.parse(this, name);
     }
 
-    public com.mojang.brigadier.context.CommandContext<BukkitCommandSender> brigadier() {
+    public com.mojang.brigadier.context.CommandContext<?> brigadier() {
         return brigadier;
     }
 

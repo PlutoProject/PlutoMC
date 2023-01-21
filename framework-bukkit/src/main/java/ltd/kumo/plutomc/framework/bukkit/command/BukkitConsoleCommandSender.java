@@ -1,7 +1,6 @@
 package ltd.kumo.plutomc.framework.bukkit.command;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public final class BukkitConsoleCommandSender extends BukkitCommandSender {

@@ -32,6 +32,14 @@ public interface Command<T extends CommandSender, P extends Player<?>> {
     Command<T, P> requires(Predicate<T> requirement);
 
     /**
+     * 为指令添加别名
+     *
+     * @param aliases 别名
+     * @return 自己
+     */
+    Command<T, P> aliases(String... aliases);
+
+    /**
      * 设置执行器
      *
      * @param executor 执行器

@@ -18,6 +18,8 @@ import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentDouble;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentFloat;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentLong;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     private BiConsumer<BukkitPlayer, CommandContext> executorPlayer;
     private Consumer<Suggestion> suggestion;
     private Predicate<BukkitCommandSender> requirement;
+    private final List<String> aliases = new ArrayList<>();
 
     public BukkitCommand(BukkitPlatform platform, String name) {
         this.platform = platform;
@@ -68,6 +71,12 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     @Override
     public BukkitCommand requires(Predicate<BukkitCommandSender> requirement) {
         this.requirement = requirement;
+        return this;
+    }
+
+    @Override
+    public BukkitCommand aliases(String... aliases) {
+        this.aliases.addAll(List.of(aliases));
         return this;
     }
 
@@ -143,15 +152,22 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
         return newCommand;
     }
 
+    public List<String> getAliases() {
+        return aliases;
+    }
+
     @SuppressWarnings("unchecked")
-    public ArgumentBuilder<BukkitCommandSender, ?> toBrigadier() {
-        ArgumentBuilder<BukkitCommandSender, ?> builder = this.argument ? RequiredArgumentBuilder.argument(this.name, this.brigadierType) : LiteralArgumentBuilder.literal(this.name);
+    public ArgumentBuilder<Object, ?> toBrigadier() {
+        ArgumentBuilder<Object, ?> builder = this.argument ? RequiredArgumentBuilder.argument(this.name, this.brigadierType) : LiteralArgumentBuilder.literal(this.name);
         for (BukkitCommand command : this.children)
             builder.then(command.toBrigadier());
         if (this.requirement != null)
-            builder.requires(requirement);
+            builder.requires(req -> {
+                CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(req);
+                return this.requirement.test(sender instanceof Player ? BukkitPlayer.of((Player) sender) : BukkitConsoleCommandSender.INSTANCE);
+            });
         if (this.suggestion != null && this.argument)
-            ((RequiredArgumentBuilder<BukkitCommandSender, ?>) builder).suggests(((commandContext, suggestionsBuilder) -> {
+            ((RequiredArgumentBuilder<Object, ?>) builder).suggests(((commandContext, suggestionsBuilder) -> {
                 BukkitSuggestion bukkitSuggestion = new BukkitSuggestion();
                 suggestion.accept(bukkitSuggestion);
                 bukkitSuggestion.getStringSuggestions().forEach(suggestionsBuilder::suggest);
@@ -159,37 +175,14 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
                 return suggestionsBuilder.buildFuture();
             }));
         builder.executes(commandContext -> {
-            if (commandContext.getSource() instanceof BukkitPlayer && this.executorPlayer != null)
-                this.executorPlayer.accept((BukkitPlayer) commandContext.getSource(), new BukkitCommandContext(this.platform, commandContext));
+            CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
+            if (sender instanceof Player player && this.executorPlayer != null)
+                this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
             else if (this.executor != null)
-                this.executor.accept(commandContext.getSource(), new BukkitCommandContext(this.platform, commandContext));
+                this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
             return 1;
         });
         return builder;
-    }
-
-    public ArgumentBuilder<Object, ?> toCommodore() {
-        if (this.argument) {
-            RequiredArgumentBuilder<Object, ?> requiredArgumentBuilder = RequiredArgumentBuilder.argument(this.name, this.argumentType.commodore());
-            for (BukkitCommand command : this.children) {
-                requiredArgumentBuilder.then(command.toCommodore());
-            }
-            if (this.suggestion != null)
-                requiredArgumentBuilder.suggests(((commandContext, suggestionsBuilder) -> {
-                    BukkitSuggestion bukkitSuggestion = new BukkitSuggestion();
-                    suggestion.accept(bukkitSuggestion);
-                    bukkitSuggestion.getStringSuggestions().forEach(suggestionsBuilder::suggest);
-                    bukkitSuggestion.getIntSuggestions().forEach(suggestionsBuilder::suggest);
-                    return suggestionsBuilder.buildFuture();
-                }));
-            return requiredArgumentBuilder;
-        } else {
-            LiteralArgumentBuilder<Object> literalArgumentBuilder = LiteralArgumentBuilder.literal(this.name);
-            for (BukkitCommand command : this.children) {
-                literalArgumentBuilder.then(command.toCommodore());
-            }
-            return literalArgumentBuilder;
-        }
     }
 
 }

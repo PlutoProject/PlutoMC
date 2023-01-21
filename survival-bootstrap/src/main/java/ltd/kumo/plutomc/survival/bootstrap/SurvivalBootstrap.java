@@ -2,6 +2,9 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
+import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
+import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
+import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentMessage;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
@@ -51,20 +54,20 @@ public class SurvivalBootstrap extends JavaPlugin {
         ));
 
         // Test code, don't delete! Test is still in need!
-        // BukkitCommand command = bukkitPlatform.createCommand("test");
-        // command.executes((bukkitCommandSender, context) -> {
-        //     bukkitCommandSender.send("Hello world!");
-        // })
-        //         .thenInteger("age", 1, 18)
-        //         .suggests(suggestion -> suggestion.suggests(1))
-        //         .executes((bukkitCommandSender, context) -> {
-        //             bukkitCommandSender.send("Your age is " + context.argument(ArgumentInteger.class, "age"));
-        //         })
-        //             .then("message", ArgumentMessage.class)
-        //             .executes((sender, context) -> {
-        //                 sender.send("You send: " + context.argument(ArgumentMessage.class, "message"));
-        //             });
-        // bukkitPlatform.registerCommand("pluto", command);
+        BukkitCommand command = bukkitPlatform.createCommand("test");
+        command.executes((bukkitCommandSender, context) -> {
+            bukkitCommandSender.send("Hello world!");
+        })
+                .thenInteger("age", 1, 18)
+                .suggests(suggestion -> suggestion.suggests(1).suggests(18))
+                .executes((bukkitCommandSender, context) -> {
+                    bukkitCommandSender.send("Your age is " + context.argument(ArgumentInteger.class, "age"));
+                })
+                .then("message", ArgumentMessage.class)
+                .executes((sender, context) -> {
+                    sender.send("You send: " + context.argument(ArgumentMessage.class, "message"));
+                });
+        bukkitPlatform.registerCommand("pluto", command);
 
         // GUI test
         /*
