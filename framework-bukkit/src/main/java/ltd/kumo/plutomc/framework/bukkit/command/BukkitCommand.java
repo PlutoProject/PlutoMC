@@ -32,7 +32,6 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     private final BukkitPlatform platform;
     private final String name;
     private final boolean argument;
-    private final BukkitArgument<?> argumentType;
     private final ArgumentType<?> brigadierType;
     private final List<BukkitCommand> children = new ArrayList<>();
     private BiConsumer<BukkitCommandSender, CommandContext> executor;
@@ -45,16 +44,14 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
         this.platform = platform;
         this.name = name;
         this.argument = false;
-        this.argumentType = null;
         this.brigadierType = null;
     }
 
-    public BukkitCommand(BukkitPlatform platform, String name, BukkitArgument<?> argument, ArgumentType<?> brigadierType) {
+    public BukkitCommand(BukkitPlatform platform, String name, ArgumentType<?> brigadierType) {
         this.platform = platform;
         this.name = name;
-        this.argumentType = argument;
         this.brigadierType = brigadierType;
-        this.argument = argument != null && brigadierType != null;
+        this.argument = brigadierType != null;
     }
 
     @Override
@@ -104,7 +101,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
         BukkitArgument<A> argument = this.platform.getCommandManager().argument(type);
         if (argument == null)
             throw new RuntimeException("Cannot find the argument type");
-        BukkitCommand command = new BukkitCommand(this.platform, name, argument, argument.brigadier());
+        BukkitCommand command = new BukkitCommand(this.platform, name, argument.brigadier());
         this.children.add(command);
         return command;
     }
@@ -112,7 +109,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     @Override
     public BukkitCommand thenInteger(String name, int min, int max) {
         ArgumentBukkitInteger argument = (ArgumentBukkitInteger) this.platform.getCommandManager().argument(ArgumentInteger.class);
-        BukkitCommand command = new BukkitCommand(this.platform, name, argument, argument.brigadier(min, max));
+        BukkitCommand command = new BukkitCommand(this.platform, name, argument.brigadier(min, max));
         this.children.add(command);
         return command;
     }
@@ -120,7 +117,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     @Override
     public BukkitCommand thenLong(String name, long min, long max) {
         ArgumentBukkitLong argument = (ArgumentBukkitLong) this.platform.getCommandManager().argument(ArgumentLong.class);
-        BukkitCommand command = new BukkitCommand(this.platform, name, argument, argument.brigadier(min, max));
+        BukkitCommand command = new BukkitCommand(this.platform, name, argument.brigadier(min, max));
         this.children.add(command);
         return command;
     }
@@ -128,7 +125,7 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     @Override
     public BukkitCommand thenFloat(String name, float min, float max) {
         ArgumentBukkitFloat argument = (ArgumentBukkitFloat) this.platform.getCommandManager().argument(ArgumentFloat.class);
-        BukkitCommand command = new BukkitCommand(this.platform, name, argument, argument.brigadier(min, max));
+        BukkitCommand command = new BukkitCommand(this.platform, name, argument.brigadier(min, max));
         this.children.add(command);
         return command;
     }
@@ -136,14 +133,14 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     @Override
     public BukkitCommand thenDouble(String name, double min, double max) {
         ArgumentBukkitDouble argument = (ArgumentBukkitDouble) this.platform.getCommandManager().argument(ArgumentDouble.class);
-        BukkitCommand command = new BukkitCommand(this.platform, name, argument, argument.brigadier(min, max));
+        BukkitCommand command = new BukkitCommand(this.platform, name, argument.brigadier(min, max));
         this.children.add(command);
         return command;
     }
 
     @Override
     public BukkitCommand clone(String name) {
-        BukkitCommand newCommand = new BukkitCommand(this.platform, name, this.argumentType, this.brigadierType);
+        BukkitCommand newCommand = new BukkitCommand(this.platform, name, this.brigadierType);
         newCommand.children.addAll(this.children);
         newCommand.executor = this.executor;
         newCommand.executorPlayer = this.executorPlayer;
@@ -175,21 +172,20 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
                 return suggestionsBuilder.buildFuture();
             }));
         builder.executes(commandContext -> {
-            try {
-                CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
-                if (sender instanceof Player player) {
-                    if (executorPlayer != null) {
-                        this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
-                    } else if (executor != null) {
-
-                    }
-                } else if (this.executor != null) {
-                    this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
+            CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
+            if (sender instanceof Player player) {
+                if (executorPlayer != null) {
+                    this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
+                    return 1;
+                } else if (executor != null) {
+                    this.executor.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
+                    return 1;
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } else if (this.executor != null) {
+                this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
+                return 1;
             }
-            return 1;
+            return 0;
         });
         return builder;
     }

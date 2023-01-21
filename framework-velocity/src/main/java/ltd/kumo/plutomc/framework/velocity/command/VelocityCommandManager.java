@@ -2,7 +2,6 @@ package ltd.kumo.plutomc.framework.velocity.command;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.velocitypowered.api.command.BrigadierCommand;
-import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.command.CommandSource;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.arguments.*;

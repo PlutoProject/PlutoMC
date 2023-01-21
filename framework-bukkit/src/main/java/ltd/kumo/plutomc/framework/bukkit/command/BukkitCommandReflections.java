@@ -64,8 +64,8 @@ public final class BukkitCommandReflections {
         METHOD_GET_BUKKIT_PLAYER = CLASS_ENTITY_PLAYER.findMethod(false, CLASS_CRAFT_PLAYER.original());
         METHOD_GET_STRING = CLASS_I_CHAT_BASE_COMPONENT.findMethod(false, String.class);
         METHOD_GET_MESSAGE = CLASS_ARGUMENT_CHAT.findMethod(true, CLASS_I_CHAT_BASE_COMPONENT.original(), CommandContext.class, String.class);
-        METHOD_GET_ENTITY_PLAYER = CLASS_ARGUMENT_ENTITY.findMethod(true, CLASS_ENTITY_PLAYER.original());
-        METHOD_GET_ENTITY_PLAYERS = CLASS_ARGUMENT_ENTITY.findMethod(true, Collection.class, 2);
+        METHOD_GET_ENTITY_PLAYER = CLASS_ARGUMENT_ENTITY.findMethod(true, CLASS_ENTITY_PLAYER.original(), CommandContext.class, String.class);
+        METHOD_GET_ENTITY_PLAYERS = CLASS_ARGUMENT_ENTITY.findMethod(true, Collection.class, 2, CommandContext.class, String.class);
     }
 
 }

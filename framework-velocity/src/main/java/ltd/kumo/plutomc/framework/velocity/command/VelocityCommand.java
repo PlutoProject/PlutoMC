@@ -5,7 +5,6 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import com.velocitypowered.api.proxy.Player;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.Command;

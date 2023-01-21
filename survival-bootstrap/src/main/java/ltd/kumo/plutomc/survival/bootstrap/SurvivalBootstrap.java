@@ -2,11 +2,6 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
-import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
-import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitPlayer;
-import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitPlayers;
-import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
-import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentMessage;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
@@ -56,6 +51,8 @@ public class SurvivalBootstrap extends JavaPlugin {
         ));
 
         // Test code, don't delete! Test is still in need!
+        // Command test
+        /*
         BukkitCommand command = bukkitPlatform.createCommand("test");
         command.executes((bukkitCommandSender, context) -> {
             bukkitCommandSender.send("Hello world!");
@@ -82,6 +79,7 @@ public class SurvivalBootstrap extends JavaPlugin {
                             .forEach(bukkitPlayer -> bukkitPlayer.send("Multi"));
                 });
         bukkitPlatform.registerCommand("pluto", command);
+        */
 
         // GUI test
         /*
