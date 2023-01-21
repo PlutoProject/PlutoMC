@@ -46,6 +46,7 @@ public abstract class Platform<T> {
 
     public abstract <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command);
 
+    @NotNull
     public abstract <E extends Service<E>> E getService(Class<E> clazz);
 
     public abstract void enableModules();

@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 public final class VelocityPlatform extends Platform<PluginContainer> {
@@ -71,8 +72,8 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends Service<E>> E getService(Class<E> clazz) {
-        return (E) this.services.get(clazz);
+    public <E extends Service<E>> @NotNull E getService(Class<E> clazz) {
+        return Optional.ofNullable((E) this.services.get(clazz)).orElseThrow();
     }
 
     @Override

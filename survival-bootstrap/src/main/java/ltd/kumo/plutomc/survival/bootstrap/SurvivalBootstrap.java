@@ -6,13 +6,14 @@ import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
 import ltd.kumo.plutomc.modules.waxednotwaxed.WaxedNotWaxedModule;
+import net.deechael.dutil.Preconditions;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused"})
 public class SurvivalBootstrap extends JavaPlugin {
 
     @Nullable
@@ -39,8 +40,8 @@ public class SurvivalBootstrap extends JavaPlugin {
     }
 
     @Override
-    // @SuppressWarnings("unchecked")
     public void onEnable() {
+        Preconditions.checkNull(bukkitPlatform);
         bukkitPlatform.enable();
         bukkitPlatform.modules(ImmutableList.of(
                 new IronElevatorModule(bukkitPlatform),
@@ -126,6 +127,8 @@ public class SurvivalBootstrap extends JavaPlugin {
         });
         bukkitPlatform.registerCommand("pluto", command);
         */
+
+        // BukkitEconomyService economyService = (BukkitEconomyService) bukkitPlatform.getService(EconomyService.class);
 
         Objects.requireNonNull(bukkitPlatform).enableModules();
     }
