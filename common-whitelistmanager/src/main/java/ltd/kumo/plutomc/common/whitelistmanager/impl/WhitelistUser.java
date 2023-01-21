@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public final class WhitelistUser implements User {
     @NotNull
     private final Document document;
