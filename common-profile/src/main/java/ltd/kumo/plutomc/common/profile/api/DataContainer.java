@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public interface DataContainer {
     void set(@NotNull String key, @NotNull Object value);
 
@@ -29,7 +30,7 @@ public interface DataContainer {
     @NotNull
     <T> Optional<List<T>> getList(@NotNull String key, @NotNull Class<T> clazz);
 
-    void remove(@NotNull String string);
+    void remove(@NotNull String key);
 
     void apply();
 }

@@ -42,63 +42,64 @@ public class ProfileDataContainer implements DataContainer {
         Objects.requireNonNull(value);
 
         if (!document.containsKey(key)) {
-            document.append(key, value);
+            document.append("custom." + key, value);
             return;
         }
 
-        document.replace(key, value);
+        document.replace("custom." + key, value);
     }
 
     @Override
     @NotNull
     public Optional<String> getString(@NotNull String key) {
-        return Optional.of(document.getString(key));
+        return Optional.of(document.getString("custom." + key));
     }
 
     @Override
     public boolean getBoolean(@NotNull String key) {
-        return false;
+        Objects.requireNonNull(key);
+        return document.getBoolean("custom." + key);
     }
 
     @Override
     public int getInteger(@NotNull String key) {
         Objects.requireNonNull(key);
-        return document.getInteger(key);
+        return document.getInteger("custom." + key);
     }
 
     @Override
     public long getLong(@NotNull String key) {
         Objects.requireNonNull(key);
-        return document.getLong(key);
+        return document.getLong("custom." + key);
     }
 
     @Override
     public double getDouble(@NotNull String key) {
         Objects.requireNonNull(key);
-        return document.getDouble(key);
+        return document.getDouble("custom." + key);
     }
 
     @Override
     public @NotNull Optional<Date> getDate(@NotNull String key) {
         Objects.requireNonNull(key);
-        return Optional.of(document.getDate(key));
+        return Optional.of(document.getDate("custom." + key));
     }
 
     @Override
     public @NotNull Optional<Object> get(@NotNull String key) {
         Objects.requireNonNull(key);
-        return Optional.of(document.get(key));
+        return Optional.of(document.get("custom." + key));
     }
 
     @Override
     public @NotNull <T> Optional<List<T>> getList(@NotNull String key, @NotNull Class<T> clazz) {
         Objects.requireNonNull(key);
-        return Optional.of(document.getList(key, clazz));
+        return Optional.of(document.getList("custom." + key, clazz));
     }
 
     @Override
-    public void remove(@NotNull String string) {
-
+    public void remove(@NotNull String key) {
+        document.remove("custom." + key);
     }
 
     @Override
