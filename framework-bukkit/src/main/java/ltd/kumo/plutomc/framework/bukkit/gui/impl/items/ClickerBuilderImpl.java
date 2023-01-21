@@ -1,8 +1,8 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.impl.items;
+package ltd.kumo.plutomc.framework.bukkit.gui.impl.items;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.items.Clicker;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.ClickerBuilder;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.SlotBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.Clicker;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.ClickerBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.SlotBuilder;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.jetbrains.annotations.NotNull;

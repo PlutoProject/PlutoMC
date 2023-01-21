@@ -3,8 +3,9 @@ package ltd.kumo.plutomc.framework.bukkit;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
-import ltd.kumo.plutomc.framework.bukkit.guis.Menu;
-import ltd.kumo.plutomc.framework.bukkit.guis.impl.MenuImpl;
+import ltd.kumo.plutomc.framework.bukkit.economy.BukkitEconomyService;
+import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
+import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
 import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
@@ -12,6 +13,7 @@ import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import ltd.kumo.plutomc.framework.shared.economy.EconomyService;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -25,7 +27,7 @@ import java.util.Objects;
 @SuppressWarnings({"unused", "unchecked"})
 public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
-    private final Map<Class<? extends Service<?>>, Service<?>> services = new HashMap<>();
+    private final Map<Class<?>, Service<?>> services = new HashMap<>();
     private BukkitCommandManager commandManager;
 
     private BukkitPlatform(@NotNull JavaPlugin plugin) {
@@ -113,6 +115,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
         this.commandManager = new BukkitCommandManager(this);
         PlutoHologramsAPI.onEnable();
         this.services.put(HologramService.class, new HologramService());
+        this.services.put(EconomyService.class, new BukkitEconomyService());
         Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
         Bukkit.getPluginManager().registerEvents(this, this.plugin());
     }

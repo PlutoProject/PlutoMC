@@ -1,6 +1,6 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.items;
+package ltd.kumo.plutomc.framework.bukkit.gui.items;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.Scene;
+import ltd.kumo.plutomc.framework.bukkit.gui.Scene;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 

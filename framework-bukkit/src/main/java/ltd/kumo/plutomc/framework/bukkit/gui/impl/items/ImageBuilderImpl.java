@@ -1,8 +1,8 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.impl.items;
+package ltd.kumo.plutomc.framework.bukkit.gui.impl.items;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.items.Image;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.ImageBuilder;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.SlotBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.Image;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.ImageBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.SlotBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class ImageBuilderImpl implements ImageBuilder {

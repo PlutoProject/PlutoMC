@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * An enumeration for containing Minecraft's built-in {@link ArgumentType}s
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public enum MinecraftArgumentType {
 
     /**
@@ -250,8 +250,7 @@ public enum MinecraftArgumentType {
         }
         try {
             argumentConstructor = argumentClass.asSubclass(ArgumentType.class).getDeclaredConstructor(parameters);
-            if (!argumentConstructor.isAccessible())
-                argumentConstructor.setAccessible(true);
+            argumentConstructor.trySetAccessible();
             if (parameters.length == 0) {
                 argumentType = argumentConstructor.newInstance();
             } else {

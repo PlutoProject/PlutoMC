@@ -1,9 +1,9 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.impl;
+package ltd.kumo.plutomc.framework.bukkit.gui.impl;
 
 import lombok.Getter;
 import lombok.Setter;
-import ltd.kumo.plutomc.framework.bukkit.guis.Audience;
-import ltd.kumo.plutomc.framework.bukkit.guis.Menu;
+import ltd.kumo.plutomc.framework.bukkit.gui.Audience;
+import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;

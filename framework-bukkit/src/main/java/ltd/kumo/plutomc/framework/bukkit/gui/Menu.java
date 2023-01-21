@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.bukkit.guis;
+package ltd.kumo.plutomc.framework.bukkit.gui;
 
 import java.util.List;
 

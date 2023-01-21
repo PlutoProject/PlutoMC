@@ -1,6 +1,6 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.items;
+package ltd.kumo.plutomc.framework.bukkit.gui.items;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.Renderer;
+import ltd.kumo.plutomc.framework.bukkit.gui.Renderer;
 import net.deechael.dutil.builder.BaseBuilder;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,11 +1,11 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.impl;
+package ltd.kumo.plutomc.framework.bukkit.gui.impl;
 
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.event.BukkitPlayerQuitEvent;
-import ltd.kumo.plutomc.framework.bukkit.guis.Audience;
-import ltd.kumo.plutomc.framework.bukkit.guis.Menu;
-import ltd.kumo.plutomc.framework.bukkit.guis.Renderer;
-import ltd.kumo.plutomc.framework.bukkit.guis.Scene;
+import ltd.kumo.plutomc.framework.bukkit.gui.Audience;
+import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
+import ltd.kumo.plutomc.framework.bukkit.gui.Renderer;
+import ltd.kumo.plutomc.framework.bukkit.gui.Scene;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

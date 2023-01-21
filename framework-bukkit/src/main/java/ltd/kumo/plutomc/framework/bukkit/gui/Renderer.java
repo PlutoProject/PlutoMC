@@ -1,7 +1,7 @@
-package ltd.kumo.plutomc.framework.bukkit.guis;
+package ltd.kumo.plutomc.framework.bukkit.gui;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.items.Closer;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.SlotBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.Closer;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.SlotBuilder;
 import net.kyori.adventure.text.Component;
 
 public interface Renderer {

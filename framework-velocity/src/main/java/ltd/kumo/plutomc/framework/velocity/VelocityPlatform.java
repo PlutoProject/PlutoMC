@@ -8,13 +8,19 @@ import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import ltd.kumo.plutomc.framework.shared.economy.EconomyService;
 import ltd.kumo.plutomc.framework.shared.player.Player;
+import ltd.kumo.plutomc.framework.velocity.economy.VelocityEconomyService;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
 public final class VelocityPlatform extends Platform<PluginContainer> {
+
+    private final Map<Class<?>, Service<?>> services = new HashMap<>();
     @NotNull ProxyServer proxyServer;
 
     private VelocityPlatform(@NotNull PluginContainer plugin, @NotNull ProxyServer proxyServer) {
@@ -64,9 +70,9 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <E extends Service<E>> E getService(Class<E> clazz) {
-        // TODO
-        return null;
+        return (E) this.services.get(clazz);
     }
 
     @Override
@@ -100,7 +106,7 @@ public final class VelocityPlatform extends Platform<PluginContainer> {
 
     @Override
     public void enable() {
-
+        this.services.put(EconomyService.class, new VelocityEconomyService());
     }
 
     @Override

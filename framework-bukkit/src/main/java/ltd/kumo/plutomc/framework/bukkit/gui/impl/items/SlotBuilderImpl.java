@@ -1,9 +1,9 @@
-package ltd.kumo.plutomc.framework.bukkit.guis.impl.items;
+package ltd.kumo.plutomc.framework.bukkit.gui.impl.items;
 
-import ltd.kumo.plutomc.framework.bukkit.guis.Renderer;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.ClickerBuilder;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.ImageBuilder;
-import ltd.kumo.plutomc.framework.bukkit.guis.items.SlotBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.Renderer;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.ClickerBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.ImageBuilder;
+import ltd.kumo.plutomc.framework.bukkit.gui.items.SlotBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class SlotBuilderImpl implements SlotBuilder {
