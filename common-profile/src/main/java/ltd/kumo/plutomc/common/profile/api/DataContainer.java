@@ -2,6 +2,7 @@ package ltd.kumo.plutomc.common.profile.api;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +18,18 @@ public interface DataContainer {
 
     long getLong(@NotNull String key);
 
+    double getDouble(@NotNull String key);
+
+    @NotNull
+    Optional<Date> getDate(@NotNull String key);
+
     @NotNull
     Optional<Object> get(@NotNull String key);
 
     @NotNull
     <T> Optional<List<T>> getList(@NotNull String key, @NotNull Class<T> clazz);
 
-    void remove(String string);
+    void remove(@NotNull String string);
+
+    void apply();
 }

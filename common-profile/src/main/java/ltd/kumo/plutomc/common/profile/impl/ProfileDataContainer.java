@@ -1,9 +1,13 @@
 package ltd.kumo.plutomc.common.profile.impl;
 
+import lombok.Getter;
 import ltd.kumo.plutomc.common.profile.api.DataContainer;
 import ltd.kumo.plutomc.common.profile.api.Profile;
+import ltd.kumo.plutomc.common.profile.api.ProfileManager;
+import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,21 +15,44 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 public class ProfileDataContainer implements DataContainer {
     @NotNull
-    private final Profile PROFILE;
+    @Getter
+    private final Profile profile;
 
-    private ProfileDataContainer(@NotNull final Profile profile) {
+    @NotNull
+    @Getter
+    private final Document document;
+
+    @NotNull
+    @Getter
+    private final ProfileManager profileManager;
+
+    public ProfileDataContainer(@NotNull final ProfileManager profileManager, @NotNull final Profile profile, @NotNull final Document document) {
+        Objects.requireNonNull(profileManager);
         Objects.requireNonNull(profile);
-        this.PROFILE = profile;
+        Objects.requireNonNull(document);
+
+        this.profileManager = profileManager;
+        this.profile = profile;
+        this.document = document;
     }
 
     @Override
     public void set(@NotNull String key, @NotNull Object value) {
+        Objects.requireNonNull(key);
+        Objects.requireNonNull(value);
 
+        if (!document.containsKey(key)) {
+            document.append(key, value);
+            return;
+        }
+
+        document.replace(key, value);
     }
 
     @Override
-    public @NotNull Optional<String> getString(@NotNull String key) {
-        return Optional.empty();
+    @NotNull
+    public Optional<String> getString(@NotNull String key) {
+        return Optional.of(document.getString(key));
     }
 
     @Override
@@ -35,31 +62,47 @@ public class ProfileDataContainer implements DataContainer {
 
     @Override
     public int getInteger(@NotNull String key) {
-        return 0;
+        Objects.requireNonNull(key);
+        return document.getInteger(key);
     }
 
     @Override
     public long getLong(@NotNull String key) {
-        return 0;
+        Objects.requireNonNull(key);
+        return document.getLong(key);
+    }
+
+    @Override
+    public double getDouble(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return document.getDouble(key);
+    }
+
+    @Override
+    public @NotNull Optional<Date> getDate(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return Optional.of(document.getDate(key));
     }
 
     @Override
     public @NotNull Optional<Object> get(@NotNull String key) {
-        return Optional.empty();
+        Objects.requireNonNull(key);
+        return Optional.of(document.get(key));
     }
 
     @Override
     public @NotNull <T> Optional<List<T>> getList(@NotNull String key, @NotNull Class<T> clazz) {
-        return Optional.empty();
+        Objects.requireNonNull(key);
+        return Optional.of(document.getList(key, clazz));
     }
 
     @Override
-    public void remove(String string) {
+    public void remove(@NotNull String string) {
 
     }
 
-    @NotNull
-    public static DataContainer from(@NotNull Profile profile) {
-        return new ProfileDataContainer(profile);
+    @Override
+    public void apply() {
+        profileManager.updateCustomData(profile, this);
     }
 }

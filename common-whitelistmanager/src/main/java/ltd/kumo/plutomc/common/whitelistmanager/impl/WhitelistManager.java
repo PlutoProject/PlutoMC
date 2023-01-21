@@ -15,7 +15,6 @@ import com.mongodb.event.ServerMonitorListener;
 import lombok.Getter;
 import ltd.kumo.plutomc.common.whitelistmanager.api.Manager;
 import ltd.kumo.plutomc.common.whitelistmanager.api.User;
-import ltd.kumo.plutomc.common.whitelistmanager.utilities.IterableUtils;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
@@ -90,7 +89,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull String userName) {
-        var list = IterableUtils.toList(userCollection.find(Filters.eq("name", userName.toLowerCase())));
+        var list = userCollection.find(Filters.eq("name", userName.toLowerCase())).into(new ArrayList<>());
 
         if (list.size() != 1) {
             return Optional.empty();
@@ -102,7 +101,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(long qqNumber) {
-        var list = IterableUtils.toList(userCollection.find(Filters.eq("qq_number", qqNumber)));
+        var list = userCollection.find(Filters.eq("qq_number", qqNumber)).into(new ArrayList<>());
 
         if (list.size() != 1) {
             return Optional.empty();
@@ -114,7 +113,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public Optional<User> getUser(@NotNull UUID uuid) {
-        var list = IterableUtils.toList(userCollection.find(Filters.eq("uuid", uuid.toString().toLowerCase())));
+        var list = userCollection.find(Filters.eq("uuid", uuid.toString().toLowerCase())).into(new ArrayList<>());
 
         if (list.size() != 1) {
             return Optional.empty();
@@ -158,7 +157,7 @@ public final class WhitelistManager implements Manager, ServerMonitorListener {
     @Override
     @NotNull
     public ImmutableList<User> getAllUser() {
-        List<Document> allDocuments = IterableUtils.toList(userCollection.find());
+        List<Document> allDocuments = userCollection.find().into(new ArrayList<>());
         List<User> users = new ArrayList<>();
 
         allDocuments.forEach(document -> {

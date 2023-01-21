@@ -1,40 +1,49 @@
 package ltd.kumo.plutomc.common.profile.impl;
 
+import lombok.Getter;
 import ltd.kumo.plutomc.common.profile.api.DataContainer;
 import ltd.kumo.plutomc.common.profile.api.Profile;
+import ltd.kumo.plutomc.common.profile.api.ProfileManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
 public final class PlayerProfile implements Profile {
     @NotNull
-    private final String NAME;
+    private final String name;
 
     @NotNull
-    private final UUID UUID;
+    private final UUID uuid;
 
-    private PlayerProfile(@NotNull String name, @NotNull UUID uuid) {
+    @NotNull
+    @Getter
+    private final ProfileManager profileManager;
+
+    public PlayerProfile(@NotNull final ProfileManager profileManager, @NotNull final String name, @NotNull final UUID uuid) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(uuid);
 
-        this.NAME = name;
-        this.UUID = uuid;
+        this.name = name;
+        this.uuid = uuid;
+        this.profileManager = profileManager;
     }
 
     @Override
-    public @NotNull DataContainer getCustomDataContainer() {
-        return null;
+    @NotNull
+    public Optional<DataContainer> getCustomDataContainer() {
+        return profileManager.getCustomDataContainer(this);
     }
 
     @Override
     public @NotNull String name() {
-        return NAME;
+        return name;
     }
 
     @Override
     public @NotNull UUID uuid() {
-        return UUID;
+        return uuid;
     }
 }
