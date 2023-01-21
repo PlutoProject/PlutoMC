@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     compileOnly("net.mamoe:mirai-core:2.13.3")
-    compileOnly("net.mamoe:mirai-console:2.13.2")
+    compileOnly("net.mamoe:mirai-console:2.13.3")
     compileOnly("org.mongodb:mongodb-driver-sync:4.8.2")
     compileOnly("org.mongodb:bson:4.8.2")
 
