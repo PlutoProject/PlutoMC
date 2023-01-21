@@ -2,8 +2,15 @@ package ltd.kumo.plutomc.framework.velocity.command;
 
 import com.velocitypowered.api.command.CommandSource;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 
 public abstract class VelocityCommandSender implements CommandSender {
+
+    private final CommandSource source;
+
+    public VelocityCommandSender(VelocityPlatform platform, CommandSource commandSource) {
+        this.source = commandSource;
+    }
 
     @Override
     public boolean isPlayer() {
@@ -20,6 +27,8 @@ public abstract class VelocityCommandSender implements CommandSender {
         return false;
     }
 
-    public abstract CommandSource asVelocity();
+    public CommandSource asVelocity() {
+        return this.source;
+    }
 
 }

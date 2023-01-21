@@ -9,11 +9,7 @@ public final class BukkitConsoleCommandSender extends BukkitCommandSender {
     public final static BukkitConsoleCommandSender INSTANCE = new BukkitConsoleCommandSender();
 
     private BukkitConsoleCommandSender() {
-    }
-
-    @Override
-    public CommandSender asBukkit() {
-        return Bukkit.getConsoleSender();
+        super(Bukkit.getConsoleSender());
     }
 
     @Override

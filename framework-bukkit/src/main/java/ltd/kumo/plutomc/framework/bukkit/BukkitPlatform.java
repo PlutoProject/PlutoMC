@@ -8,6 +8,7 @@ import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
 import ltd.kumo.plutomc.framework.bukkit.listeners.CommandListeners;
+import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
@@ -20,10 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings({"unused", "unchecked"})
 public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
@@ -129,6 +127,11 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
     @Override
     public void disable() {
         PlutoHologramsAPI.onDisable();
+    }
+
+    @Override
+    public @NotNull BukkitPlayer player(UUID uuid) {
+        return BukkitPlayer.of(uuid);
     }
 
 }

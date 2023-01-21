@@ -8,6 +8,7 @@ import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @SuppressWarnings("unused")
 public abstract class Platform<T> {
@@ -60,5 +61,8 @@ public abstract class Platform<T> {
     public abstract void enable();
 
     public abstract void disable();
+
+    @NotNull
+    public abstract Player<?> player(UUID uuid);
 
 }

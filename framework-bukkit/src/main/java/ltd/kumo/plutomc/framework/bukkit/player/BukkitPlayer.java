@@ -35,14 +35,19 @@ public final class BukkitPlayer extends BukkitCommandSender implements Player<or
     private Scene scene;
 
     private BukkitPlayer(@NotNull UUID player) {
+        super(Bukkit.getPlayer(player));
         this.player = player;
     }
 
     public static @NotNull BukkitPlayer of(org.bukkit.entity.Player player) {
-        if (CACHE.containsKey(player.getUniqueId()))
-            return CACHE.get(player.getUniqueId());
-        BukkitPlayer bukkitPlayer = new BukkitPlayer(player.getUniqueId());
-        CACHE.put(player.getUniqueId(), bukkitPlayer);
+        return of(player.getUniqueId());
+    }
+
+    public static @NotNull BukkitPlayer of(UUID uuid) {
+        if (CACHE.containsKey(uuid))
+            return CACHE.get(uuid);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(uuid);
+        CACHE.put(uuid, bukkitPlayer);
         return bukkitPlayer;
     }
 
