@@ -3,6 +3,8 @@ package ltd.kumo.plutomc.survival.bootstrap;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
+import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitPlayer;
+import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitPlayers;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentMessage;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
@@ -66,6 +68,18 @@ public class SurvivalBootstrap extends JavaPlugin {
                 .then("message", ArgumentMessage.class)
                 .executes((sender, context) -> {
                     sender.send("You send: " + context.argument(ArgumentMessage.class, "message"));
+                });
+        command.then("first")
+                .then("player", ArgumentBukkitPlayer.class)
+                .executes((bukkitCommandSender, commandContext) -> {
+                    commandContext.argument(ArgumentBukkitPlayer.class, "player")
+                            .send("Hello, world!");
+                });
+        command.then("second")
+                .then("players", ArgumentBukkitPlayers.class)
+                .executes((bukkitCommandSender, commandContext) -> {
+                    commandContext.argument(ArgumentBukkitPlayers.class, "players")
+                            .forEach(bukkitPlayer -> bukkitPlayer.send("Multi"));
                 });
         bukkitPlatform.registerCommand("pluto", command);
 

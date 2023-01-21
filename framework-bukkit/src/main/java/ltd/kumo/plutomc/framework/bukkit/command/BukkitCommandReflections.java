@@ -8,6 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 
+import java.util.Collection;
+
 @SuppressWarnings("unchecked")
 public final class BukkitCommandReflections {
 
@@ -24,6 +26,7 @@ public final class BukkitCommandReflections {
     public final static RawClass<?> CLASS_CRAFT_PLAYER = RawClass.of(Ref.obcClass("entity.CraftPlayer"));
     public final static RawClass<?> CLASS_I_CHAT_BASE_COMPONENT = RawClass.of(Ref.nmsClass("network.chat.IChatBaseComponent"));
     public final static RawClass<?> CLASS_ARGUMENT_CHAT = RawClass.of(Ref.nmsClass("commands.arguments.ArgumentChat"));
+    public final static RawClass<?> CLASS_ARGUMENT_ENTITY = RawClass.of(Ref.nmsClass("commands.arguments.ArgumentEntity"));
 
     public final static RawConstructor<Command> CONSTRUCTOR_VANILLA_COMMAND_WRAPPER;
 
@@ -41,6 +44,8 @@ public final class BukkitCommandReflections {
     public final static RawMethod METHOD_GET_BUKKIT_PLAYER;
     public final static RawMethod METHOD_GET_STRING;
     public final static RawMethod METHOD_GET_MESSAGE;
+    public final static RawMethod METHOD_GET_ENTITY_PLAYER;
+    public final static RawMethod METHOD_GET_ENTITY_PLAYERS;
 
     static {
         CONSTRUCTOR_VANILLA_COMMAND_WRAPPER = (RawConstructor<Command>) CLASS_VANILLA_COMMAND_WRAPPER.findConstructor(CLASS_COMMAND_DISPATCHER.original(), CommandNode.class);
@@ -59,6 +64,8 @@ public final class BukkitCommandReflections {
         METHOD_GET_BUKKIT_PLAYER = CLASS_ENTITY_PLAYER.findMethod(false, CLASS_CRAFT_PLAYER.original());
         METHOD_GET_STRING = CLASS_I_CHAT_BASE_COMPONENT.findMethod(false, String.class);
         METHOD_GET_MESSAGE = CLASS_ARGUMENT_CHAT.findMethod(true, CLASS_I_CHAT_BASE_COMPONENT.original(), CommandContext.class, String.class);
+        METHOD_GET_ENTITY_PLAYER = CLASS_ARGUMENT_ENTITY.findMethod(true, CLASS_ENTITY_PLAYER.original());
+        METHOD_GET_ENTITY_PLAYERS = CLASS_ARGUMENT_ENTITY.findMethod(true, Collection.class, 2);
     }
 
 }

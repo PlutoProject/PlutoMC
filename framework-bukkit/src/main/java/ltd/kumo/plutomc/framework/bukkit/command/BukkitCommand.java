@@ -175,11 +175,20 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
                 return suggestionsBuilder.buildFuture();
             }));
         builder.executes(commandContext -> {
-            CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
-            if (sender instanceof Player player && this.executorPlayer != null)
-                this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
-            else if (this.executor != null)
-                this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
+            try {
+                CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
+                if (sender instanceof Player player) {
+                    if (executorPlayer != null) {
+                        this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
+                    } else if (executor != null) {
+
+                    }
+                } else if (this.executor != null) {
+                    this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             return 1;
         });
         return builder;
