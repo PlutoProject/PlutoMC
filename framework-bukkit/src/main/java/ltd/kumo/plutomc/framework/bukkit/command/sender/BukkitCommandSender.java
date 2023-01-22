@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.bukkit.command;
+package ltd.kumo.plutomc.framework.bukkit.command.sender;
 
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
 

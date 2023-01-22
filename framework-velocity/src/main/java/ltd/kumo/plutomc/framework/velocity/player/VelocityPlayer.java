@@ -4,7 +4,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
-import ltd.kumo.plutomc.framework.velocity.command.VelocityCommandSender;
+import ltd.kumo.plutomc.framework.velocity.command.sender.VelocityCommandSender;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

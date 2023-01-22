@@ -7,7 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandSender;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitCommandSender;
 
 import java.util.ArrayList;
 import java.util.Collections;

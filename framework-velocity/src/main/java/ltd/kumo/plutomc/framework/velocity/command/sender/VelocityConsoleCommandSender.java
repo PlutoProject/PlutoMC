@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.velocity.command;
+package ltd.kumo.plutomc.framework.velocity.command.sender;
 
 import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import net.kyori.adventure.text.Component;

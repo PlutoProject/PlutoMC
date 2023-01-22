@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.*;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitCommandSender;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.arguments.*;
 import org.bukkit.Bukkit;

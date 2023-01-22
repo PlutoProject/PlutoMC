@@ -1,6 +1,6 @@
 package ltd.kumo.plutomc.framework.bukkit.player;
 
-import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandSender;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitCommandSender;
 import ltd.kumo.plutomc.framework.bukkit.event.BukkitPlayerQuitEvent;
 import ltd.kumo.plutomc.framework.bukkit.gui.Audience;
 import ltd.kumo.plutomc.framework.bukkit.gui.Scene;

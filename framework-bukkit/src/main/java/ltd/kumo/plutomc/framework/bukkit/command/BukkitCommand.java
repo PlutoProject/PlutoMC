@@ -9,6 +9,9 @@ import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitDouble;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitFloat;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitInteger;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitLong;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitBlockCommandSender;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitCommandSender;
+import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitConsoleCommandSender;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.Command;
@@ -18,6 +21,7 @@ import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentDouble;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentFloat;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentLong;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -181,6 +185,9 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
                     this.executor.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
                     return 1;
                 }
+            } else if (sender instanceof BlockCommandSender blockSender) {
+                this.executor.accept(new BukkitBlockCommandSender(blockSender), new BukkitCommandContext(this.platform, commandContext));
+                return 1;
             } else if (this.executor != null) {
                 this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
                 return 1;

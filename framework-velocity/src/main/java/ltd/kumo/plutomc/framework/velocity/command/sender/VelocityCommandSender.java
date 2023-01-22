@@ -1,4 +1,4 @@
-package ltd.kumo.plutomc.framework.velocity.command;
+package ltd.kumo.plutomc.framework.velocity.command.sender;
 
 import com.velocitypowered.api.command.CommandSource;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;

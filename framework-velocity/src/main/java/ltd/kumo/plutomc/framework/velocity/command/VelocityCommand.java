@@ -19,6 +19,8 @@ import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityDoub
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityFloat;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityInteger;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityLong;
+import ltd.kumo.plutomc.framework.velocity.command.sender.VelocityCommandSender;
+import ltd.kumo.plutomc.framework.velocity.command.sender.VelocityConsoleCommandSender;
 import ltd.kumo.plutomc.framework.velocity.player.VelocityPlayer;
 
 import java.util.ArrayList;
