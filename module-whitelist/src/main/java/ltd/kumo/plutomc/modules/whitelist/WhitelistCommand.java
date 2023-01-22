@@ -7,7 +7,11 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
+import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentLong;
+import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentString;
 import ltd.kumo.plutomc.framework.shared.utilities.colorpattle.Catppuccin;
+import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
+import ltd.kumo.plutomc.framework.velocity.command.VelocityCommand;
 import ltd.kumo.plutomc.modules.whitelist.utils.ProfileUtil;
 import net.kyori.adventure.text.Component;
 
@@ -20,6 +24,29 @@ public final class WhitelistCommand {
 
     public static BrigadierCommand brigadier() {
         return new BrigadierCommand(commandNode());
+    }
+
+    public static VelocityCommand pluto(VelocityPlatform platform) {
+        VelocityCommand command = platform.createCommand("whitelist");
+        command.then("add")
+                .then("playerName", ArgumentString.class)
+                .thenLong("qqNumber", 10000, Long.MAX_VALUE)
+                .executes((sender, context) -> {
+                    executeAdd(sender.asVelocity(),
+                            context.argument(ArgumentString.class, "playerName"),
+                            context.argument(ArgumentLong.class, "qqNumber"));
+                });
+        command.then("remove")
+                .then("playerName", ArgumentString.class)
+                .executes((sender, context) -> {
+                    executeRemove(sender.asVelocity(),
+                            context.argument(ArgumentString.class, "playerName"));
+                });
+        command.then("list")
+                .executes((sender, context) -> {
+                    executeList(sender.asVelocity());
+                });
+        return command;
     }
 
     private static LiteralCommandNode<CommandSource> commandNode() {

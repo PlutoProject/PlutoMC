@@ -51,7 +51,7 @@ public class VelocityCommandManager {
 
     @SuppressWarnings("unchecked")
     public void register(String prefix, VelocityCommand command) {
-        this.platform.getProxyServer().getCommandManager().register(new BrigadierCommand((LiteralArgumentBuilder<CommandSource>) command.toBrigadier()));
+        this.platform.getProxyServer().getCommandManager().register(command.name(), new BrigadierCommand((LiteralArgumentBuilder<CommandSource>) command.toBrigadier()), command.getAliases().toArray(new String[0]));
     }
 
     @SuppressWarnings("unchecked")

@@ -7,6 +7,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
 import ltd.kumo.plutomc.common.whitelistmanager.impl.WhitelistManager;
 import ltd.kumo.plutomc.framework.shared.Platform;
+import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import ltd.kumo.plutomc.framework.velocity.modules.VelocityModule;
 import ltd.kumo.plutomc.modules.whitelist.listeners.PlayerListeners;
 import okhttp3.OkHttpClient;
@@ -37,7 +38,6 @@ public final class WhitelistModule extends VelocityModule {
     @Getter
     private static ProxyServer server;
     @NotNull
-    @Getter
     private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();
     @NotNull
     private final File dataDir;
@@ -68,13 +68,13 @@ public final class WhitelistModule extends VelocityModule {
             }
 
             configHelper = new ConfigHelper(new File(dataDir, "config.toml"));
-            whitelistManager = new WhitelistManager(
-                    configHelper.get("mongodb.host", "mongodb"),
-                    configHelper.get("mongodb.port", 27017),
-                    configHelper.get("mongodb.user", "whitelist"),
-                    configHelper.get("mongodb.password", "12345"),
-                    configHelper.get("mongodb.database", "whitelist")
-            );
+            //whitelistManager = new WhitelistManager(
+            //        configHelper.get("mongodb.host", "mongodb"),
+            //        configHelper.get("mongodb.port", 27017),
+            //        configHelper.get("mongodb.user", "whitelist"),
+            //        configHelper.get("mongodb.password", "12345"),
+            //        configHelper.get("mongodb.database", "whitelist")
+            //);
 
             configHelper.getFileConfig().save();
         } catch (Exception e) {
@@ -84,6 +84,7 @@ public final class WhitelistModule extends VelocityModule {
 
         LISTENERS.forEach(listener -> listener(Objects.requireNonNull(server), listener));
         COMMANDS.forEach(command -> command(Objects.requireNonNull(server), "whitelist", Objects.requireNonNull(command), "wl"));
+        // FIXME: this.platform.registerCommand("pluto", WhitelistCommand.pluto((VelocityPlatform) this.platform));
     }
 
     @Override
@@ -95,4 +96,9 @@ public final class WhitelistModule extends VelocityModule {
     public void reload() {
 
     }
+
+    public static OkHttpClient getHttpClient() {
+        return HTTP_CLIENT;
+    }
+
 }
