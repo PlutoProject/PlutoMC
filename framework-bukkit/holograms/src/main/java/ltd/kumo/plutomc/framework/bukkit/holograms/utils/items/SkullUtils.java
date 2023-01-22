@@ -61,7 +61,7 @@ public final class SkullUtils {
 
             PropertyMap properties = profile.getProperties();
             Collection<Property> property = properties.get("textures");
-            if (property != null && !property.isEmpty()) {
+            if (!property.isEmpty()) {
                 return property.stream().findFirst().get().getValue();
             }
         } catch (Exception e) {

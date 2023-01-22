@@ -59,8 +59,9 @@ public class BukkitCommandManager implements Listener {
         this.argumentImplementers.put(ArgumentBukkitMessage.class, argumentBukkitMessage);
 
         this.argumentImplementers.put(ArgumentBukkitPlayer.class, new ArgumentBukkitPlayer());
-
         this.argumentImplementers.put(ArgumentBukkitPlayers.class, new ArgumentBukkitPlayers());
+        this.argumentImplementers.put(ArgumentBukkitWorld.class, new ArgumentBukkitWorld());
+        this.argumentImplementers.put(ArgumentBukkitVector.class, new ArgumentBukkitVector());
 
         this.commandMap = Bukkit.getServer().getCommandMap();
     }

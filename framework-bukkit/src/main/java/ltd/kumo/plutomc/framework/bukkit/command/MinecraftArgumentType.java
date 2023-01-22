@@ -159,7 +159,7 @@ public enum MinecraftArgumentType {
      * A location, represented as 3 numbers (which may have a decimal point, but will be moved to the
      * center of a block if none is specified). May use relative locations with ~.
      */
-    VECTOR_3("coordinates.ArgumentVec3"),
+    VECTOR_3("coordinates.ArgumentVec3", boolean.class),
 
     /**
      * A location, represented as 2 numbers (which may have a decimal point, but will be moved to the center

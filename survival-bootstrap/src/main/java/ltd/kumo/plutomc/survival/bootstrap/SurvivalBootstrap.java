@@ -55,8 +55,8 @@ public class SurvivalBootstrap extends JavaPlugin {
         /*
         BukkitCommand command = bukkitPlatform.createCommand("test");
         command.executes((bukkitCommandSender, context) -> {
-            bukkitCommandSender.send("Hello world!");
-        })
+                    bukkitCommandSender.send("Hello world!");
+                })
                 .thenInteger("age", 1, 18)
                 .suggests(suggestion -> suggestion.suggests(1).suggests(18))
                 .executes((bukkitCommandSender, context) -> {
@@ -77,6 +77,14 @@ public class SurvivalBootstrap extends JavaPlugin {
                 .executes((bukkitCommandSender, commandContext) -> {
                     commandContext.argument(ArgumentBukkitPlayers.class, "players")
                             .forEach(bukkitPlayer -> bukkitPlayer.send("Multi"));
+                });
+        command.then("setblock")
+                .then("world", ArgumentBukkitWorld.class)
+                .then("location", ArgumentBukkitVector.class)
+                .executes((sender, context) -> {
+                    World world = context.argument(ArgumentBukkitWorld.class, "world");
+                    Vector vector = context.argument(ArgumentBukkitVector.class, "location");
+                    vector.toLocation(world).getBlock().setType(Material.DIAMOND_BLOCK);
                 });
         bukkitPlatform.registerCommand("pluto", command);
         */
