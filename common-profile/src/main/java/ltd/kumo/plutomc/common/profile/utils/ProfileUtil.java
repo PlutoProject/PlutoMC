@@ -59,7 +59,7 @@ public final class ProfileUtil {
 
             String responseStr = responseBody.string();
             return Optional.of(JsonParser.parseString(responseStr).getAsJsonObject());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
