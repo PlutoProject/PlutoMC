@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 @Getter
@@ -321,28 +322,27 @@ public class HologramLine extends HologramObject {
         if (isDisabled())
             return;
         NMS nms = NMS.getInstance();
-        boolean shouldBreak;
+        BiConsumer<NMS, Player> consumer = getTypeConsumer();
         for (Player player : getPlayers(false, players)) {
-            shouldBreak = false;
             if (player == null)
                 continue;
             if (parent != null && parent.getParent().isHideState(player))
                 continue;
             if (isVisible(player) || canShow(player) || isInDisplayRange(player))
                 continue;
-            switch (type) {
-                case TEXT -> showText(nms, player);
-                case HEAD, SMALLHEAD -> showHead(nms, player);
-                case ICON -> showIcon(nms, player);
-                case ENTITY -> {
-                    if (!showEntity(nms, player))
-                        shouldBreak = true;
-                }
-            }
-            if (shouldBreak)
-                break;
+            consumer.accept(nms, player);
             viewers.add(player.getUniqueId());
         }
+    }
+
+    private BiConsumer<NMS, Player> getTypeConsumer() {
+        return switch (type) {
+            case TEXT -> this::showText;
+            case HEAD, SMALLHEAD -> this::showHead;
+            case ICON -> this::showIcon;
+            case ENTITY -> this::showEntity;
+            default -> null;
+        };
     }
 
     private void showText(NMS nms, Player player) {
@@ -363,17 +363,16 @@ public class HologramLine extends HologramObject {
         nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
     }
 
-    private boolean showEntity(NMS nms, Player player) {
+    private void showEntity(NMS nms, Player player) {
         EntityType entityType = new HologramEntity(PAPI.setPlaceholders(player, getEntity().getContent())).getType();
         if (entityType == null || !PlutoEntityType.isAllowed(entityType))
-            return false;
+            return;
         nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, true, false);
         if (entity.getType().isAlive())
             nms.showFakeEntityLiving(player, getLocation(), entityType, entityIds[1]);
         else
             nms.showFakeEntity(player, getLocation(), entityType, entityIds[1]);
         nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
-        return true;
     }
 
     /**
