@@ -318,53 +318,45 @@ public class HologramLine extends HologramObject {
      * @param players Given players.
      */
     public void show(Player... players) {
-        if (isDisabled()) {
+        if (isDisabled())
             return;
-        }
-        List<Player> playerList = getPlayers(false, players);
         NMS nms = NMS.getInstance();
-        for (Player player : playerList) {
-            if (player == null) {
+        for (Player player : getPlayers(false, players)) {
+            if (player == null)
                 continue;
-            }
-            if (parent != null && parent.getParent().isHideState(player)) {
+            if (parent != null && parent.getParent().isHideState(player))
                 continue;
-            }
-            if (!isVisible(player) && canShow(player) && isInDisplayRange(player)) {
-                switch (type) {
-                    case TEXT:
-                        nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, !HologramLineType.HEAD.equals(type), false);
-                        nms.updateFakeEntityCustomName(player, getText(player, true), entityIds[0]);
-                        break;
-                    case HEAD:
-                    case SMALLHEAD:
-                        nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, !HologramLineType.HEAD.equals(type), false);
-                        ItemStack itemStack = containsPlaceholders ? HologramItem.parseItemStack(item.getContent(), player) : item.parse();
-                        nms.helmetFakeEntity(player, itemStack, entityIds[0]);
-                        break;
-                    case ICON:
-                        nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, true, false);
-                        ItemStack itemStack1 = containsPlaceholders ? HologramItem.parseItemStack(item.getContent(), player) : item.parse();
-                        nms.showFakeEntityItem(player, getLocation(), itemStack1, entityIds[1]);
-                        nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
-                        break;
-                    case ENTITY:
-                        EntityType entityType = new HologramEntity(PAPI.setPlaceholders(player, getEntity().getContent())).getType();
-                        if (entityType == null || !PlutoEntityType.isAllowed(entityType)) break;
-                        nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, true, false);
-
-                        if (entity.getType().isAlive()) {
-                            nms.showFakeEntityLiving(player, getLocation(), entityType, entityIds[1]);
-                        } else {
-                            nms.showFakeEntity(player, getLocation(), entityType, entityIds[1]);
-                        }
-                        nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
-                        break;
-                    default:
-                        break;
+            if (isVisible(player) || canShow(player) || isInDisplayRange(player))
+                continue;
+            switch (type) {
+                case TEXT -> {
+                    nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, !HologramLineType.HEAD.equals(type), false);
+                    nms.updateFakeEntityCustomName(player, getText(player, true), entityIds[0]);
                 }
-                viewers.add(player.getUniqueId());
+                case HEAD, SMALLHEAD -> {
+                    nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, !HologramLineType.HEAD.equals(type), false);
+                    ItemStack itemStack = containsPlaceholders ? HologramItem.parseItemStack(item.getContent(), player) : item.parse();
+                    nms.helmetFakeEntity(player, itemStack, entityIds[0]);
+                }
+                case ICON -> {
+                    nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, true, false);
+                    ItemStack itemStack1 = containsPlaceholders ? HologramItem.parseItemStack(item.getContent(), player) : item.parse();
+                    nms.showFakeEntityItem(player, getLocation(), itemStack1, entityIds[1]);
+                    nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
+                }
+                case ENTITY -> {
+                    EntityType entityType = new HologramEntity(PAPI.setPlaceholders(player, getEntity().getContent())).getType();
+                    if (entityType == null || !PlutoEntityType.isAllowed(entityType))
+                        break;
+                    nms.showFakeEntityArmorStand(player, getLocation(), entityIds[0], true, true, false);
+                    if (entity.getType().isAlive())
+                        nms.showFakeEntityLiving(player, getLocation(), entityType, entityIds[1]);
+                    else
+                        nms.showFakeEntity(player, getLocation(), entityType, entityIds[1]);
+                    nms.attachFakeEntity(player, entityIds[0], entityIds[1]);
+                }
             }
+            viewers.add(player.getUniqueId());
         }
     }
 
