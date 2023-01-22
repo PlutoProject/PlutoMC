@@ -37,6 +37,7 @@ public class PacketListener {
         }
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean hook(Player player) {
         if (usingProtocolLib) {
             return true;

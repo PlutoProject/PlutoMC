@@ -33,13 +33,13 @@ public class ProxyBootstrap {
     private static PluginContainer pluginContainer;
     @NotNull
     @Getter
-    private ProxyServer server;
+    private final ProxyServer server;
     @NotNull
     @Getter
-    private Logger logger;
+    private final Logger logger;
     @NotNull
     @Getter
-    private Path dataDir;
+    private final Path dataDir;
 
 
     @Inject

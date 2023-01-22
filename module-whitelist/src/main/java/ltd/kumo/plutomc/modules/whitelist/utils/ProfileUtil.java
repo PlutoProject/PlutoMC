@@ -22,7 +22,7 @@ public final class ProfileUtil {
         Request request = new Request.Builder()
                 .url(requestUrl)
                 .build();
-        Call call = WhitelistModule.getOkHttpClient().newCall(request);
+        Call call = WhitelistModule.getHttpClient().newCall(request);
         Response response = call.execute();
         ResponseBody responseBody = response.body();
 

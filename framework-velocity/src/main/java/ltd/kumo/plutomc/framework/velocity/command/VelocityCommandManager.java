@@ -49,6 +49,7 @@ public class VelocityCommandManager {
         this.argumentImplementers.put(ArgumentVelocityMessage.class, argumentVelocityMessage);
     }
 
+    @SuppressWarnings("unchecked")
     public void register(String prefix, VelocityCommand command) {
         this.platform.getProxyServer().getCommandManager().register(new BrigadierCommand((LiteralArgumentBuilder<CommandSource>) command.toBrigadier()));
     }

@@ -80,6 +80,7 @@ public class AnimationManager extends Ticked {
         return this.animationMap.put(name, animation);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public TextAnimation registerAnimation(@NonNull TextAnimation animation) {
         return this.animationMap.put(animation.getName(), animation);
     }

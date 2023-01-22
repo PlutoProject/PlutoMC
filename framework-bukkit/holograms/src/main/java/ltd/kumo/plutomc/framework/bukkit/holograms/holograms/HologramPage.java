@@ -41,7 +41,7 @@ public class HologramPage extends FlagHolder {
      *	General Methods
      */
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SameReturnValue"})
     public boolean hasOffsets() {
         return true; // Not used, just ignore.
     }
@@ -152,6 +152,7 @@ public class HologramPage extends FlagHolder {
      * @param line New line.
      * @return Boolean whether the operation was successful.
      */
+    @SuppressWarnings("SameReturnValue")
     public boolean addLine(@NonNull HologramLine line) {
         lines.add(line);
         parent.getViewerPlayers(index).forEach(line::show);

@@ -126,11 +126,6 @@ public class Hologram extends UpdatingHologramObject implements ITicked {
     }
 
     @Override
-    public void delete() {
-        super.delete();
-    }
-
-    @Override
     public void destroy() {
         this.disable(DisableCause.API);
         this.viewerPages.clear();
@@ -319,6 +314,7 @@ public class Hologram extends UpdatingHologramObject implements ITicked {
      * @param player player
      * @return state
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isShowState(@NonNull Player player) {
         return showPlayers.contains(player.getUniqueId());
     }

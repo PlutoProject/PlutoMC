@@ -6,6 +6,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import ltd.kumo.plutomc.framework.bukkit.holograms.utils.reflect.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -153,7 +154,7 @@ public final class SkullUtils {
     public static String getSkullOwner(@NonNull ItemStack itemStack) {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta instanceof SkullMeta) {
-            return ((SkullMeta) meta).getOwner();
+            return ((SkullMeta) meta).getOwnerProfile().getName();
         }
         return null;
     }
@@ -168,7 +169,7 @@ public final class SkullUtils {
     public static void setSkullOwner(@NonNull ItemStack itemStack, @NonNull String owner) {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta instanceof SkullMeta) {
-            ((SkullMeta) meta).setOwner(owner);
+            ((SkullMeta) meta).setOwnerProfile(Bukkit.createPlayerProfile(owner));
 
             itemStack.setItemMeta(meta);
 

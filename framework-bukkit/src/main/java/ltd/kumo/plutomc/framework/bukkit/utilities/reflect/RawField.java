@@ -11,7 +11,6 @@ public class RawField {
         this.field.trySetAccessible();
     }
 
-    @SuppressWarnings("unchecked")
     public Object get(Object object) {
         try {
             return this.field.get(object);
@@ -20,7 +19,6 @@ public class RawField {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public Object getStatic() {
         try {
             return this.field.get(null);

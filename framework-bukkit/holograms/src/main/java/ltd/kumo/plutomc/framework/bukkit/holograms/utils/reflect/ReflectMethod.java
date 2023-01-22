@@ -27,6 +27,7 @@ public class ReflectMethod {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T invoke(Object instance, Object... args) {
         this.init();
 
@@ -39,6 +40,7 @@ public class ReflectMethod {
         return object == null ? null : (T) object;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T invokeStatic(Object... args) {
         this.init();
 

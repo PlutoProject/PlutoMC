@@ -13,6 +13,7 @@ public final class LocationUtility {
     private LocationUtility() {
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isOnSomething(@NotNull Location location, @NotNull Collection<Material> materials) {
         Objects.requireNonNull(location);
         Objects.requireNonNull(materials);

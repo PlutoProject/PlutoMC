@@ -235,8 +235,7 @@ public final class HologramService implements Service<HologramService> {
     @Nullable
     public HologramPage removeHologramPage(Hologram hologram, int index) throws IllegalArgumentException {
         Preconditions.checkNotNull(hologram);
-        HologramPage page = hologram.removePage(index);
-        return page;
+        return hologram.removePage(index);
     }
 
     /**
@@ -741,8 +740,7 @@ public final class HologramService implements Service<HologramService> {
         if (page == null) {
             throw new IllegalArgumentException("Given page index is out of bounds for the hologram.");
         }
-        HologramLine line = page.removeLine(lineIndex);
-        return line;
+        return page.removeLine(lineIndex);
     }
 
     /**
@@ -756,8 +754,7 @@ public final class HologramService implements Service<HologramService> {
     @Nullable
     public HologramLine removeHologramLine(HologramPage page, int lineIndex) throws IllegalArgumentException {
         Preconditions.checkNotNull(page);
-        HologramLine line = page.removeLine(lineIndex);
-        return line;
+        return page.removeLine(lineIndex);
     }
 
     /**

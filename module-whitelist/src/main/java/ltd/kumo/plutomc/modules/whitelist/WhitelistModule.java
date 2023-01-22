@@ -38,7 +38,7 @@ public final class WhitelistModule extends VelocityModule {
     private static ProxyServer server;
     @NotNull
     @Getter
-    private static OkHttpClient okHttpClient = new OkHttpClient();
+    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();
     @NotNull
     private final File dataDir;
 

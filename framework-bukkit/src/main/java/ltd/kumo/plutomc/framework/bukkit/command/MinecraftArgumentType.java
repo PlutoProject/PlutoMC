@@ -279,6 +279,7 @@ public enum MinecraftArgumentType {
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     public static void ensureSetup() {
         // do nothing - this is only called to trigger the static initializer
     }

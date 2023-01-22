@@ -25,6 +25,7 @@ public class ReflectConstructor {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T newInstance(Object... args) {
         this.init();
 

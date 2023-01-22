@@ -20,12 +20,14 @@ public abstract class Module {
     @NotNull
     public abstract String name();
 
+    @SuppressWarnings("SameReturnValue")
     public abstract boolean shouldBeEnabled();
 
     public abstract void initial();
 
     public abstract void terminate();
 
+    @SuppressWarnings("EmptyMethod")
     public abstract void reload();
 
     @NotNull

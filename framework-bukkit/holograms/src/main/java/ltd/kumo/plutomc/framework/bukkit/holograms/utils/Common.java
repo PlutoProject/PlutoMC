@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Common {
 
     private static final Pattern SPACING_CHARS_REGEX;
-    public static String PREFIX;
+    public static final String PREFIX;
 
     static {
         SPACING_CHARS_REGEX = Pattern.compile("[_ \\-]+");

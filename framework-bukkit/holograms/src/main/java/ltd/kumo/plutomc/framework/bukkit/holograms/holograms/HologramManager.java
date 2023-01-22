@@ -20,26 +20,11 @@ public class HologramManager extends Ticked {
     private final @NonNull Map<UUID, Long> clickCooldowns;
     private final @NonNull Set<HologramLine> temporaryLines;
 
-    /**
-     * Map of holograms to load, when their respective worls loads.
-     * <p>
-     * There were issues with world management plugins loading worlds
-     * after holograms. Due to that, holograms in these worlds were skipped
-     * as we can't load holograms, that don't have their world all loaded.
-     * <p>
-     * Key is the name of the world, and Value is a set of file names
-     * of all holograms, that couldn't be loaded due to this world problem.
-     *
-     * @since 2.7.4
-     */
-    private final @NonNull Map<String, Set<String>> toLoad;
-
     public HologramManager() {
         super(20L);
         this.hologramMap = new ConcurrentHashMap<>();
         this.clickCooldowns = new ConcurrentHashMap<>();
         this.temporaryLines = Collections.synchronizedSet(new HashSet<>());
-        this.toLoad = new ConcurrentHashMap<>();
         this.register();
 
         S.async(this::reload); // Reload when worlds are ready
