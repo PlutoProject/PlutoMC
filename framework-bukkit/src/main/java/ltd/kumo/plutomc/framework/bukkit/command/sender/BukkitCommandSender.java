@@ -1,6 +1,7 @@
 package ltd.kumo.plutomc.framework.bukkit.command.sender;
 
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import net.kyori.adventure.text.Component;
 
 public abstract class BukkitCommandSender implements CommandSender {
 
@@ -8,6 +9,16 @@ public abstract class BukkitCommandSender implements CommandSender {
 
     public BukkitCommandSender(org.bukkit.command.CommandSender sender) {
         this.sender = sender;
+    }
+
+    @Override
+    public void send(String message) {
+        this.asBukkit().sendMessage(message);
+    }
+
+    @Override
+    public void send(Component message) {
+        this.asBukkit().sendMessage(message);
     }
 
     @Override

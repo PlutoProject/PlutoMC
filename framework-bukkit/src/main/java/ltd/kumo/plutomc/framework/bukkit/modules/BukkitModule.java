@@ -1,6 +1,7 @@
 package ltd.kumo.plutomc.framework.bukkit.modules;
 
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
+import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabExecutor;
@@ -35,5 +36,10 @@ public abstract class BukkitModule extends Module {
     @NotNull
     public Logger logger() {
         return Logger.getLogger("BukkitPlatform - " + name());
+    }
+
+    @Override
+    public @NotNull BukkitPlatform platform() {
+        return (BukkitPlatform) this.platform;
     }
 }

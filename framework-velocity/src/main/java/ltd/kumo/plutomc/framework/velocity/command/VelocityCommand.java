@@ -8,28 +8,28 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.Command;
-import ltd.kumo.plutomc.framework.shared.command.CommandContext;
 import ltd.kumo.plutomc.framework.shared.command.Suggestion;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentDouble;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentFloat;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentLong;
+import ltd.kumo.plutomc.framework.shared.command.executors.Executor;
 import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityDouble;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityFloat;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityInteger;
 import ltd.kumo.plutomc.framework.velocity.command.argument.ArgumentVelocityLong;
+import ltd.kumo.plutomc.framework.velocity.command.executor.VelocityPlayerExecutor;
 import ltd.kumo.plutomc.framework.velocity.command.sender.VelocityCommandSender;
 import ltd.kumo.plutomc.framework.velocity.command.sender.VelocityConsoleCommandSender;
 import ltd.kumo.plutomc.framework.velocity.player.VelocityPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class VelocityCommand implements Command<VelocityCommandSender, VelocityPlayer> {
+public class VelocityCommand implements Command<VelocityCommandSender, VelocityPlayer, VelocityPlayerExecutor> {
 
     private final VelocityPlatform platform;
     private final String name;
@@ -37,8 +37,8 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
     private final VelocityArgument<?> argumentType;
     private final ArgumentType<?> brigadierType;
     private final List<VelocityCommand> children = new ArrayList<>();
-    private BiConsumer<VelocityCommandSender, CommandContext> executor;
-    private BiConsumer<VelocityPlayer, CommandContext> executorPlayer;
+    private Executor executor;
+    private VelocityPlayerExecutor executorPlayer;
     private Consumer<Suggestion> suggestion;
     private Predicate<VelocityCommandSender> requirement;
     private final List<String> aliases = new ArrayList<>();
@@ -82,13 +82,13 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
     }
 
     @Override
-    public VelocityCommand executes(BiConsumer<VelocityCommandSender, CommandContext> executor) {
+    public VelocityCommand executes(Executor executor) {
         this.executor = executor;
         return this;
     }
 
     @Override
-    public VelocityCommand executesPlayer(BiConsumer<VelocityPlayer, CommandContext> executor) {
+    public VelocityCommand executesPlayer(VelocityPlayerExecutor executor) {
         this.executorPlayer = executor;
         return this;
     }
@@ -179,9 +179,9 @@ public class VelocityCommand implements Command<VelocityCommandSender, VelocityP
             }));
         builder.executes(commandContext -> {
             if (commandContext.getSource() instanceof Player && this.executorPlayer != null)
-                this.executorPlayer.accept(VelocityPlayer.of((Player) commandContext.getSource(), this.platform), new VelocityCommandContext(this.platform, commandContext));
+                this.executorPlayer.executes(VelocityPlayer.of((Player) commandContext.getSource(), this.platform), new VelocityCommandContext(this.platform, commandContext));
             else if (this.executor != null)
-                this.executor.accept(VelocityConsoleCommandSender.instance(this.platform), new VelocityCommandContext(this.platform, commandContext));
+                this.executor.executes(VelocityConsoleCommandSender.instance(this.platform), new VelocityCommandContext(this.platform, commandContext));
             return 1;
         });
         return builder;

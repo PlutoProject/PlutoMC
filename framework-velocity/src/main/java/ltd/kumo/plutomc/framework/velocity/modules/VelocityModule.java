@@ -6,6 +6,7 @@ import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.proxy.ProxyServer;
 import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.modules.Module;
+import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -51,5 +52,10 @@ public abstract class VelocityModule extends Module {
         Objects.requireNonNull(command);
 
         proxyServer.getCommandManager().register(command);
+    }
+
+    @Override
+    public @NotNull VelocityPlatform platform() {
+        return (VelocityPlatform) this.platform;
     }
 }

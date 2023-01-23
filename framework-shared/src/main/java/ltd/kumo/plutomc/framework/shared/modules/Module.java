@@ -32,4 +32,7 @@ public abstract class Module {
 
     @NotNull
     public abstract Logger logger();
+
+    @NotNull
+    public abstract Platform<?> platform();
 }

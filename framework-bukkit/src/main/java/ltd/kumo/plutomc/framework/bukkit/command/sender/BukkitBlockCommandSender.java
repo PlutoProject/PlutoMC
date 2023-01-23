@@ -15,11 +15,6 @@ public class BukkitBlockCommandSender extends BukkitCommandSender {
     }
 
     @Override
-    public void send(String message) {
-        asBukkit().sendMessage(message);
-    }
-
-    @Override
     public boolean isBlock() {
         return true;
     }

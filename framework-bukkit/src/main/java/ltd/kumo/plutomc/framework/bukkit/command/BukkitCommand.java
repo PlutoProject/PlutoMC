@@ -9,37 +9,37 @@ import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitDouble;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitFloat;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitInteger;
 import ltd.kumo.plutomc.framework.bukkit.command.argument.ArgumentBukkitLong;
+import ltd.kumo.plutomc.framework.bukkit.command.executor.BukkitPlayerExecutor;
 import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitBlockCommandSender;
 import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitCommandSender;
 import ltd.kumo.plutomc.framework.bukkit.command.sender.BukkitConsoleCommandSender;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.shared.command.Argument;
 import ltd.kumo.plutomc.framework.shared.command.Command;
-import ltd.kumo.plutomc.framework.shared.command.CommandContext;
 import ltd.kumo.plutomc.framework.shared.command.Suggestion;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentDouble;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentFloat;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentInteger;
 import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentLong;
+import ltd.kumo.plutomc.framework.shared.command.executors.Executor;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer> {
+public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer, BukkitPlayerExecutor> {
 
     private final BukkitPlatform platform;
     private final String name;
     private final boolean argument;
     private final ArgumentType<?> brigadierType;
     private final List<BukkitCommand> children = new ArrayList<>();
-    private BiConsumer<BukkitCommandSender, CommandContext> executor;
-    private BiConsumer<BukkitPlayer, CommandContext> executorPlayer;
+    private Executor executor;
+    private BukkitPlayerExecutor executorPlayer;
     private Consumer<Suggestion> suggestion;
     private Predicate<BukkitCommandSender> requirement;
     private final List<String> aliases = new ArrayList<>();
@@ -82,13 +82,13 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
     }
 
     @Override
-    public BukkitCommand executes(BiConsumer<BukkitCommandSender, CommandContext> executor) {
+    public BukkitCommand executes(Executor executor) {
         this.executor = executor;
         return this;
     }
 
     @Override
-    public BukkitCommand executesPlayer(BiConsumer<BukkitPlayer, CommandContext> executor) {
+    public BukkitCommand executesPlayer(BukkitPlayerExecutor executor) {
         this.executorPlayer = executor;
         return this;
     }
@@ -179,17 +179,17 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer>
             CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
             if (sender instanceof Player player) {
                 if (executorPlayer != null) {
-                    this.executorPlayer.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
+                    this.executorPlayer.executes(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
                     return 1;
                 } else if (executor != null) {
-                    this.executor.accept(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
+                    this.executor.executes(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
                     return 1;
                 }
             } else if (sender instanceof BlockCommandSender blockSender) {
-                this.executor.accept(new BukkitBlockCommandSender(blockSender), new BukkitCommandContext(this.platform, commandContext));
+                this.executor.executes(new BukkitBlockCommandSender(blockSender), new BukkitCommandContext(this.platform, commandContext));
                 return 1;
             } else if (this.executor != null) {
-                this.executor.accept(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
+                this.executor.executes(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
                 return 1;
             }
             return 0;

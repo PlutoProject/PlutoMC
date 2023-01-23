@@ -1,5 +1,6 @@
 package ltd.kumo.plutomc.framework.shared.command;
 
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public interface CommandSender {
@@ -18,6 +19,13 @@ public interface CommandSender {
      * @param message 消息文本
      */
     void send(String message);
+
+    /**
+     * 向指令发送者发送消息
+     *
+     * @param message 消息文本
+     */
+    void send(Component message);
 
     /**
      * 判断发送者是否是玩家

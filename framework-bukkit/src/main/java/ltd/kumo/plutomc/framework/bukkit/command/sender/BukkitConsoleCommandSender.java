@@ -17,11 +17,6 @@ public final class BukkitConsoleCommandSender extends BukkitCommandSender {
     }
 
     @Override
-    public void send(String message) {
-        asBukkit().sendMessage(message);
-    }
-
-    @Override
     public boolean isConsole() {
         return true;
     }
