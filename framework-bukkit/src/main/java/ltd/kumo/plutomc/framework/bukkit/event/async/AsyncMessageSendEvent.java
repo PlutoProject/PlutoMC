@@ -1,5 +1,6 @@
 package ltd.kumo.plutomc.framework.bukkit.event.async;
 
+import com.google.common.base.Preconditions;
 import ltd.kumo.plutomc.framework.bukkit.utilities.reflect.RawClass;
 import ltd.kumo.plutomc.framework.bukkit.utilities.reflect.RawConstructor;
 import ltd.kumo.plutomc.framework.bukkit.utilities.reflect.RawField;
@@ -93,6 +94,11 @@ public class AsyncMessageSendEvent extends Event implements Cancellable {
         if (event.getContent() == null)
             return null;
         return CONSTRUCTOR.newInstance(event.getContent(), null, event.isOverlay());
+    }
+
+    public static Object createPacket(Component component, boolean overlay) {
+        Preconditions.checkNotNull(component);
+        return CONSTRUCTOR.newInstance(component, null, overlay);
     }
 
 }
