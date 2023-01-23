@@ -7,6 +7,7 @@ import ltd.kumo.plutomc.framework.bukkit.economy.BukkitEconomyService;
 import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
 import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
+import ltd.kumo.plutomc.framework.bukkit.injector.ProtocolInjector;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
@@ -28,6 +29,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
     private final Map<Class<?>, Service<?>> services = new HashMap<>();
     private BukkitCommandManager commandManager;
+    private ProtocolInjector injector;
 
     private BukkitPlatform(@NotNull JavaPlugin plugin) {
         super(plugin);
@@ -111,6 +113,8 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
     @Override
     public void enable() {
+        this.injector = new ProtocolInjector(this);
+
         this.commandManager = new BukkitCommandManager(this);
 
         PlutoHologramsAPI.onEnable();
@@ -127,6 +131,8 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
     @Override
     public void disable() {
+        if (this.injector != null && !this.injector.isClosed())
+            this.injector.close();
         PlutoHologramsAPI.onDisable();
     }
 

@@ -107,4 +107,8 @@ public class RawClass<T> {
         return true;
     }
 
+    public boolean isInstance(Object packet) {
+        return this.type.isInstance(packet);
+    }
+
 }

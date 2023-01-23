@@ -52,6 +52,21 @@ public class SurvivalBootstrap extends JavaPlugin {
                 new EconomyModule(bukkitPlatform)
         ));
 
+        // Test for Protocol Injector
+        /*
+        BukkitCommand command = bukkitPlatform.createCommand("injector");
+        command.executes(((sender, context) -> {
+            sender.send("Hello world!");
+        }));
+        bukkitPlatform.registerCommand("pluto", command);
+        Bukkit.getPluginManager().registerEvents(new Listener() {
+            @EventHandler
+            public void test(AsyncMessageSendEvent event) {
+                event.setContent(Component.text("Successfully"));
+            }
+        }, this);
+        */
+
         // Test code, don't delete! Test is still in need!
         // Command test
         /*
