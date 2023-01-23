@@ -1,7 +1,7 @@
 package ltd.kumo.plutomc.framework.bukkit.command;
 
 import com.mojang.brigadier.arguments.ArgumentType;
-import ltd.kumo.plutomc.framework.bukkit.utilities.ReflectionUtility;
+import ltd.kumo.plutomc.framework.bukkit.utilities.reflect.Ref;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -263,17 +263,7 @@ public enum MinecraftArgumentType {
     }
 
     private static Class<?> resolveArgumentClass(String name) {
-        try {
-            if (ReflectionUtility.minecraftVersion() > 16) {
-                return ReflectionUtility.mcClass("commands.arguments." + name);
-            } else {
-                String stripped;
-                if (name.lastIndexOf('.') != -1)
-                    stripped = name.substring(name.lastIndexOf('.'));
-                else
-                    stripped = name;
-                return ReflectionUtility.nmsClass(stripped);
-            }
+        try {return Ref.nmsClass("commands.arguments." + name);
         } catch (Throwable t) {
             return null;
         }
