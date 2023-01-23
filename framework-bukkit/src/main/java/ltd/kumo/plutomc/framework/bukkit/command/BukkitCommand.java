@@ -175,25 +175,35 @@ public class BukkitCommand implements Command<BukkitCommandSender, BukkitPlayer,
                 bukkitSuggestion.getIntSuggestions().forEach(suggestionsBuilder::suggest);
                 return suggestionsBuilder.buildFuture();
             }));
-        builder.executes(commandContext -> {
-            CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
-            if (sender instanceof Player player) {
-                if (executorPlayer != null) {
-                    this.executorPlayer.executes(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
-                    return 1;
-                } else if (executor != null) {
-                    this.executor.executes(BukkitPlayer.of(player), new BukkitCommandContext(this.platform, commandContext));
-                    return 1;
+        if (executorPlayer != null || executor != null)
+            builder.executes(commandContext -> {
+                BukkitCommandContext context = new BukkitCommandContext(this.platform, commandContext);
+                CommandSender sender = (CommandSender) BukkitCommandReflections.METHOD_GET_BUKKIT_SENDER.invoke(commandContext.getSource());
+                if (sender instanceof Player player) {
+                    if (executorPlayer != null) {
+                        this.executorPlayer.executes(BukkitPlayer.of(player), context);
+                        return 1;
+                    } else if (executor != null) {
+                        this.executor.executes(BukkitPlayer.of(player), context);
+                        return 1;
+                    }
+                } else if (sender instanceof BlockCommandSender blockSender) {
+                    if (executor != null) {
+                        this.executor.executes(new BukkitBlockCommandSender(blockSender), context);
+                        return 1;
+                    } else if (executorPlayer != null) {
+                        context.error("你必须是一个玩家");
+                    }
+                } else {
+                    if (executor != null) {
+                        this.executor.executes(BukkitConsoleCommandSender.INSTANCE, context);
+                        return 1;
+                    } else if (executorPlayer != null) {
+                        context.error("你必须是一个玩家");
+                    }
                 }
-            } else if (sender instanceof BlockCommandSender blockSender) {
-                this.executor.executes(new BukkitBlockCommandSender(blockSender), new BukkitCommandContext(this.platform, commandContext));
-                return 1;
-            } else if (this.executor != null) {
-                this.executor.executes(BukkitConsoleCommandSender.INSTANCE, new BukkitCommandContext(this.platform, commandContext));
-                return 1;
-            }
-            return 0;
-        });
+                return 0;
+            });
         return builder;
     }
 

@@ -3,6 +3,7 @@ package ltd.kumo.plutomc.survival.bootstrap;
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
+import ltd.kumo.plutomc.modules.economy.EconomyModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
 import ltd.kumo.plutomc.modules.waxednotwaxed.WaxedNotWaxedModule;
@@ -47,7 +48,8 @@ public class SurvivalBootstrap extends JavaPlugin {
                 new IronElevatorModule(bukkitPlatform),
                 new CactusRotatorModule(bukkitPlatform),
                 new VoidTotemModule(bukkitPlatform),
-                new WaxedNotWaxedModule(bukkitPlatform)
+                new WaxedNotWaxedModule(bukkitPlatform),
+                new EconomyModule(bukkitPlatform)
         ));
 
         // Test code, don't delete! Test is still in need!

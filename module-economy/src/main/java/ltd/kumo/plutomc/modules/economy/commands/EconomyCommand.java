@@ -11,7 +11,7 @@ public class EconomyCommand {
 
     public static BukkitCommand command(BukkitPlatform platform) {
         BukkitCommand economyCommand = platform.createCommand("economy");
-        economyCommand.aliases("eco", "balance", "经济", "钱", "coin", "money", "金币");
+        economyCommand.aliases("eco", "balance", "coin", "money");
         economyCommand.executesPlayer((sender, context) -> {
             BukkitEconomyService service = (BukkitEconomyService) platform.getService(EconomyService.class);
             double economy = service.getBalance(sender);

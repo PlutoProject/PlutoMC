@@ -1,5 +1,7 @@
 package ltd.kumo.plutomc.framework.shared.command;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
 public interface CommandContext {
 
     /**
@@ -11,5 +13,11 @@ public interface CommandContext {
      * @return 参数内容
      */
     <T extends Argument<E>, E> E argument(Class<T> type, String name);
+
+    /**
+     * 发出错误信息，终止指令执行，给指令执行者提醒错误的内容
+     * @param message 信息
+     */
+    void error(String message) throws CommandSyntaxException;
 
 }

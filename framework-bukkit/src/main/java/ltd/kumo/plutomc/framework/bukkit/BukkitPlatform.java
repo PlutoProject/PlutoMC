@@ -13,6 +13,7 @@ import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
 import ltd.kumo.plutomc.framework.shared.command.CommandSender;
+import ltd.kumo.plutomc.framework.shared.command.executors.PlayerExecutor;
 import ltd.kumo.plutomc.framework.shared.economy.EconomyService;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.bukkit.Bukkit;
@@ -63,7 +64,7 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
     }
 
     @Override
-    public <E extends CommandSender, P extends Player<?>> void registerCommand(String prefix, Command<E, P> command) {
+    public <E extends CommandSender, P extends Player<?>, X extends PlayerExecutor> void registerCommand(String prefix, Command<E, P, X> command) {
         this.commandManager.register(prefix, (BukkitCommand) command);
     }
 
