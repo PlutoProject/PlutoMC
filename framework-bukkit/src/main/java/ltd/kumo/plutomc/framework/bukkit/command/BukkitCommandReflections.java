@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @SuppressWarnings("unchecked")
 public final class BukkitCommandReflections {
@@ -33,6 +34,8 @@ public final class BukkitCommandReflections {
     public final static RawClass<?> CLASS_CRAFT_WORLD = RawClass.of(Ref.obcClass("CraftWorld"));
     public final static RawClass<?> CLASS_ARGUMENT_VEC3 = RawClass.of(Ref.nmsClass("commands.arguments.coordinates.ArgumentVec3"));
     public final static RawClass<?> CLASS_VEC3D = RawClass.of(Ref.nmsClass("world.phys.Vec3D"));
+    public final static RawClass<?> CLASS_ARGUMENT_PROFILE = RawClass.of(Ref.nmsClass("commands.arguments.ArgumentProfile"));
+    public final static RawClass<?> CLASS_GAME_PROFILE = RawClass.of(Ref.classOf("com.mojang.authlib.GameProfile"));
 
     public final static RawConstructor<Command> CONSTRUCTOR_VANILLA_COMMAND_WRAPPER;
 
@@ -58,6 +61,8 @@ public final class BukkitCommandReflections {
     public final static RawMethod METHOD_GET_DIMENSION;
     public final static RawMethod METHOD_GET_WORLD;
     public final static RawMethod METHOD_GET_VEC3D;
+    public final static RawMethod METHOD_GET_GAME_PROFILES;
+    public final static RawMethod METHOD_GET_ID;
 
     static {
         CONSTRUCTOR_VANILLA_COMMAND_WRAPPER = (RawConstructor<Command>) CLASS_VANILLA_COMMAND_WRAPPER.findConstructor(CLASS_COMMAND_DISPATCHER.original(), CommandNode.class);
@@ -84,6 +89,8 @@ public final class BukkitCommandReflections {
         METHOD_GET_DIMENSION = CLASS_ARGUMENT_DIMENSION.findMethod(true, CLASS_WORLD_SERVER.original(), CommandContext.class, String.class);
         METHOD_GET_WORLD = CLASS_WORLD.findMethod(false, CLASS_CRAFT_WORLD.original());
         METHOD_GET_VEC3D = CLASS_ARGUMENT_VEC3.findMethod(true, CLASS_VEC3D.original(), CommandContext.class, String.class);
+        METHOD_GET_GAME_PROFILES = CLASS_ARGUMENT_PROFILE.findMethod(true, Collection.class, CommandContext.class, String.class);
+        METHOD_GET_ID = CLASS_GAME_PROFILE.findMethod(false, UUID.class);
     }
 
 }
