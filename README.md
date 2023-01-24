@@ -43,7 +43,7 @@
 
 # 许可
 
-PlutoMC 在 [MIT License](https://mit-license.org/) 下许可。
+PlutoMC 在 [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html) 下许可。
 
 ---
 
