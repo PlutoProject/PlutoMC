@@ -12,6 +12,7 @@ import ltd.kumo.plutomc.framework.shared.command.arguments.ArgumentString;
 import ltd.kumo.plutomc.framework.shared.utilities.colorpattle.Catppuccin;
 import ltd.kumo.plutomc.framework.velocity.VelocityPlatform;
 import ltd.kumo.plutomc.framework.velocity.command.VelocityCommand;
+import ltd.kumo.plutomc.framework.velocity.player.VelocityPlayer;
 import ltd.kumo.plutomc.modules.whitelist.utils.ProfileUtil;
 import net.kyori.adventure.text.Component;
 
@@ -32,19 +33,19 @@ public final class WhitelistCommand {
                 .then("playerName", ArgumentString.class)
                 .thenLong("qqNumber", 10000, Long.MAX_VALUE)
                 .executes((sender, context) -> {
-                    executeAdd(sender.asVelocity(),
+                    executeAdd(((VelocityPlayer)sender).asVelocity(),
                             context.argument(ArgumentString.class, "playerName"),
                             context.argument(ArgumentLong.class, "qqNumber"));
                 });
         command.then("remove")
                 .then("playerName", ArgumentString.class)
                 .executes((sender, context) -> {
-                    executeRemove(sender.asVelocity(),
+                    executeRemove(((VelocityPlayer)sender).asVelocity(),
                             context.argument(ArgumentString.class, "playerName"));
                 });
         command.then("list")
                 .executes((sender, context) -> {
-                    executeList(sender.asVelocity());
+                    executeList(((VelocityPlayer)sender).asVelocity());
                 });
         return command;
     }

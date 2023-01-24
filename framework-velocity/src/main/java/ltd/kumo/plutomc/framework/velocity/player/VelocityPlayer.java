@@ -65,6 +65,14 @@ public final class VelocityPlayer extends VelocityCommandSender implements Playe
     }
 
     @Override
+    public void send(Component message) {
+        com.velocitypowered.api.proxy.Player player = this.player();
+        if (player == null)
+            return;
+        player.sendMessage(message);
+    }
+
+    @Override
     public boolean isPlayer() {
         return true;
     }

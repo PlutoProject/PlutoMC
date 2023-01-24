@@ -24,4 +24,9 @@ public class VelocityConsoleCommandSender extends VelocityCommandSender {
         asVelocity().sendMessage(Component.text(message));
     }
 
+    @Override
+    public void send(Component message) {
+        asVelocity().sendMessage(message);
+    }
+
 }

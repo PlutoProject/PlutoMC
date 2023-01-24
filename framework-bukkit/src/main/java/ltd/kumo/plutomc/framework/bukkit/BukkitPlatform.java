@@ -6,10 +6,8 @@ import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
 import ltd.kumo.plutomc.framework.bukkit.economy.BukkitEconomyService;
 import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
-import ltd.kumo.plutomc.framework.bukkit.holograms.PlutoHologramsAPI;
 import ltd.kumo.plutomc.framework.bukkit.injector.ProtocolInjector;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
-import ltd.kumo.plutomc.framework.bukkit.services.HologramService;
 import ltd.kumo.plutomc.framework.shared.Platform;
 import ltd.kumo.plutomc.framework.shared.Service;
 import ltd.kumo.plutomc.framework.shared.command.Command;
@@ -108,7 +106,6 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
     @Override
     public void load() {
-        PlutoHologramsAPI.onLoad(this.plugin());
     }
 
     @Override
@@ -116,9 +113,6 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
         this.injector = new ProtocolInjector(this);
 
         this.commandManager = new BukkitCommandManager(this);
-
-        PlutoHologramsAPI.onEnable();
-        this.services.put(HologramService.class, new HologramService());
 
         BukkitEconomyService economyService = new BukkitEconomyService();
         this.services.put(EconomyService.class, economyService);
@@ -133,7 +127,6 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
     public void disable() {
         if (this.injector != null && !this.injector.isClosed())
             this.injector.close();
-        PlutoHologramsAPI.onDisable();
     }
 
     @Override
