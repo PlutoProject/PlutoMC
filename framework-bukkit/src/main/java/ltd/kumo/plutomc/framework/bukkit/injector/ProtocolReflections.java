@@ -50,4 +50,7 @@ public final class ProtocolReflections {
         METHOD_GET_ID = CLASS_GAME_PROFILE.findMethod(false, UUID.class);
     }
 
+    private ProtocolReflections() {
+    }
+
 }
