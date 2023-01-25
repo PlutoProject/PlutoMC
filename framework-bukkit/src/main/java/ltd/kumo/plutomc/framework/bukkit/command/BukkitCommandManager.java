@@ -111,6 +111,7 @@ public class BukkitCommandManager implements Listener {
                         continue;
                     if (!Objects.equals(command, commandRecord.command()))
                         continue;
+                    command.setDescription("A Pluto-Framework provided command");
                     brigadierCommandDispatcher.getRoot().addChild(copy(alias, commandNode));
                     BukkitCommandReflections.FIELD_DISPATCHER.set(command, bukkitCommandDispatcher);
                 }
