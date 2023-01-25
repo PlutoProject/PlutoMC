@@ -6,6 +6,8 @@ import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommandManager;
 import ltd.kumo.plutomc.framework.bukkit.economy.BukkitEconomyService;
 import ltd.kumo.plutomc.framework.bukkit.gui.Menu;
 import ltd.kumo.plutomc.framework.bukkit.gui.impl.MenuImpl;
+import ltd.kumo.plutomc.framework.bukkit.hologram.HologramService;
+import ltd.kumo.plutomc.framework.bukkit.hologram.impl.BukkitHologramService;
 import ltd.kumo.plutomc.framework.bukkit.injector.ProtocolInjector;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import ltd.kumo.plutomc.framework.shared.Platform;
@@ -16,6 +18,7 @@ import ltd.kumo.plutomc.framework.shared.command.executors.PlayerExecutor;
 import ltd.kumo.plutomc.framework.shared.economy.EconomyService;
 import ltd.kumo.plutomc.framework.shared.player.Player;
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -114,11 +117,16 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
 
         this.commandManager = new BukkitCommandManager(this);
 
+        this.services.put(ProtocolInjector.class, this.injector);
+
         BukkitEconomyService economyService = new BukkitEconomyService();
         this.services.put(EconomyService.class, economyService);
         this.services.put(BukkitEconomyService.class, economyService);
 
-        // Bukkit.getPluginManager().registerEvents(new CommandListeners(this), this.plugin());
+        BukkitHologramService hologramService = new BukkitHologramService(this);
+        this.services.put(HologramService.class, hologramService);
+        this.services.put(BukkitHologramService.class, hologramService);
+
         Bukkit.getPluginManager().registerEvents(this.commandManager, this.plugin());
         Bukkit.getPluginManager().registerEvents(this, this.plugin());
     }
@@ -127,6 +135,9 @@ public class BukkitPlatform extends Platform<JavaPlugin> implements Listener {
     public void disable() {
         if (this.injector != null && !this.injector.isClosed())
             this.injector.close();
+        this.services.clear();
+        HandlerList.unregisterAll(this.commandManager);
+        HandlerList.unregisterAll(this);
     }
 
     @Override

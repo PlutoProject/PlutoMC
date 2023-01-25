@@ -30,9 +30,33 @@ public class RawClass<T> {
     }
 
     @Nullable
+    public RawField findField(boolean isStatic, boolean isFinal, Class<?> type) {
+        return this.findField(isStatic, isFinal, type, 0);
+    }
+
+    @Nullable
     public RawField findField(boolean isStatic, Class<?> type, int skipTimes) {
         for (Field field : this.type.getDeclaredFields()) {
             if (isStatic && !Modifier.isStatic(field.getModifiers()))
+                continue;
+            if (type != null)
+                if (!Objects.equals(type, field.getType()))
+                    continue;
+            if (skipTimes > 0) {
+                skipTimes--;
+                continue;
+            }
+            return new RawField(field);
+        }
+        return null;
+    }
+
+    @Nullable
+    public RawField findField(boolean isStatic, boolean isFinal, Class<?> type, int skipTimes) {
+        for (Field field : this.type.getDeclaredFields()) {
+            if (isStatic && !Modifier.isStatic(field.getModifiers()))
+                continue;
+            if (isFinal && !Modifier.isFinal(field.getModifiers()))
                 continue;
             if (type != null)
                 if (!Objects.equals(type, field.getType()))

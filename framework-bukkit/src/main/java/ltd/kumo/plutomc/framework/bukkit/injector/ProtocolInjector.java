@@ -3,6 +3,7 @@ package ltd.kumo.plutomc.framework.bukkit.injector;
 import io.netty.channel.*;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.event.async.AsyncMessageSendEvent;
+import ltd.kumo.plutomc.framework.shared.Service;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ProtocolInjector {
+public class ProtocolInjector implements Service<ProtocolInjector> {
 
     private final BukkitPlatform platform;
     private final String identifier;

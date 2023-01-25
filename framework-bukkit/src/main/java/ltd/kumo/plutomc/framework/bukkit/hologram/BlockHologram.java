@@ -3,7 +3,6 @@ package ltd.kumo.plutomc.framework.bukkit.hologram;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -13,7 +12,7 @@ import java.util.function.Function;
  */
 public interface BlockHologram extends Hologram {
 
-    @Nullable
+    @NotNull
     Function<BukkitPlayer, ItemStack> getItem();
 
     void setItem(@NotNull Function<BukkitPlayer, ItemStack> item);

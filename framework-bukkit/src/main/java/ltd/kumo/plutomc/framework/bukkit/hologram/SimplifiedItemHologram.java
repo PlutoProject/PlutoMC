@@ -1,11 +1,11 @@
 package ltd.kumo.plutomc.framework.bukkit.hologram;
 
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public interface SimplifiedItemHologram extends ItemHologram {
 
-    @Nullable
+    @NotNull
     ItemStack item();
 
     void item(ItemStack item);

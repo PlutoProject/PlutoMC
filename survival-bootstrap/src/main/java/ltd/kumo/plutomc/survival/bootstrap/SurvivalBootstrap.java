@@ -2,12 +2,19 @@ package ltd.kumo.plutomc.survival.bootstrap;
 
 import com.google.common.collect.ImmutableList;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
+import ltd.kumo.plutomc.framework.bukkit.command.BukkitCommand;
+import ltd.kumo.plutomc.framework.bukkit.hologram.HologramService;
+import ltd.kumo.plutomc.framework.bukkit.hologram.TextHologram;
 import ltd.kumo.plutomc.modules.cactusrotator.CactusRotatorModule;
 import ltd.kumo.plutomc.modules.economy.EconomyModule;
 import ltd.kumo.plutomc.modules.ironelevator.IronElevatorModule;
 import ltd.kumo.plutomc.modules.voidtotem.VoidTotemModule;
 import ltd.kumo.plutomc.modules.waxednotwaxed.WaxedNotWaxedModule;
 import net.deechael.dutil.Preconditions;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,6 +58,15 @@ public class SurvivalBootstrap extends JavaPlugin {
                 new WaxedNotWaxedModule(bukkitPlatform),
                 new EconomyModule(bukkitPlatform)
         ));
+
+        TextHologram hologram = bukkitPlatform.getService(HologramService.class).createHologram(TextHologram.class, new Location(Bukkit.getWorlds().get(0), 0, 75, 0));
+        hologram.setText(player -> Component.text("Fuck you!").color(NamedTextColor.GOLD));
+
+        BukkitCommand command = bukkitPlatform.createCommand("hologram");
+        command.executesPlayer(((sender, context) -> {
+            hologram.addViewer(sender);
+        }));
+        bukkitPlatform.registerCommand("pluto", command);
 
         // Test for Protocol Injector
         /*
