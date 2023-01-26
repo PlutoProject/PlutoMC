@@ -7,20 +7,24 @@ import org.bukkit.Location;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 public class BukkitHologramService implements HologramService {
 
     private final BukkitPlatform platform;
-    private final Map<Class<?>, Function<Location, Hologram>> holograms = new HashMap<>();
+    private final Map<Class<?>, BiFunction<BukkitPlatform, Location, Hologram>> holograms = new HashMap<>();
 
     public BukkitHologramService(BukkitPlatform platform) {
         this.platform = platform;
 
-        this.holograms.put(TextHologram.class, location -> new TextHologramImpl(this.platform, location));
-        this.holograms.put(TextHologramImpl.class, location -> new TextHologramImpl(this.platform, location));
-        this.holograms.put(SimplifiedTextHologram.class, location -> new SimplifiedTextHologramImpl(this.platform, location));
-        this.holograms.put(SimplifiedTextHologramImpl.class, location -> new SimplifiedTextHologramImpl(this.platform, location));
+        this.holograms.put(TextHologram.class, TextHologramImpl::new);
+        this.holograms.put(TextHologramImpl.class, TextHologramImpl::new);
+        this.holograms.put(SimplifiedTextHologram.class, SimplifiedTextHologramImpl::new);
+        this.holograms.put(SimplifiedTextHologramImpl.class, SimplifiedTextHologramImpl::new);
+        this.holograms.put(ItemHologram.class, ItemHologramImpl::new);
+        this.holograms.put(ItemHologramImpl.class, ItemHologramImpl::new);
+        this.holograms.put(SimplifiedItemHologram.class, SimplifiedItemHologramImpl::new);
+        this.holograms.put(SimplifiedItemHologramImpl.class, SimplifiedItemHologramImpl::new);
     }
 
     @Override
@@ -28,10 +32,12 @@ public class BukkitHologramService implements HologramService {
     public <T extends Hologram> T createHologram(Class<T> type, Location location) {
         Preconditions.checkNotNull(type);
         Preconditions.checkNotNull(location);
+        location.setYaw(0);
+        location.setPitch(0);
         if (!this.holograms.containsKey(type))
             throw new RuntimeException("Hologram type not exists");
         Preconditions.checkNotNull(this.holograms.get(type));
-        return (T) this.holograms.get(type).apply(location);
+        return (T) this.holograms.get(type).apply(this.platform, location);
     }
 
     @Override

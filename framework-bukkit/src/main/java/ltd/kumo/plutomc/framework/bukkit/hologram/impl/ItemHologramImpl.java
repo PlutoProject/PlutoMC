@@ -3,51 +3,50 @@ package ltd.kumo.plutomc.framework.bukkit.hologram.impl;
 import com.google.common.base.Preconditions;
 import ltd.kumo.plutomc.framework.bukkit.BukkitPlatform;
 import ltd.kumo.plutomc.framework.bukkit.hologram.HologramReflections;
-import ltd.kumo.plutomc.framework.bukkit.hologram.TextHologram;
+import ltd.kumo.plutomc.framework.bukkit.hologram.ItemHologram;
 import ltd.kumo.plutomc.framework.bukkit.injector.ProtocolInjector;
 import ltd.kumo.plutomc.framework.bukkit.player.BukkitPlayer;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
 
-public class TextHologramImpl implements TextHologram {
+public class ItemHologramImpl implements ItemHologram {
 
     private final BukkitPlatform platform;
 
     private final Set<BukkitPlayer> players = new HashSet<>();
     private final Map<BukkitPlayer, Location> originalLocations = new HashMap<>();
     private final Object entity;
-    private final ArmorStand bukkitEntity;
+    private final Item bukkitEntity;
     private Location location;
     private boolean dropped = false;
-    private Function<BukkitPlayer, Component> function = (player) -> Component.text("Hello, world!");
-    // private final Turtle bukkitEntity;
+    private Function<BukkitPlayer, ItemStack> function = (player) -> new ItemStack(Material.AIR);
     private boolean showed = true;
 
-    public TextHologramImpl(BukkitPlatform platform, Location location) {
+    public ItemHologramImpl(BukkitPlatform platform, Location location) {
         Preconditions.checkNotNull(platform);
         Preconditions.checkNotNull(location);
         Preconditions.checkNotNull(location.getWorld());
         this.platform = platform;
         this.location = location;
-        this.entity = HologramReflections.CONSTRUCTOR_ENTITY_ARMOR_STAND.newInstance(HologramReflections.METHOD_GET_HANDLE_WORLD.invoke(location.getWorld()), location.x(), location.y(), location.z());
-
-        this.bukkitEntity = (ArmorStand) HologramReflections.METHOD_GET_CRAFT_ENTITY.invoke(this.entity);
+        this.entity = HologramReflections.CONSTRUCTOR_ENTITY_ITEM.newInstance(HologramReflections.METHOD_GET_HANDLE_WORLD.invoke(location.getWorld()), location.x(), location.y(), location.z(), HologramReflections.METHOD_AS_NMS_COPY.invokeStatic(new ItemStack(Material.AIR)));
+        this.bukkitEntity = (Item) HologramReflections.METHOD_GET_CRAFT_ENTITY.invoke(this.entity);
+        this.bukkitEntity.setUnlimitedLifetime(true);
+        this.bukkitEntity.setCanMobPickup(false);
+        this.bukkitEntity.setCanPlayerPickup(false);
+        this.bukkitEntity.setHealth(32767);
         this.bukkitEntity.setGravity(false);
-        this.bukkitEntity.setCustomNameVisible(true);
-        this.bukkitEntity.setArms(false);
-        this.bukkitEntity.setInvisible(true);
-        this.bukkitEntity.setSmall(true);
-        // HologramReflections.METHOD_SET_NO_GRAVITY.invoke(this.entity, true);
-        // HologramReflections.METHOD_SET_CUSTOM_NAME_VISIBLE.invoke(this.entity, true);
-        // HologramReflections.METHOD_SET_ARMS.invoke(this.entity, false);
-        // HologramReflections.METHOD_SET_HIDE_BASE_PLATE.invoke(this.entity, true);
+        // HologramReflections.FIELD_ITEM_LIFETIME.set(this.entity, -32768);
+        // HologramReflections.FIELD_ITEM_PICKUP_DELAY.set(this.entity, 32767);
+        // HologramReflections.FIELD_ITEM_HEALTH.set(this.entity, 32767);
+        // HologramReflections.FIELD_ITEM_CAN_MOB_PICKUP.set(this.entity, false);
         // HologramReflections.METHOD_SET_INVISIBLE.invoke(this.entity, 5, true);
-        // HologramReflections.METHOD_SET_SMALL.invoke(this.entity, true);
+        // HologramReflections.METHOD_SET_NO_GRAVITY.invoke(this.entity, true);
         HologramReflections.METHOD_TELEPORT.invoke(this.entity, location.x(), location.y() - this.bukkitEntity.getHeight(), location.z(), location.getYaw(), location.getPitch());
     }
 
@@ -69,7 +68,7 @@ public class TextHologramImpl implements TextHologram {
                 this.location.z(),
                 this.location.getPitch(),
                 this.location.getYaw(),
-                // HologramReflections.FIELD_ENTITY_TYPE_ARMOR_STAND.getStatic(),
+                // HologramReflections.FIELD_ENTITY_TYPE_ITEM.getStatic(),
                 HologramReflections.METHOD_GET_ENTITY_TYPES.invoke(this.entity),
                 0,
                 HologramReflections.FIELD_ENTITY_VELOCITY.get(this.entity),
@@ -143,20 +142,20 @@ public class TextHologramImpl implements TextHologram {
 
     @Override
     public double getHeight() {
-        return 0.2;
+        return 0.3;
     }
 
     @Override
-    public @NotNull Function<BukkitPlayer, Component> getText() {
+    public @NotNull Function<BukkitPlayer, ItemStack> getItem() {
         return this.function;
     }
 
     @Override
-    public void setText(@NotNull Function<BukkitPlayer, Component> text) {
+    public void setItem(@NotNull Function<BukkitPlayer, ItemStack> item) {
         if (this.isDropped())
             return;
-        Preconditions.checkNotNull(text);
-        this.function = text;
+        Preconditions.checkNotNull(item);
+        this.function = item;
     }
 
     @Override
@@ -239,7 +238,7 @@ public class TextHologramImpl implements TextHologram {
                 this.location.z(),
                 this.location.getPitch(),
                 this.location.getYaw(),
-                // HologramReflections.FIELD_ENTITY_TYPE_ARMOR_STAND.getStatic(),
+                // HologramReflections.FIELD_ENTITY_TYPE_ITEM.getStatic(),
                 HologramReflections.METHOD_GET_ENTITY_TYPES.invoke(this.entity),
                 0,
                 HologramReflections.FIELD_ENTITY_VELOCITY.get(this.entity),
@@ -249,8 +248,8 @@ public class TextHologramImpl implements TextHologram {
     }
 
     private void updateMetadata(BukkitPlayer player, ProtocolInjector injector) {
-        Component text = this.function.apply(player);
-        HologramReflections.METHOD_SET_CUSTOM_NAME.invoke(this.entity, HologramReflections.METHOD_AS_VANILLA.invokeStatic(text));
+        ItemStack itemStack = this.function.apply(player);
+        HologramReflections.METHOD_SET_ITEM_STACK.invoke(this.entity, HologramReflections.METHOD_AS_NMS_COPY.invokeStatic(itemStack));
         Object list = HologramReflections.METHOD_PACK_ALL.invoke(HologramReflections.FIELD_DATA_WATCHER.get(this.entity));
         Object metadataPacket = HologramReflections.CONSTRUCTOR_PACKET_PLAY_OUT_ENTITY_METADATA.newInstance(this.bukkitEntity.getEntityId(), list == null ? new ArrayList<>() : list);
         injector.sendPacket(player.player(), metadataPacket);

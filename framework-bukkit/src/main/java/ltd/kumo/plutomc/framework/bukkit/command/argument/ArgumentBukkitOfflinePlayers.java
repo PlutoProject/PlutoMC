@@ -20,6 +20,7 @@ public class ArgumentBukkitOfflinePlayers implements BukkitArgument<List<Offline
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<OfflinePlayer> parse(CommandContext context, String name) {
         List<Object> gameProfiles = (List<Object>) BukkitCommandReflections.METHOD_GET_GAME_PROFILES.invokeStatic(((BukkitCommandContext) context).brigadier(), name);
         return gameProfiles.stream()

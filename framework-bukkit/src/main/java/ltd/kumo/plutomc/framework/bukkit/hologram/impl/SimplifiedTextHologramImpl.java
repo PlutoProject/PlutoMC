@@ -30,14 +30,15 @@ public class SimplifiedTextHologramImpl extends TextHologramImpl implements Simp
         super.setText((player) -> this.text);
     }
 
+    @NotNull
+    @Override
+    public Function<BukkitPlayer, Component> getText() {
+        return (player) -> this.text;
+    }
+
     @Override
     public void setText(@NotNull Function<BukkitPlayer, Component> text) {
         // Ignore
-    }
-
-    @NotNull
-    public Function<BukkitPlayer, Component> getText() {
-        return (player) -> this.text;
     }
 
 }
