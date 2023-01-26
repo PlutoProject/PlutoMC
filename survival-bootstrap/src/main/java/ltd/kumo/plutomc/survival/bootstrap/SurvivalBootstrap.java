@@ -70,12 +70,14 @@ public class SurvivalBootstrap extends JavaPlugin {
             hologram.addViewer(sender);
         });
         command.then("both").executesPlayer((sender, context) -> {
+            HologramGroup group = bukkitPlatform.getService(HologramService.class).createGroup(sender.player().getLocation());
             TextHologram hologram = bukkitPlatform.getService(HologramService.class).createHologram(TextHologram.class, sender.player().getLocation());
             hologram.setText(player -> Component.text("Fuck you!").color(NamedTextColor.GOLD));
             ItemHologram itemHologram = bukkitPlatform.getService(HologramService.class).createHologram(ItemHologram.class, sender.player().getLocation());
             itemHologram.setItem(player -> new ItemStack(Material.DIAMOND));
-            hologram.addViewer(sender);
-            itemHologram.addViewer(sender);
+            group.addHologram(hologram);
+            group.addHologram(itemHologram);
+            group.addViewer(sender);
         });
         bukkitPlatform.registerCommand("pluto", command);
         */

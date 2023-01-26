@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface HologramGroup {
+public interface HologramGroup extends Iterable<Hologram> {
 
     @NotNull
     Location getLocation(); // Group的位置是指第一行的位置
@@ -32,6 +32,10 @@ public interface HologramGroup {
     void removeHologram(@NotNull Hologram hologram);
 
     void removeHologramAll(@NotNull HologramGroup group);
+
+    void addViewer(@NotNull BukkitPlayer player);
+
+    void removeViewer(@NotNull BukkitPlayer player);
 
     List<Hologram> listHolograms();
 

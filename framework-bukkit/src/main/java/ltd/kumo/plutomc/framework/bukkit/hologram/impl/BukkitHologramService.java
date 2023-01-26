@@ -42,7 +42,7 @@ public class BukkitHologramService implements HologramService {
 
     @Override
     public HologramGroup createGroup(Location location) {
-        return null;
+        return new HologramGroupImpl(this.platform, location);
     }
 
 }
