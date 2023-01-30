@@ -2,7 +2,6 @@ rootProject.name = 'PlutoMC'
 
 include 'bot-shared'
 include 'bot-qq'
-include 'bot-kook'
 include 'common-whitelistmanager'
 include 'framework-shared'
 include 'framework-bukkit'
