@@ -1,0 +1,51 @@
+version: "3.2"
+
+services:
+  mongodb:
+    container_name: "mongodb"
+    command:  "--auth"
+    image: "mongo:latest"
+    volumes:
+      - "./mongodb/:/data/db/"
+    networks:
+      - "minecraft"
+  velocity:
+    container_name: "proxy"
+    stop_signal: "SIGINT"
+    build: .
+    stdin_open: true
+    tty: true
+    ports:
+      - "25577:25577"
+    depends_on:
+      - "mongodb"
+    volumes:
+      - "./servers_data/proxy/:/data/"
+    networks:
+      - "minecraft"
+    environment:
+      - JAVA_ARG=-Xmx256M -Xms256M
+      - JAR_NAME=velocity.jar
+      - JAR_ARG=
+  survival:
+    container_name: "survival"
+    stop_signal: "SIGINT"
+    build: .
+    stdin_open: true
+    tty: true
+    depends_on:
+      - "mongodb"
+      - "velocity"
+    volumes:
+      - "./servers_data/survival/:/data/"
+    networks:
+      - "minecraft"
+    environment:
+      - JAVA_ARG=-Xmx1G -Xms1G
+      - JAR_NAME=keyi.jar
+      - JAR_ARG=nogui
+
+
+networks:
+  minecraft:
+    driver: "bridge"
