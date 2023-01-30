@@ -32,7 +32,7 @@
 - `resource-bootstrap`: 资源世界服务器插件。通过框架中的模块功能将需要的模块打入并加载。
 - `event-bootstrap`: 活动中心服务器插件。通过框架中的模块功能将需要的模块打入并加载。
 - `module-*`: 各类插件模块。
-- `library-*`: 一些没有发布到maven仓库的依赖库
+- `library-*`: 一些没有发布到 Maven 仓库的依赖库。
 - `common-*`: 一些除了插件平台开发还能用到的辅助工具。
 - `bot-qq`: QQ 机器人。
 - `bot-kook`: KOOK 机器人。
