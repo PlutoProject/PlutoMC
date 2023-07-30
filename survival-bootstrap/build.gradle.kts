@@ -1,12 +1,12 @@
 plugins {
-    id 'xyz.jpenilla.run-paper' version '2.0.1'
+    id("xyz.jpenilla.run-paper" )version "2.0.1"
 }
 
 dependencies {
     implementation(project(":framework-bukkit"))
     compileOnly(project(":framework-shared"))
 
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.mojang:brigadier:1.0.18")
 
     implementation(project(":module-ironelevator"))
