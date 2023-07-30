@@ -49,7 +49,7 @@ allprojects {
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
 
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     }
 
     tasks.test {
