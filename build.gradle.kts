@@ -11,6 +11,7 @@ version "2.0.0"
 
 allprojects {
     apply {
+        plugin("org.jetbrains.kotlin.jvm")
         plugin("java")
         plugin("idea")
         plugin("com.github.johnrengelman.shadow")
