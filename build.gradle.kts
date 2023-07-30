@@ -36,7 +36,7 @@ allprojects {
     dependencies {
         implementation("com.google.code.gson:gson:2.10.1")
         implementation("fastutil:fastutil:5.0.9")
-        implementation("com.google.guava:guava:31.1-jre")
+        implementation("com.google.guava:guava:32.1.1-jre")
         implementation("com.electronwill.night-config:toml:3.6.6")
         implementation("org.apache.commons:commons-lang3:3.12.0")
 
