@@ -39,7 +39,7 @@ allprojects {
         implementation("fastutil:fastutil:5.0.9")
         implementation("com.google.guava:guava:32.1.1-jre")
         implementation("com.electronwill.night-config:toml:3.6.6")
-        implementation("org.apache.commons:commons-lang3:3.12.0")
+        implementation("org.apache.commons:commons-lang3:3.13.0")
 
         compileOnly("org.jetbrains:annotations:24.0.0")
         compileOnly("org.projectlombok:lombok:1.18.28")
