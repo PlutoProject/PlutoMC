@@ -5,9 +5,9 @@
 ![GitHub](https://img.shields.io/github/license/plutosmp/PlutoMC)
 ![](https://img.shields.io/github/last-commit/nostalgic853/PlutoMC-Engine?logo=artstation&flat&color=9266CC)
 
-⚡ PlutoMC Season 2 自研内容。
+⚡ 星社 自主开发内容。
 
-本仓库包含了所有由我们自主为 Season 2 开发的内容。
+本仓库包含了所有由我们自主为星社开发的内容。
 
 # 贡献
 
@@ -19,27 +19,12 @@
 
 # 分支规则
 
-- `dev`: 开发分支，包含不稳定的代码。
+- `refactor`: 由 PlutoMC 到星社重构的分支。
 - `prod`: 生产分支，所有已经确认稳定并且可在生产环境中使用的内容会被提交到此处。
-
-# 模块说明
-
-- `framework-shared`: 开发框架通用部分，大部分内容为抽象接口类。
-- `framework-bukkit`: 开发框架 Bukkit 专用部分。
-- `framework-velocity`: 开发框架 velocity 专用部分。
-- `proxy-bootstrap`: 代理端服务器插件。通过框架中的模块功能将需要的模块打入并加载。
-- `survival-bootstrap`: 主生存服务器插件。通过框架中的模块功能将需要的模块打入并加载。
-- `resource-bootstrap`: 资源世界服务器插件。通过框架中的模块功能将需要的模块打入并加载。
-- `event-bootstrap`: 活动中心服务器插件。通过框架中的模块功能将需要的模块打入并加载。
-- `module-*`: 各类插件模块。
-- `library-*`: 一些没有发布到 Maven 仓库的依赖库。
-- `common-*`: 一些除了插件平台开发还能用到的辅助工具。
-- `bot-qq`: QQ 机器人。
-- `bot-kook`: KOOK 机器人。
 
 # 开发语言
 
-本项目目前使用 Java 语言进行开发。
+原项目使用 Java 语言进行开发，目前我们正在使用 Kotlin 语言重构。
 
 # 许可
 
@@ -47,4 +32,4 @@ PlutoMC 在 [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0
 
 ---
 
-Copyright © 2022 PlutoMC Team & all contributors. All rights reserved.
+Copyright © 2023 PlutoTeam & all contributors. All rights reserved.
