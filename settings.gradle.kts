@@ -1,10 +1,9 @@
 rootProject.name = "plutomc"
 
+/*
 include("framework-shared")
 include("framework-bukkit")
 include("framework-velocity")
-
-/*
 include("common-whitelistmanager")
 include("module-ironelevator")
 include("module-cactusrotator")
