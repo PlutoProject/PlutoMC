@@ -16,6 +16,6 @@ include("common-profile")
 include("module-economy")
 */
 
-include("dutil")
+// include("dutil")
 
-project(":dutil").projectDir = File("./library-dutil")
+// project(":dutil").projectDir = File("./library-dutil")
