@@ -36,3 +36,6 @@ run/
 
 # Other
 out/
+
+# VS Code
+.vscode/
