@@ -1,5 +1,11 @@
 # PlutoMC
 
+> **更新于 2023/8/26：**
+>
+> 此项目为 PlutoMC 二周目时期遗留的开发中内容，并且已经被废弃。
+>
+> 请移步到 [此仓库](https://github.com/PlutoProject/pluto-plugins) 查看我们正在为星社开发的内容。
+
 [![CodeFactor](https://www.codefactor.io/repository/github/plutosmp/plutomc/badge)](https://www.codefactor.io/repository/github/plutosmp/plutomc)
 ![GitHub language count](https://img.shields.io/github/languages/count/plutosmp/PlutoMC)
 ![GitHub](https://img.shields.io/github/license/plutosmp/PlutoMC)
